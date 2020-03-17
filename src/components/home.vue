@@ -1,6 +1,16 @@
 <template>
     <div>
 
+        <router-link to="/summery">
+            <v-btn id="bhome"
+                   rounded
+                   color="#D44637"
+
+                   dark
+                   right
+            >
+            </v-btn>
+        </router-link>
         <input type="file" ref="myFile" @change="selectedFile"><br/>
         <textarea v-model="text"></textarea>
 
@@ -51,265 +61,22 @@
         },
         methods: {
             selectedFile() {
-                console.log('selected a file');
-                // console.log(this.$refs.myFile.files[0]);
+                console.log('File uploaded');
                 let file = this.$refs.myFile.files[0];
                 let reader = new FileReader();
                 reader.readAsText(file, "UTF-8");
                 reader.onload = evt => {
-
                     this.text = evt.target.result;
                     this.result = this.text.split("\n");
                     this.cordoutput = this.text.split("\n");
 
-
                     for (var i = 0; i < this.result.length; i++) {
-                        //  this.result[i]=this.result[i].replace(";"," ");
-
-//keywords
-                        const keywords = ["abstract", "break", "case", "catch", "class", "continue", "default", "double", "enum", "extends", "final", "finally", "implements", "import", "instanceof", "interface", "native", "new", "null", "package", "private", "protected", "public", "return", "static", "strictfp", "super", "synchronized", "this", "throw", "throws", "transient", "try", "void", "volatile"]
-                        var keyitmes = 0;
-                        for (var key = 0; key < keywords.length; key++) {
-                            if (this.result[i].match(keywords[key])) {
-                                keyitmes = keyitmes + 1
-                                this.Nkw[i] = keyitmes;
-                            }
-                        }
-
-//operaters
-                        const operaters = ["(?<!\\+)\\+(?![+=])", "(?<!-)-(?![-=>])", "\\*(?!=)", "(?<!\\/)\\/(?![=/*])", "%(?!=)", "\\+\\+", "--", "==", "!=", "(?<![->])>(?![>=])", "(?<![<])<(?![<=])", "(?<!>)>=", "(?<!<)<=", "&&", "\\|\\|", "!(?!=)", "(?<!\\|)\\|((?![|=]))", "\\^(?!=)", "~", "(?<![<])<<(?![<=])", "(?<![>])>>(?![>=])", ">>>(?!=)", "<<<", "(?<![-+!%^&*<>=:/|~^.]),(?![-+!%^&*<>=:/|~^.])", "->", "::", "\\+=", "-=", "\\*=", "\\/=", "(?<!>)>>>=", "\\|=", "&=", "%=", "(?<!<)<<=", "(?<!>)>>=", "\\^=", "(?<![!=<^%&|/*+>-])=(?!=)"]
-                        var operitem = 0;
-                        var splitBySpace = this.result[i].replace(";", " ").split(" ");
-
-                        for (var index = 0; index < splitBySpace.length; index++) {
-
-                            for (var operater = 0; operater < operaters.length; operater++) {
-
-                                if (splitBySpace[index].match(operaters[operater])) {
-                                    operitem = operitem + 1;
-                                    this.Nop[i] = operitem;
-                                }
-
-                            }
-
-                            if (splitBySpace[index].search("\\.")) {
-                                //     console.log(" spliter "+splitBySpace[index].split(".").length);
-                                var splitbyDot = splitBySpace[index].split(".");
-                                operitem = operitem + (splitbyDot.length - 1);
-                                this.Nop[i] = operitem;
-                            }
-                        }
-
-
-//digits
-
-                        var splitBySpace1 = this.result[i].trim().replace(";", " ").split(" ");
-                        var digitcunt = 0;
-                        //  console.log(splitBySpace1);
-                        for (var index1 = 0; index1 < splitBySpace1.length; index1++) {
-                            //   console.log(splitBySpace1[index1]);
-                            //   console.log(Number.isInteger(Number(splitBySpace1[index1])));
-                            if (splitBySpace1[index1] != "") {
-                                if (Number.isInteger(Number(splitBySpace1[index1]))) {
-                                    digitcunt = digitcunt + 1;
-                                    //   console.log(digitcunt);
-                                    this.Nnv[i] = digitcunt;
-                                }
-                            }
-                        }
-
-//string identifer
-                        this.Nsl.push(0);
-                        var stringcount = 0;
-                        console.log(this.result[i].split("+"));
-                        var splitByPlus = this.result[i].split("+");
-                        //   console.log(this.result[i].includes("\"[^\"]*\""));
-                        for (var splitByPlusindex = 0; splitByPlusindex < splitByPlus.length; splitByPlusindex++) {
-                            if (splitByPlus[splitByPlusindex].match("\"[^\"]*\"")) {
-                                stringcount = stringcount + 1;
-                                // console.log(stringcount);
-                                this.Nsl[i] = stringcount;
-                            }
-                        }
-
-
-                        var classIdentyfer = "\\bclass\\b";
-                        var methodsIdentyfer = "((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\w\\s\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*";
-                        var variablesIdentyfer = "(?<=(\\bboolean\\s\\b)|(\\bbool\\s\\b)|(\\blong\\s\\b)|(\\bbyte\\s\\b)|(\\bshort\\s\\b)|(\\bdouble\\s\\b)|(\\bint\\s\\b)|(\\bfloat\\s\\b)|(\\bstring\\s\\b)|(\\bString\\s\\b)|(\\bchar\\s\\b))(\\w*)";
-                        var multiVariableIdentifier = "(?<=(\\bboolean\\s\\b)|(\\bbool\\s\\b)|(\\blong\\s\\b)|(\\bbyte\\s\\b)|(\\bshort\\s\\b)|(\\bdouble\\s\\b)|(\\bint\\s\\b)|(\\bfloat\\s\\b)|(\\bstring\\s\\b)|(\\bString\\s\\b)|(\\bchar\\s\\b))(\\w*(,(.*)))(?=;)";
-                        var objectIdentyfer = "\\=?[\" \"]*\\bnew\\b";
-
-
-                        this.Nid.push(0);
-                        if (this.result[i].match(classIdentyfer)) {
-                            this.Nid[i] = 1;
-                        }
-
-                        if (this.result[i].match(methodsIdentyfer)) {
-                            this.Nid[i] = 1;
-                        }
-
-                        if (this.result[i].match(objectIdentyfer)) {
-                            this.Nid[i] = 1;
-                        }
-
-                        if (this.result[i].match(variablesIdentyfer)) {
-                            if (this.result[i].match(multiVariableIdentifier)) {
-                                var splitByComma = this.result[i].split(",");
-                                this.Nid[i] = splitByComma.length + 1;
-                            }
-                            else {
-                                this.Nid[i] = 1;
-                            }
-
-                        }
-                        var forPattern = "(for\\s*\\()([a-zA-Z]*\\s*\\w*\\s*=?\\s*[a-zA-Z0-9]*;+\\s*)(\\w+\\s*[><=!][=]*\\s*[a-zA-Z0-9]+)((\\s*\\&\\&|\\s*\\|\\||\\s*\\&|\\s*\\|)(\\s*\\w+\\s*[><=!][=]*\\s*[a-zA-Z0-9]+))*(;\\s*[a-zA-Z]+\\+\\+)(\\)\\s*\\{)";
-                        var whilePattern = "(while\\s*\\()(\\w+\\s*[><=!]*[=]*\\s*[a-zA-Z0-9]*)((\\s*\\&\\&|\\s*\\|\\||\\s*\\&|\\s*\\|)(\\s*\\w+\\s*[><=!]*[=]*\\s*[a-zA-Z0-9]*))*(\\.\\w+\\(\\\"*\\w*\\\"*\\))*(\\)\\s*\\{?)";
-                        //   var doWhileTopPattern = "(do\\s*\\{)";
-                        // var doWhileBottomPattern = "(\\}\\s*while\\s*\\()(\\w+\\s*[><=!]*[=]*\\s*[a-zA-Z0-9]*)((\\s*\\&\\&|\\s*\\|\\||\\s*\\&|\\s*\\|)(\\s*\\w+\\s*[><=!]*[=]*\\s*[a-zA-Z0-9]*))*(\\.\\w+\\(\\\"*\\w*\\\"*\\))*(\\)\\;)";
-                        var forEachPattern = "(for\\s*\\()([a-zA-Z]*\\s*\\w+\\s*:\\s*\\w+)(\\))";
-                        var ifPattern = "(\\w*\\s*if\\s*\\()(\\(*\\w+\\s*[><=!]*[=]*\\s*[a-zA-Z0-9]*\\)*)((\\s*\\&\\&|\\s*\\|\\||\\s*\\&|\\s*\\|)(\\s*\\(*\\w+\\s*[><=!]*[=]*\\s*[a-zA-Z0-9]*\\)*))*(\\.\\w+\\(\\\"*\\w*\\\"*\\))*(\\)\\s*\\{)";
-                        var switchPattern = "(switch\\s*\\()(\\w+\\s*[><=!\\*\\+-]*[=]*\\s*[a-zA-Z0-9]*\\)*)(\\))"//"(switch\\s*\\()(\\w+)(\\))";
-
-                        if (this.result[i].trim().match(forPattern)) {
-
-                            var splitforbysemicolen = this.result[i].split(";");
-                            var foridentiffiercounter = 2;
-                            splitforbyspace = splitforbysemicolen[1].trim();
-                            var splitforbyspace = splitforbysemicolen[1].replace("<", " ").replace("<=", " ").replace(">", " ").replace("=>", " ").replace("=", " ").split(" ");
-
-                            for (var splitforbyspaceindex = 0; splitforbyspaceindex < splitforbyspace.length; splitforbyspaceindex++) {
-
-                                if (!splitforbyspace[splitforbyspaceindex].match(/^\d+$/g) && !splitforbyspace[splitforbyspaceindex] != "" && !splitforbyspace[splitforbyspaceindex].match("(true|false)")) {
-                                    foridentiffiercounter = foridentiffiercounter + 1;
-
-                                }
-                            }
-                            this.Nid[i] = foridentiffiercounter;
-                        }
-
-                        if (this.result[i].trim().match(whilePattern)) {
-                            var whileidentiffiercounter = 0;
-                            var whilearguments = this.result[i].trim().replace(/\(|\)|{|}|while/g, "").split(/=|<|>|!/g)
-
-                            console.log(whilearguments);
-                            for (var splitwhilebyspaceindex = 0; splitwhilebyspaceindex < whilearguments.length; splitwhilebyspaceindex++) {
-
-                                if (whilearguments[splitwhilebyspaceindex].replace(/\d|true|false/g, "").match(/\D/g)) {
-                                    console.log(whilearguments[splitwhilebyspaceindex]);
-
-                                    whileidentiffiercounter = whileidentiffiercounter + 1;
-
-                                }
-
-                            }
-
-                            this.Nid[i] = whileidentiffiercounter;
-                        }
-
-                        if (this.result[i].trim().match(ifPattern)) {
-                            var ifidentiffiercounter = 0;
-                            var ifarguments = this.result[i].trim().replace(/\(|\)|{|}|if/g, "").split(/=|<|>|!/g);
-
-                            console.log(ifarguments);
-                            for (var splitifbyspaceindex = 0; splitifbyspaceindex < ifarguments.length; splitifbyspaceindex++) {
-
-                                if (ifarguments[splitifbyspaceindex].replace(/\d|true|false/g, "").match(/\D/g)) {
-                                    console.log(ifarguments[splitifbyspaceindex]);
-
-                                    ifidentiffiercounter = ifidentiffiercounter + 1;
-
-                                }
-
-                            }
-
-                            this.Nid[i] = ifidentiffiercounter;
-                        }
-
-
-                        if (this.result[i].trim().match(forEachPattern)) {
-                            var forEachidentiffiercounter = 0;
-                            var forEacharguments = this.result[i].trim().replace(/\(|\)|{|}|for/g, "");
-
-                            // const keywords = ["abstract","break","case","catch","class","continue","default","double","enum","extends","final","finally","implements","import","instanceof","interface","native","new","null","package","private","protected","public","return","static","strictfp","super","synchronized","this","throw","throws","transient","try","void","volatile"]
-                            // var keyitmes=0;
-                            for (var key1 = 0; key1 < keywords.length; key1++) {
-                                forEacharguments = forEacharguments.replace(keywords[key1], "")
-
-                            }
-
-                            forEacharguments = forEacharguments.split(/:/g)
-
-                            console.log(forEacharguments);
-                            for (var splitforEachbyspaceindex = 0; splitforEachbyspaceindex < forEacharguments.length; splitforEachbyspaceindex++) {
-
-                                if (forEacharguments[splitforEachbyspaceindex].replace(/\d|true|false/g, "").match(/\D/g)) {
-                                    console.log(forEacharguments[splitforEachbyspaceindex]);
-
-                                    forEachidentiffiercounter = forEachidentiffiercounter + 1;
-
-                                }
-
-                            }
-
-                            this.Nid[i] = forEachidentiffiercounter;
-                        }
-
-
-                        if (this.result[i].trim().match(switchPattern)) {
-                            var switchidentiffiercounter = 0;
-                            var switcharguments = this.result[i].trim().replace(/\(|\)|{|}|switch/g, "");//.split(/=|<|>|!|\/|-|\*/g);
-                            console.log(switcharguments);
-                            switcharguments = switcharguments.split(/=|<|>|!|\/|-|\*|\+/g);
-                            console.log(switcharguments);
-                            for (var splitswitchbyspaceindex = 0; splitswitchbyspaceindex < switcharguments.length; splitswitchbyspaceindex++) {
-
-                                if (switcharguments[splitswitchbyspaceindex].replace(/\d|true|false/g, "").match(/\D/g)) {
-                                    console.log(switcharguments[splitswitchbyspaceindex]);
-
-                                    switchidentiffiercounter = switchidentiffiercounter + 1;
-
-                                }
-
-                            }
-
-                            this.Nid[i] = switchidentiffiercounter;
-                        }
-
-                        var x = this.result[i];
-                        var pramidentiffiercounter = 0;
-                        if (x.match(methodsIdentyfer)) {
-                            x = "";
-                        }
-                        console.log(x);
-                        if (x.match(/(\w*\s\w*\s*=)*\s*\w*\(/g)) {
-                            if (!x.match(/while|if|for|switch/g)) {
-                                x = x.replace(/\s/g, "");
-                                x = x.replace(/\(|\)/g, " ");
-                                console.log("x :-" + x);
-                                x = x.split(/\s/g);
-                                x = x[1].split(",");
-                                console.log("x[1] :-" + x);
-                                for (var y = 0; y < x.length; y++) {
-                                    var z = x[y].split(/=|<|>|!|\/|-|\*|\+/g);
-                                    for (var m = 0; m < z.length; m++) {
-                                        if (z[m].replace(/\d|true|false/g, "").match(/\D/g)) {
-                                            // console.log(switcharguments[splitswitchbyspaceindex]);
-
-                                            pramidentiffiercounter = pramidentiffiercounter + 1;
-
-                                        }
-
-                                    }
-
-
-                                }
-                            }
-                        }
-                        this.Nid[i] = pramidentiffiercounter;
-
-                        //  this.Cs[i].push(this.Nkw[i]+this.Nid[i]+this.Nop[i]+this.Nnv[i]+this.Nsl[i]);
-                        //  console.log(this.Cs);
+                        this.getNkw(this.result[i], i);
+                        this.getNop(this.result[i], i);
+                        this.getNnv(this.result[i], i);
+                        this.getNsl(this.result[i], i);
+                        this.getNid(this.result[i], i);
+                        this.Cs[i] = this.Nkw[i] + this.Nid[i] + this.Nop[i] + this.Nnv[i] + this.Nsl[i];
                     }
                 }
                 reader.onerror = evt => {
@@ -317,47 +84,237 @@
                 }
 
             },
+            getNkw(line, index) {
+                const keywords = ["abstract", "break", "case", "catch", "class", "continue", "default", "double", "enum", "extends", "final", "finally", "implements", "import", "instanceof", "interface", "native", "new", "null", "package", "private", "protected", "public", "return", "static", "strictfp", "super", "synchronized", "this", "throw", "throws", "transient", "try", "void", "volatile"]
+                var counter = 0;
+                for (var i = 0; i < keywords.length; i++) {
+                    if (line.match(keywords[i])) {
+                        counter = counter + 1;
 
-            getCs() {
-                for (var i = 0; i < this.result.length; i++) {
-                    this.Cs[i] = this.Nkw[i] + this.Nid[i] + this.Nop[i] + this.Nnv[i] + this.Nsl[i];
+                    }
+
+                }
+                this.Nkw[index] = counter;
+            },
+            getNid(line, index) {
+                // var counter = 0;
+
+                var objectVariableMethodClassIdentifier = this.objectVariableMethodClassIdentifier(line);
+                var ForIdentifier = this.ForIdentifier(line);
+                var ForeachIdentifier = this.ForeachIdentifier(line);
+                var IfIdentifier = this.IfIdentifier(line);
+                var SwitchiIdentifier = this.SwitchiIdentifier(line);
+                var WhileIdentifier = this.WhileIdentifier(line);
+                var MethadCallIdentifier = this.MethadCallIdentifier(line);
+                console.log(objectVariableMethodClassIdentifier + " " + ForIdentifier + " " + ForeachIdentifier + " " + IfIdentifier + " " + SwitchiIdentifier + " " + WhileIdentifier + " " + MethadCallIdentifier);
+                this.Nid[index] = objectVariableMethodClassIdentifier + ForIdentifier + ForeachIdentifier + IfIdentifier + SwitchiIdentifier + WhileIdentifier + MethadCallIdentifier;
+            },
+            getNop(line, index) {
+                const operaters = ["(?<!\\+)\\+(?![+=])", "(?<!-)-(?![-=>])", "\\*(?!=)", "(?<!\\/)\\/(?![=/*])", "%(?!=)", "\\+\\+", "--", "==", "!=", "(?<![->])>(?![>=])", "(?<![<])<(?![<=])", "(?<!>)>=", "(?<!<)<=", "&&", "\\|\\|", "!(?!=)", "(?<!\\|)\\|((?![|=]))", "\\^(?!=)", "~", "(?<![<])<<(?![<=])", "(?<![>])>>(?![>=])", ">>>(?!=)", "<<<", "(?<![-+!%^&*<>=:/|~^.]),(?![-+!%^&*<>=:/|~^.])", "->", "::", "\\+=", "-=", "\\*=", "\\/=", "(?<!>)>>>=", "\\|=", "&=", "%=", "(?<!<)<<=", "(?<!>)>>=", "\\^=", "(?<![!=<^%&|/*+>-])=(?!=)", "(?<![-+!%^&*<>=:\\|~^.])\\.(?![-+!%^&*<>=:\\|~^.])"];
+                var counter = 0;
+                var templine = line;
+                for (var operater = 0; operater < operaters.length; operater++) {
+                    var rejex = new RegExp(operaters[operater], "g");
+                    templine.replace(rejex, function (finder) {
+                        counter = counter + 1;
+                        console.log(finder);
+                        finder = " ";
+
+                        return finder;
+                    });
+                }
+                this.Nop[index] = counter;
+            },
+            getNnv(line, index) {
+                const operaters = ["(?<!\\+)\\+(?![+=])", "(?<!-)-(?![-=>])", "\\*(?!=)", "(?<!\\/)\\/(?![=/*])", "%(?!=)", "\\+\\+", "--", "==", "!=", "(?<![->])>(?![>=])", "(?<![<])<(?![<=])", "(?<!>)>=", "(?<!<)<=", "&&", "\\|\\|", "!(?!=)", "(?<!\\|)\\|((?![|=]))", "\\^(?!=)", "~", "(?<![<])<<(?![<=])", "(?<![>])>>(?![>=])", ">>>(?!=)", "<<<", "(?<![-+!%^&*<>=:/|~^.]),(?![-+!%^&*<>=:/|~^.])", "->", "::", "\\+=", "-=", "\\*=", "\\/=", "(?<!>)>>>=", "\\|=", "&=", "%=", "(?<!<)<<=", "(?<!>)>>=", "\\^=", "(?<![!=<^%&|/*+>-])=(?!=)"];
+
+                line = line.trim().replace(";", " ");
+                var counter = 0;
+                for (var operater = 0; operater < operaters.length; operater++) {
+                    var rejex = new RegExp(operaters[operater], "g");
+                    line = line.replace(rejex, " ");
+                }
+                line = line.split(" ");
+                //    console.log(line);
+                for (var i = 0; i < line.length; i++) {
+                    if (line[i] != "") {
+                        if (Number.isInteger(Number(line[i]))) {
+                            counter = counter + 1;
+                        }
+                    }
+
+                }
+                this.Nnv[index] = counter;
+            },
+            getNsl(line, index) {
+                this.Nsl[index] = 0;
+                var counter = 0;
+                // console.log(line.split("+"));
+                var splitByPlus = line.split("+");
+                for (var i = 0; i < splitByPlus.length; i++) {
+                    if (splitByPlus[i].match("\"[^\"]*\"")) {
+                        counter = counter + 1;
+                        this.Nsl[index] = counter;
+                    }
                 }
             },
-            getNkw() {
+            objectVariableMethodClassIdentifier(line) {
+                var classIdentyfer = "\\bclass\\b";
+                var methodsIdentyfer = "((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\w\\s\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*";
+                var variablesIdentyfer = "(?<=(\\bboolean\\s\\b)|(\\bbool\\s\\b)|(\\blong\\s\\b)|(\\bbyte\\s\\b)|(\\bshort\\s\\b)|(\\bdouble\\s\\b)|(\\bint\\s\\b)|(\\bfloat\\s\\b)|(\\bstring\\s\\b)|(\\bString\\s\\b)|(\\bchar\\s\\b))(\\w*)";
+                var multiVariableIdentifier = "(?<=(\\bboolean\\s\\b)|(\\bbool\\s\\b)|(\\blong\\s\\b)|(\\bbyte\\s\\b)|(\\bshort\\s\\b)|(\\bdouble\\s\\b)|(\\bint\\s\\b)|(\\bfloat\\s\\b)|(\\bstring\\s\\b)|(\\bString\\s\\b)|(\\bchar\\s\\b))(\\w*(,(.*)))(?=;)";
+                var objectIdentyfer = "\\=?[\" \"]*\\bnew\\b";
+
+                var counter = 0;
+                this.Nid.push(0);
+                if (line.match(classIdentyfer)) {
+                    counter = counter + 1;
+                }
+
+                if (line.match(methodsIdentyfer)) {
+                    counter = counter + 1;
+                }
+
+                if (line.match(objectIdentyfer)) {
+                    counter = counter + 1;
+                }
+
+                if (line.match(variablesIdentyfer)) {
+                    if (line.match(multiVariableIdentifier)) {
+                        var splitByComma = line.split(",");
+                        counter = counter + splitByComma.length;
+                    }
+                    else {
+                        counter = counter + 1;
+                    }
+
+                }
+                return counter;
 
             },
-            getNid() {
+            ForIdentifier(line) {
+                var forPattern = "(for\\s*\\()([a-zA-Z]*\\s*\\w*\\s*=?\\s*[a-zA-Z0-9]*;+\\s*)(\\w+\\s*[><=!][=]*\\s*[a-zA-Z0-9]+)((\\s*\\&\\&|\\s*\\|\\||\\s*\\&|\\s*\\|)(\\s*\\w+\\s*[><=!][=]*\\s*[a-zA-Z0-9]+))*(;\\s*[a-zA-Z]+\\+\\+)(\\)\\s*\\{)";
+                var counter = 0;
+                if (line.trim().match(new RegExp(forPattern, "g"))) {
+                    var splitforbysemicolen = line.split("/;/g");
+                    counter = 2;
+                    splitforbyspace = splitforbysemicolen[1].trim();
+                    var splitforbyspace = splitforbysemicolen[1].replace("<", " ").replace("<=", " ").replace(">", " ").replace("=>", " ").replace("=", " ").split(" ");
 
+                    for (var i = 0; i < splitforbyspace.length; i++) {
+
+                        if (!splitforbyspace[i].match(/^\d+$/g) && !splitforbyspace[i] != "" && !splitforbyspace[i].match("(true|false)")) {
+                            counter = counter + 1;
+
+                        }
+                    }
+
+                }
+                return counter;
             },
-            getNop() {
+            ForeachIdentifier(line) {
+                var forEachPattern = "(for\\s*\\()([a-zA-Z]*\\s*\\w+\\s*:\\s*\\w+)(\\))";
+                var counter = 0;
+                if (line.trim().match(new RegExp(forEachPattern, "g"))) {
 
+                    var linearr = line.trim().replace(/\(|\)|{|}|for/g, "").split(/:/g);
+                    counter = linearr.length;
+
+                }
+                return counter;
             },
-            getNnv() {
+            IfIdentifier(line) {
+                var ifPattern = "(\\w*\\s*if\\s*\\()(\\(*\\w+\\s*[><=!]*[=]*\\s*[a-zA-Z0-9]*\\)*)((\\s*\\&\\&|\\s*\\|\\||\\s*\\&|\\s*\\|)(\\s*\\(*\\w+\\s*[><=!]*[=]*\\s*[a-zA-Z0-9]*\\)*))*(\\.\\w+\\(\\\"*\\w*\\\"*\\))*(\\)\\s*\\{)";
+                var counter = 0;
+                if (line.trim().match(ifPattern)) {
 
+                    var ifarguments = line.trim().replace(/\(|\)|{|}|if/g, "").split(/=|<|>|!/g);
+
+                    for (var i = 0; i < ifarguments.length; i++) {
+
+                        if (ifarguments[i].replace(/\d|true|false/g, "").match(/\D/g)) {
+
+                            counter = counter + 1;
+
+                        }
+
+                    }
+                }
+                return counter;
             },
-            getNsl() {
+            SwitchiIdentifier(line) {
+                var switchPattern = "(switch\\s*\\()(\\w+\\s*[><=!\\*\\+-]*[=]*\\s*[a-zA-Z0-9]*\\)*)(\\))";
+                var counter = 0;
+                if (line.trim().match(switchPattern)) {
 
+                    var switcharguments = line.trim().replace(/\(|\)|{|}|switch/g, "");//.split(/=|<|>|!|\/|-|\*/g);
+                    //    console.log(switcharguments);
+                    switcharguments = switcharguments.split(/=|<|>|!|\/|-|\*|\+/g);
+                    //     console.log(switcharguments);
+                    for (var i = 0; i < switcharguments.length; i++) {
+
+                        if (switcharguments[i].replace(/\d|true|false/g, "").match(/\D/g)) {
+                            //  console.log(switcharguments[i]);
+
+                            counter = counter + 1;
+
+                        }
+
+                    }
+                }
+                return counter;
             },
-            objectVariableMethodClassIdentifier() {
+            WhileIdentifier(line) {
+                var whilePattern = "(while\\s*\\()(\\w+\\s*[><=!]*[=]*\\s*[a-zA-Z0-9]*)((\\s*\\&\\&|\\s*\\|\\||\\s*\\&|\\s*\\|)(\\s*\\w+\\s*[><=!]*[=]*\\s*[a-zA-Z0-9]*))*(\\.\\w+\\(\\\"*\\w*\\\"*\\))*(\\)\\s*\\{?)";
+                var counter = 0;
+                if (line.trim().match(whilePattern)) {
 
+                    var whilearguments = line.trim().replace(/\(|\)|{|}|while/g, "").split(/=|<|>|!/g)
+
+                    for (var i = 0; i < whilearguments.length; i++) {
+
+                        if (whilearguments[i].replace(/\d|true|false/g, "").match(/\D/g)) {
+                            //  console.log(whilearguments[i]);
+
+                            counter = counter + 1;
+
+                        }
+
+                    }
+                }
+                return counter;
             },
-            ForIdentifier() {
+            MethadCallIdentifier(line) {
+                var methodsIdentyfer = "'(public|protected|private|static|\\s) +[\\w\\<\\>\\[\\]]+\\s+(\\w+) *\\([^\\)]*\\) *(\\{?|[^;])"
+                var x = line;
+                var counter = 0;
+                if (x.match(methodsIdentyfer)) {
+                    x = "";
+                }
+                //   console.log(x);
+                if (x.match(/(\w*\s\w*\s*=)*\s*\w*\(/g)) {
+                    if (!x.match(/while|if|for|switch/g)) {
+                        x = x.replace(/\s/g, "");
+                        x = x.replace(/\(|\)/g, " ");
+                        //         console.log("x :-" + x);
+                        x = x.split(/\s/g);
+                        x = x[1].split(",");
+                        //   console.log("x[1] :-" + x);
+                        for (var y = 0; y < x.length; y++) {
+                            var z = x[y].split(/=|<|>|!|\/|-|\*|\+/g);
+                            for (var m = 0; m < z.length; m++) {
+                                if (z[m].replace(/\d|true|false/g, "").match(/\D/g)) {
+                                    counter = counter + 1;
 
-            },
-            ForeachIdentifier() {
+                                }
 
-            },
-            IfIdentifier() {
+                            }
 
-            },
-            SwitchiIdentifier() {
 
-            },
-            WhileIdentifier() {
-
-            },
-            MethadCallIdentifier() {
-
+                        }
+                    }
+                }
+                return counter;
             }
         }
     }

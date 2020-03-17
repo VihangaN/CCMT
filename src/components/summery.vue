@@ -1,6 +1,7 @@
 <template>
     <div class="notfound">
         <span id="wrong_place">Summery</span>
+
         <router-link to="/">
             <v-btn id="bhome"
                    rounded
