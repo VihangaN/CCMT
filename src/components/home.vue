@@ -1,16 +1,6 @@
 <template>
     <div>
 
-        <router-link to="/summery">
-            <v-btn id="bhome"
-                   rounded
-                   color="#D44637"
-
-                   dark
-                   right
-            >
-            </v-btn>
-        </router-link>
         <input type="file" ref="myFile" @change="selectedFile"><br/>
         <textarea v-model="text"></textarea>
 
@@ -45,7 +35,7 @@
 
 <script>
     export default {
-
+        props:['filedata'],
         data() {
             return {
                 text: '',
@@ -68,6 +58,9 @@
                 reader.onload = evt => {
                     this.text = evt.target.result;
                     this.result = this.text.split("\n");
+                    localStorage.setItem("filedata",this.text);
+                    console.log(this.result);
+                 //   console.log(JSON.stringify(this.result));
                     this.cordoutput = this.text.split("\n");
 
                     for (var i = 0; i < this.result.length; i++) {

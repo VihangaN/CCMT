@@ -4,7 +4,7 @@ import home from './components/home.vue';
 import summery from './components/summery.vue'
 
 Vue.use(Router)
-
+Vue.component('app-fileupload',home);
 let router =  new Router({
     routes:[
        {path:'/' , component:home,props: true},
