@@ -11,16 +11,27 @@
                 <!-- navigation list items -->
 
                 <v-list-item link>
-                    <router-link to="/summery">
                     <v-list-item-icon>
                         <v-icon>mdi-upload</v-icon>
                     </v-list-item-icon>
-
+                    <router-link to="/">
                     <v-list-item-content>
                         <v-list-item-title>Upload</v-list-item-title>
                     </v-list-item-content>
                     </router-link>
                 </v-list-item>
+
+                <v-list-item link>
+                    <v-list-item-icon>
+                        <v-icon>mdi-upload</v-icon>
+                    </v-list-item-icon>
+                    <router-link to="/summery">
+                        <v-list-item-content>
+                            <v-list-item-title>Cs</v-list-item-title>
+                        </v-list-item-content>
+                    </router-link>
+                </v-list-item>
+
             </v-list>
         </v-navigation-drawer>
 

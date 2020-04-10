@@ -1,31 +1,35 @@
 <template>
     <div>
+        <v-simple-table dense>
+            <template v-slot:default>
+                <thead>
+                <tr>
+                    <th class="text-left">#</th>
+                    <th class="text-left"></th>
+                    <th class="text-left">Nkw</th>
+                    <th class="text-left">Nid</th>
+                    <th class="text-left">Nop</th>
+                    <th class="text-left">Nnv</th>
+                    <th class="text-left">Nsl</th>
+                    <th class="text-left">Cs</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="res in cordoutput.length" :key="res">
+                    <td>{{res-1}}</td>
+                    <td>{{cordoutput[res-1]}}</td>
+                    <td>{{Nkw[res-1]}}</td>
+                    <td>{{Nid[res-1]}}</td>
+                    <td>{{Nop[res-1]}}</td>
+                    <td>{{Nnv[res-1]}}</td>
+                    <td>{{Nsl[res-1]}}</td>
+                    <td>{{Cs[res-1]}}</td>
 
-                <table border="1">
-                    <tbody>
-                    <tr>
-                        <td>#</td>
-                        <td></td>
-                        <td>Nkw</td>
-                        <td>Nid</td>
-                        <td>Nop</td>
-                        <td>Nnv</td>
-                        <td>Nsl</td>
-                        <td>Cs</td>
-                    </tr>
-                    <tr v-for="res in cordoutput.length" :key="res">
-                        <td>{{res-1}}</td>
-                        <td>{{cordoutput[res-1]}}</td>
-                        <td>{{Nkw[res-1]}}</td>
-                        <td>{{Nid[res-1]}}</td>
-                        <td>{{Nop[res-1]}}</td>
-                        <td>{{Nnv[res-1]}}</td>
-                        <td>{{Nsl[res-1]}}</td>
-                        <td>{{Cs[res-1]}}</td>
+                </tr>
+                </tbody>
+            </template>
+        </v-simple-table>
 
-                    </tr>
-                    </tbody>
-                </table>
 
         <span id="wrong_place">Summery</span>
         <router-link to="/">
@@ -120,7 +124,6 @@
                         counter = counter + 1;
                         console.log(finder);
                         finder = " ";
-
                         return finder;
                     });
                 }
