@@ -30,7 +30,31 @@
                             <v-list-item-title>Cs</v-list-item-title>
                         </v-list-item-content>
                     </router-link>
+
                 </v-list-item>
+
+                <v-list-item link>
+                    <v-list-item-icon>
+                        <v-icon>mdi-upload</v-icon>
+                    </v-list-item-icon>
+                    <router-link to="/variableComplexity">
+                        <v-list-item-content>
+                            <v-list-item-title>Variable Complexity</v-list-item-title>
+                        </v-list-item-content>
+                    </router-link>
+
+                </v-list-item>
+
+                <v-list-item link>
+                <v-list-item-icon>
+                    <v-icon>mdi-upload</v-icon>
+                </v-list-item-icon>
+                <router-link to="/methodComplexity">
+                    <v-list-item-content>
+                        <v-list-item-title>Method Complexity</v-list-item-title>
+                    </v-list-item-content>
+                </router-link>
+            </v-list-item>
 
             </v-list>
         </v-navigation-drawer>

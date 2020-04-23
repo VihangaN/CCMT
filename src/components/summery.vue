@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-simple-table dense>
+        <v-simple-table >
             <template v-slot:default>
                 <thead>
                 <tr>
@@ -29,19 +29,6 @@
                 </tbody>
             </template>
         </v-simple-table>
-
-
-        <span id="wrong_place">Summery</span>
-        <router-link to="/">
-            <v-btn id="bhome"
-                   rounded
-                   color="#D44637"
-
-                   dark
-                   right
-            >
-            </v-btn>
-        </router-link>
     </div>
 </template>
 
