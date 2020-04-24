@@ -1,7 +1,6 @@
 <template>
     <div>
-        <v-simple-table>
-            <template v-slot:default>
+        <table>
                 <thead>
                 <tr>
                     <th class="text-left">#</th>
@@ -15,7 +14,7 @@
                 <tbody>
                 <tr v-for="res in cordoutput.length" :key="res">
                     <td>{{res-1}}</td>
-                    <td>{{cordoutput[res-1]}}</td>
+                    <td class="code">{{cordoutput[res-1]}}</td>
                     <td>{{Wvs[res-1]}}</td>
                     <td>{{Npdtv[res-1]}}</td>
                     <td>{{Ncdtv[res-1]}}</td>
@@ -23,8 +22,7 @@
 
                 </tr>
                 </tbody>
-            </template>
-        </v-simple-table>
+        </table>
     </div>
 </template>
 
@@ -55,15 +53,12 @@
             getComplexity() {
                 this.classDetecter();
                 this.MethodsDetecter();
-
-
                 for (var i = 0; i < this.result.length; i++) {
                     this.Wvs[i] = 0, this.Npdtv[i] = 0, this.Ncdtv[i] = 0;
                     this.getPrimitive(this.result[i], i);
                     this.getglobalvariable(this.result[i], i);
                     this.getlocalvariable(this.result[i], i);
                     this.Cv[i] = this.Wvs[i] + this.Npdtv[i] + this.Ncdtv[i];
-
                 }
 
 
@@ -193,4 +188,33 @@
 </script>
 
 <style scoped>
+    table {
+        font-family:arial;
+        width:100%;
+        border-spacing:15px;
+        border:1px solid black;
+        border-collapse:collapse;
+    }
+
+    th {
+        border:1px solid black;
+        padding:15px;
+        background-color:#dddddd;
+    }
+
+    td {
+        border:1px solid black;
+        text-align:center;
+        padding:8px;
+    }
+    td.code {
+        border:1px solid black;
+        text-align:left;
+        padding:8px;
+    }
+
+
+    tr:nth-child(odd) {
+        background-color: #eee;
+    }
 </style>

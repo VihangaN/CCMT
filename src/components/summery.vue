@@ -1,7 +1,7 @@
 <template>
     <div>
-        <v-simple-table >
-            <template v-slot:default>
+        <table >
+
                 <thead>
                 <tr>
                     <th class="text-left">#</th>
@@ -17,7 +17,7 @@
                 <tbody>
                 <tr v-for="res in cordoutput.length" :key="res">
                     <td>{{res-1}}</td>
-                    <td>{{cordoutput[res-1]}}</td>
+                    <td class="code">{{cordoutput[res-1]}}</td>
                     <td>{{Nkw[res-1]}}</td>
                     <td>{{Nid[res-1]}}</td>
                     <td>{{Nop[res-1]}}</td>
@@ -27,8 +27,8 @@
 
                 </tr>
                 </tbody>
-            </template>
-        </v-simple-table>
+
+        </table>
     </div>
 </template>
 
@@ -67,11 +67,12 @@
         methods: {
             getComplexity() {
                 for (var i = 0; i < this.result.length; i++) {
-                    this.getNkw(this.result[i], i);
+                  /*  this.getNkw(this.result[i], i);
                     this.getNop(this.result[i], i);
                     this.getNnv(this.result[i], i);
                     this.getNsl(this.result[i], i);
-                    this.getNid(this.result[i], i);
+                    this.getNid(this.result[i], i);*/
+                    this.Nkw[i]= 0 ;this.Nid[i]= 0 ; this.Nop[i]= 0 ; this.Nnv[i]= 0 ; this.Nsl[i] = 0;
                     this.Cs[i] = this.Nkw[i] + this.Nid[i] + this.Nop[i] + this.Nnv[i] + this.Nsl[i];
                 }
 
@@ -313,37 +314,34 @@
 
 <style scoped>
 
-
-    .notfound {
-        position: absolute;
-        top: 45%;
-        left: 50%;
-        transform: translate(-50%, -50%)
+    table {
+        font-family: arial;
+        width: 100%;
+        border-spacing: 15px;
+        border: 1px solid black;
+        border-collapse: collapse;
     }
 
-    #wrong_place {
-        position: absolute;
-        top: 140%;
-        width: 300px;
+    th {
+        border: 1px solid black;
+        padding: 15px;
+        background-color: #dddddd;
+    }
+
+    td {
+        border: 1px solid black;
         text-align: center;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 20px;
+        padding: 8px;
     }
 
-    #bhome {
-        position: absolute;
-        top: 180%;
-        width: 180px;
-        text-align: center;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
+    td.code {
+        border: 1px solid black;
+        text-align: left;
+        padding: 8px;
     }
 
-    #icon {
-        font-size: 150px;
-
+    tr:nth-child(odd) {
+        background-color: #eee;
     }
 
 </style>>
