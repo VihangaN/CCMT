@@ -10,7 +10,7 @@
           </v-list-item-icon>
           <router-link to="/">
             <v-list-item-content>
-              <v-list-item-title>Upload</v-list-item-title>
+              <v-list-item-title class="navtext">Upload</v-list-item-title>
             </v-list-item-content>
           </router-link>
         </v-list-item>
@@ -21,7 +21,7 @@
           </v-list-item-icon>
           <router-link to="/summery">
             <v-list-item-content>
-              <v-list-item-title>Cs</v-list-item-title>
+              <v-list-item-title class="navtext">Cs</v-list-item-title>
             </v-list-item-content>
           </router-link>
         </v-list-item>
@@ -56,7 +56,10 @@
     <v-content>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
+
+ <transition name="fade" mode="out-in">
           <router-view></router-view>
+ </transition>
         </v-row>
       </v-container>
     </v-content>
@@ -112,3 +115,21 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.navtext{
+    font-size:15px !important;
+    
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.3s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0
+}
+</style>
