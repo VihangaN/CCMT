@@ -1,0 +1,49 @@
+{
+  "Cs": {
+    "Wkw": 1,
+    "Wid": 1,
+    "Wop": 1,
+    "Wnv": 1,
+    "Wsl": 1
+  },
+  "Cv": {
+    "Global": 2,
+    "Local": 1,
+    "Primitive": 1,
+    "Composite": 2
+  },
+  "Cm": {
+    "void_return": 0,
+    "primitive_return": 1,
+    "composite_return": 2,
+    "primitive_data_type": 1,
+    "composite_data_type": 2
+  },
+  "Ci": {
+    "by_one_class":1,
+    "by_two_class":2,
+    "by_three_class":3,
+    "by_more_than_three_class":4
+  },
+  "Ccp": {
+    "Wr": 2,
+    "Wmcms": 2,
+    "Wmcmd": 3,
+    "Wmcrms": 3,
+    "Wmcrmd": 4,
+    "Wrmcrms": 4,
+    "Wrmcrmd": 5,
+    "Wrmcms": 3,
+    "Wrmcmd": 4,
+    "Wmrgvs": 1,
+    "Wmrgvd": 2,
+    "Wrmrgvs": 1,
+    "Wrmrgvd": 2
+  },
+  "Ccs": {
+    "if_ifelse": 2,
+    "loop": 3,
+    "switch": 2,
+    "case": 1
+  }
+}

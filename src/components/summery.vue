@@ -34,7 +34,7 @@
 
 <script>
    // import home from './home';
-
+   import { Size } from "../controller/Size";
     export default {
 
         name: 'notfound',
@@ -61,104 +61,22 @@
             if (localStorage.filedata) {
                 this.result = localStorage.getItem("filedata").toString().split("\n");
                 this.cordoutput = localStorage.getItem("filedata").toString().split("\n");
-                this.getComplexity();
+                this.multipalCommentidentify();
+                this.singalComment()
+                console.log(this.result)
+                Size.ad();
+             //   this.getComplexity();
             }
         },
         methods: {
             getComplexity() {
                 for (var i = 0; i < this.result.length; i++) {
-                  /*  this.getNkw(this.result[i], i);
+                    this.getNkw(this.result[i], i);
                     this.getNop(this.result[i], i);
                     this.getNnv(this.result[i], i);
                     this.getNsl(this.result[i], i);
-                    this.getNid(this.result[i], i);*/
+                    this.getNid(this.result[i], i);
 
-
-                    this.Nkw[0]= 1 ;this.Nid[0]= 0 ; this.Nop[0]= 1 ; this.Nnv[0]= 0 ; this.Nsl[i] = 0;
-                    this.Nkw[1]= 1 ;this.Nid[1]= 1 ; this.Nop[1]= 0 ; this.Nnv[i]= 0 ; this.Nsl[i] = 0;
-                    this.Nkw[2]= 1 ;this.Nid[2]= 1 ; this.Nop[2]= 0 ; this.Nnv[i]= 1 ; this.Nsl[i] = 0;
-                    this.Nkw[3]= 0 ;this.Nid[3]= 0 ; this.Nop[3]= 0 ; this.Nnv[i]= 1 ; this.Nsl[i] = 0;
-                    this.Nkw[4]= 0 ;this.Nid[4]= 0 ; this.Nop[4]= 0 ; this.Nnv[i]= 0 ; this.Nsl[i] = 0;
-                    this.Nkw[5]= 1 ;this.Nid[5]= 0 ; this.Nop[5]= 2 ; this.Nnv[i]= 0 ; this.Nsl[i] = 0;
-                    this.Nkw[6]= 0 ;this.Nid[6]= 0 ; this.Nop[6]= 2 ; this.Nnv[i]= 0 ; this.Nsl[i] = 1;
-                    this.Nkw[7]= 0 ;this.Nid[7]= 0 ; this.Nop[7]= 0 ; this.Nnv[i]= 2 ; this.Nsl[i] = 0;
-                    this.Nkw[8]= 0 ;this.Nid[8]= 0 ; this.Nop[8]= 0 ; this.Nnv[i]= 0 ; this.Nsl[i] = 0;
-                    this.Nkw[9]= 0 ;this.Nid[9]= 0 ; this.Nop[9]= 2 ; this.Nnv[9]= 0 ; this.Nsl[9] = 0;
-                    this.Nkw[10]= 1 ;this.Nid[10]= 0 ; this.Nop[10]= 0 ; this.Nnv[10]= 0 ; this.Nsl[10] = 0;
-                    this.Nkw[11]= 0 ;this.Nid[11]= 0 ; this.Nop[11]= 0 ; this.Nnv[11]= 0 ; this.Nsl[11] = 0;
-                    this.Nkw[12]= 0 ;this.Nid[12]= 0 ; this.Nop[12]= 0 ; this.Nnv[12]= 0 ; this.Nsl[12] = 0;
-                    this.Nkw[13]= 0 ;this.Nid[13]= 0 ; this.Nop[13]= 1 ; this.Nnv[13]= 0 ; this.Nsl[13] = 0;
-                    this.Nkw[14]= 2 ;this.Nid[14]= 1 ; this.Nop[14]= 0 ; this.Nnv[14]= 0 ; this.Nsl[14] = 0;
-                    this.Nkw[15]= 1 ;this.Nid[15]= 1 ; this.Nop[15]= 0 ; this.Nnv[15]= 1 ; this.Nsl[15] = 0;
-                    this.Nkw[16]= 0 ;this.Nid[16]= 0 ; this.Nop[16]= 0 ; this.Nnv[16]= 1 ; this.Nsl[16] = 0;
-                    this.Nkw[17]= 0 ;this.Nid[17]= 0 ; this.Nop[17]= 0 ; this.Nnv[17]= 0 ; this.Nsl[17] = 0;
-                    this.Nkw[18]= 1 ;this.Nid[18]= 0 ; this.Nop[18]= 2 ; this.Nnv[18]= 0 ; this.Nsl[18] = 0;
-                    this.Nkw[19]= 0 ;this.Nid[19]= 0 ; this.Nop[19]= 2 ; this.Nnv[19]= 0 ; this.Nsl[19] = 1;
-                    this.Nkw[20]= 0 ;this.Nid[20]= 0 ; this.Nop[20]= 2 ; this.Nnv[20]= 0 ; this.Nsl[20] = 0;
-                    this.Nkw[21]= 0 ;this.Nid[21]= 0 ; this.Nop[21]= 2 ; this.Nnv[21]= 0 ; this.Nsl[21] = 0;
-                    this.Nkw[22]= 1 ;this.Nid[22]= 0 ; this.Nop[22]= 0 ; this.Nnv[22]= 0 ; this.Nsl[22] = 0;
-                    this.Nkw[23]= 0 ;this.Nid[23]= 0 ; this.Nop[23]= 0 ; this.Nnv[23]= 0 ; this.Nsl[23] = 0;
-                    this.Nkw[24]= 0 ;this.Nid[24]= 0 ; this.Nop[24]= 0 ; this.Nnv[24]= 0 ; this.Nsl[24] = 0;
-                    this.Nkw[25]= 0 ;this.Nid[25]= 0 ; this.Nop[25]= 1 ; this.Nnv[25]= 0 ; this.Nsl[25] = 0;
-                    this.Nkw[26]= 2 ;this.Nid[26]= 1 ; this.Nop[26]= 0 ; this.Nnv[26]= 0 ; this.Nsl[26] = 0;
-                    this.Nkw[27]= 1 ;this.Nid[27]= 0 ; this.Nop[27]= 1 ; this.Nnv[27]= 1 ; this.Nsl[27] = 0;
-                    this.Nkw[28]= 3 ;this.Nid[28]= 1 ; this.Nop[28]= 0 ; this.Nnv[28]= 0 ; this.Nsl[28] = 0;
-                    this.Nkw[29]= 0 ;this.Nid[29]= 0 ; this.Nop[29]= 0 ; this.Nnv[29]= 1 ; this.Nsl[29] = 0;
-                    this.Nkw[30]= 1 ;this.Nid[30]= 0 ; this.Nop[30]= 1 ; this.Nnv[30]= 0 ; this.Nsl[30] = 0;
-                    this.Nkw[31]= 0 ;this.Nid[31]= 0 ; this.Nop[31]= 2 ; this.Nnv[31]= 1 ; this.Nsl[31] = 0;
-                    this.Nkw[32]= 0 ;this.Nid[32]= 0 ; this.Nop[32]= 0 ; this.Nnv[32]= 0 ; this.Nsl[32] = 0;
-                    this.Nkw[33]= 0 ;this.Nid[33]= 0 ; this.Nop[33]= 3 ; this.Nnv[33]= 0 ; this.Nsl[33] = 0;
-                    this.Nkw[34]= 0 ;this.Nid[34]= 0 ; this.Nop[34]= 3 ; this.Nnv[34]= 0 ; this.Nsl[34] = 1;
-                    this.Nkw[35]= 0 ;this.Nid[35]= 0 ; this.Nop[35]= 0 ; this.Nnv[35]= 0 ; this.Nsl[35] = 0;
-                    this.Nkw[36]= 1 ;this.Nid[36]= 0 ; this.Nop[36]= 0 ; this.Nnv[36]= 0 ; this.Nsl[36] = 0;
-                    this.Nkw[37]= 0 ;this.Nid[37]= 0 ; this.Nop[37]= 0 ; this.Nnv[37]= 0 ; this.Nsl[37] = 0;
-                    this.Nkw[38]= 0 ;this.Nid[38]= 0 ; this.Nop[38]= 0 ; this.Nnv[38]= 0 ; this.Nsl[38] = 0;
-                    this.Nkw[39]= 0 ;this.Nid[39]= 0 ; this.Nop[39]= 0 ; this.Nnv[39]= 0 ; this.Nsl[39] = 0;
-                    this.Nkw[40]= 0 ;this.Nid[40]= 0 ; this.Nop[40]= 0 ; this.Nnv[40]= 0 ; this.Nsl[40] = 0;
-                    this.Nkw[41]= 0 ;this.Nid[41]= 0 ; this.Nop[41]= 0 ; this.Nnv[41]= 0 ; this.Nsl[41] = 0;
-                    this.Nkw[42]= 0 ;this.Nid[42]= 0 ; this.Nop[42]= 0 ; this.Nnv[42]= 0 ; this.Nsl[42] = 0;
-                    this.Nkw[43]= 0 ;this.Nid[43]= 0 ; this.Nop[43]= 0 ; this.Nnv[43]= 0 ; this.Nsl[43] = 0;
-                    this.Nkw[44]= 0 ;this.Nid[44]= 0 ; this.Nop[44]= 0 ; this.Nnv[44]= 0 ; this.Nsl[44] = 0;
-                    this.Nkw[45]= 0 ;this.Nid[45]= 0 ; this.Nop[45]= 0 ; this.Nnv[45]= 0 ; this.Nsl[45] = 0;
-                    this.Nkw[46]= 0 ;this.Nid[46]= 0 ; this.Nop[46]= 0 ; this.Nnv[46]= 0 ; this.Nsl[46] = 0;
-                    this.Nkw[47]= 0 ;this.Nid[47]= 0 ; this.Nop[47]= 0 ; this.Nnv[47]= 0 ; this.Nsl[47] = 0;
-                    this.Nkw[48]= 0 ;this.Nid[48]= 0 ; this.Nop[48]= 0 ; this.Nnv[48]= 0 ; this.Nsl[48] = 0;
-                    this.Nkw[49]= 0 ;this.Nid[49]= 0 ; this.Nop[49]= 0 ; this.Nnv[49]= 0 ; this.Nsl[49] = 0;
-                    this.Nkw[50]= 0 ;this.Nid[50]= 0 ; this.Nop[50]= 0 ; this.Nnv[50]= 0 ; this.Nsl[50] = 0;
-                    this.Nkw[51]= 0 ;this.Nid[51]= 0 ; this.Nop[51]= 0 ; this.Nnv[51]= 0 ; this.Nsl[51] = 0;
-                    this.Nkw[52]= 0 ;this.Nid[52]= 0 ; this.Nop[52]= 1 ; this.Nnv[52]= 0 ; this.Nsl[52] = 0;
-                    this.Nkw[53]= 0 ;this.Nid[53]= 0 ; this.Nop[53]= 7 ; this.Nnv[53]= 0 ; this.Nsl[53] = 0;
-                    this.Nkw[54]= 1 ;this.Nid[54]= 0 ; this.Nop[54]=0  ; this.Nnv[54]= 0 ; this.Nsl[54] = 0;
-                    this.Nkw[55]= 0 ;this.Nid[55]= 0 ; this.Nop[55]= 0 ; this.Nnv[55]= 0 ; this.Nsl[55] = 0;
-                    this.Nkw[56]= 0 ;this.Nid[56]= 0 ; this.Nop[56]= 0 ; this.Nnv[56]= 2 ; this.Nsl[56] = 0;
-                    this.Nkw[57]= 0 ;this.Nid[57]= 0 ; this.Nop[57]= 1 ; this.Nnv[57]= 0 ; this.Nsl[57] = 0;
-                    this.Nkw[58]= 0 ;this.Nid[58]= 0 ; this.Nop[58]= 3 ; this.Nnv[58]= 0 ; this.Nsl[58] = 1;
-                    this.Nkw[59]= 0 ;this.Nid[59]= 0 ; this.Nop[59]= 0 ; this.Nnv[59]= 0 ; this.Nsl[59] = 0;
-                    this.Nkw[60]= 1 ;this.Nid[60]= 0 ; this.Nop[60]= 0 ; this.Nnv[60]= 0 ; this.Nsl[60] = 0;
-                    this.Nkw[61]= 0 ;this.Nid[61]= 0 ; this.Nop[61]= 9 ; this.Nnv[61]= 0 ; this.Nsl[61] = 0;
-                    this.Nkw[62]= 0 ;this.Nid[62]= 0 ; this.Nop[62]= 1 ; this.Nnv[62]= 0 ; this.Nsl[62] = 0;
-                    this.Nkw[63]= 0 ;this.Nid[63]= 0 ; this.Nop[63]= 1 ; this.Nnv[63]= 0 ; this.Nsl[63] = 0;
-                    this.Nkw[64]= 0 ;this.Nid[64]= 0 ; this.Nop[64]= 9 ; this.Nnv[64]= 0 ; this.Nsl[64] = 1;
-                    this.Nkw[65]= 0 ;this.Nid[65]= 0 ; this.Nop[65]= 0 ; this.Nnv[65]= 0 ; this.Nsl[65] = 0;
-                    this.Nkw[66]= 1 ;this.Nid[66]= 0 ; this.Nop[66]= 0 ; this.Nnv[66]= 0 ; this.Nsl[66] = 0;
-                    this.Nkw[67]= 0 ;this.Nid[67]= 0 ; this.Nop[67]= 9 ; this.Nnv[67]= 0 ; this.Nsl[67] = 1;
-                    this.Nkw[68]= 0 ;this.Nid[68]= 0 ; this.Nop[68]= 0 ; this.Nnv[68]= 0 ; this.Nsl[68] = 0;
-                    this.Nkw[69]= 0 ;this.Nid[69]= 0 ; this.Nop[69]= 1 ; this.Nnv[69]= 0 ; this.Nsl[69] = 0;
-                    this.Nkw[70]= 1 ;this.Nid[70]= 0 ; this.Nop[70]= 0 ; this.Nnv[70]= 0 ; this.Nsl[70] = 0;
-                    this.Nkw[71]= 0 ;this.Nid[71]= 0 ; this.Nop[71]=1 ; this.Nnv[71]= 0 ; this.Nsl[71] = 0;
-                    this.Nkw[72]= 0 ;this.Nid[72]= 0 ; this.Nop[72]= 1 ; this.Nnv[72]= 0 ; this.Nsl[72] = 0;
-                    this.Nkw[73]= 0 ;this.Nid[73]= 0 ; this.Nop[73]= 9 ; this.Nnv[73]= 0 ; this.Nsl[73] = 1;
-                    this.Nkw[74]= 0 ;this.Nid[74]= 0 ; this.Nop[74]= 0 ; this.Nnv[74]= 0 ; this.Nsl[74] = 0;
-                    this.Nkw[75]= 1 ;this.Nid[75]= 0 ; this.Nop[75]= 0 ; this.Nnv[75]= 0 ; this.Nsl[75] = 0;
-                    this.Nkw[76]= 0 ;this.Nid[76]= 0 ; this.Nop[76]= 9 ; this.Nnv[76]= 0 ; this.Nsl[76] = 1;
-                    this.Nkw[77]= 0 ;this.Nid[77]= 0 ; this.Nop[77]= 0 ; this.Nnv[77]= 0 ; this.Nsl[77] = 0;
-                    this.Nkw[78]= 1 ;this.Nid[78]= 0 ; this.Nop[78]= 0 ; this.Nnv[78]= 0 ; this.Nsl[78] = 0;
-                    this.Nkw[79]= 1 ;this.Nid[79]= 0 ; this.Nop[79]= 1 ; this.Nnv[79]= 0 ; this.Nsl[79] = 0;
-                    this.Nkw[80]= 1 ;this.Nid[80]= 0 ; this.Nop[80]= 1 ; this.Nnv[80]= 0 ; this.Nsl[80] = 0;
-                    this.Nkw[81]= 0 ;this.Nid[81]= 0 ; this.Nop[81]= 1 ; this.Nnv[81]= 0 ; this.Nsl[81] = 0;
-                    this.Nkw[82]= 1 ;this.Nid[82]= 0 ; this.Nop[82]= 1 ; this.Nnv[82]= 0 ; this.Nsl[82] = 0;
-                    this.Nkw[83]= 0 ;this.Nid[83]= 0 ; this.Nop[83]= 1 ; this.Nnv[83]= 0 ; this.Nsl[83] = 0;
-                    this.Nkw[84]= 1 ;this.Nid[84]= 1 ; this.Nop[84]= 1 ; this.Nnv[84]= 0 ; this.Nsl[84] = 0;
 
                     this.Cs[i] = this.Nkw[i] + this.Nid[i] + this.Nop[i] + this.Nnv[i] + this.Nsl[i];
                 }
@@ -394,6 +312,42 @@
                     }
                 }
                 return counter;
+            },
+
+            multipalCommentidentify() {
+                var start = [], end = [];
+                var a = new RegExp("\\/\\*.+","g")
+                var b = new RegExp(".\\*\\/","g")
+                // console.log(a + " "+b);
+                for (var i = 0; i < this.result.length; i++) {
+                    console.log(this.result[i].trim().match("\\/\\*.+") );
+                    if (this.result[i].trim().match(a)) {
+                        //  console.log(i)
+                        start.push(i);
+                    }
+                    if (this.result[i].trim().match(b)) {
+                        //  console.log(i)
+                        end.push(i);
+                    }
+                }
+                // console.log(start)
+                for (var j = 0; j < start.length; j++) {
+                    for (var x = start[j]; x <= end[j]; x++) {
+                        this.result[x] = "";
+                    }
+                }
+
+            },
+            singalComment() {
+                var b = new RegExp("\\/\\/","g")
+                for (var i = 0; i < this.result.length; i++) {
+                    if (this.result[i].trim().match(b)) {
+                        // console.log(i)
+                        var filter = this.result[i].split(b);
+                        this.result[i] = filter[0];
+                    }
+
+                }
             }
         }
     };
