@@ -29,19 +29,6 @@
                 </tbody>
             </template>
         </v-simple-table>
-
-
-        <span id="wrong_place">Summery</span>
-        <router-link to="/">
-            <v-btn id="bhome"
-                   rounded
-                   color="#D44637"
-
-                   dark
-                   right
-            >
-            </v-btn>
-        </router-link>
     </div>
 </template>
 
@@ -72,8 +59,8 @@
 
         mounted: function () {
             if (localStorage.filedata) {
-                this.result = localStorage.getItem("filedata").toString().split("\n");
-                this.cordoutput = localStorage.getItem("filedata").toString().split("\n");
+                this.result = localStorage.getItem("filedata").toString().split("\n");      // split line by line
+                this.cordoutput = localStorage.getItem("filedata").toString().split("\n");  // Output 
                 this.getComplexity();
             }
         },
@@ -89,9 +76,11 @@
                 }
 
             },
+
+            // Keywords read line by line 
             getNkw(line, index) {
                 const keywords = ["abstract", "break", "case", "catch", "class", "continue", "default", "double", "enum", "extends", "final", "finally", "implements", "import", "instanceof", "interface", "native", "new", "null", "package", "private", "protected", "public", "return", "static", "strictfp", "super", "synchronized", "this", "throw", "throws", "transient", "try", "void", "volatile"]
-                var counter = 0;
+                var counter = 0; // count keywords
                 for (var i = 0; i < keywords.length; i++) {
                     if (line.match(keywords[i])) {
                         counter = counter + 1;
@@ -101,6 +90,9 @@
                 }
                 this.Nkw[index] = counter;
             },
+
+
+            // detect identifiers
             getNid(line, index) {
                 // var counter = 0;
 
@@ -114,6 +106,7 @@
                 console.log(objectVariableMethodClassIdentifier + " " + ForIdentifier + " " + ForeachIdentifier + " " + IfIdentifier + " " + SwitchiIdentifier + " " + WhileIdentifier + " " + MethadCallIdentifier);
                 this.Nid[index] = objectVariableMethodClassIdentifier + ForIdentifier + ForeachIdentifier + IfIdentifier + SwitchiIdentifier + WhileIdentifier + MethadCallIdentifier;
             },
+
             getNop(line, index) {
                 const operaters = ["(?<!\\+)\\+(?![+=])", "(?<!-)-(?![-=>])", "\\*(?!=)", "(?<!\\/)\\/(?![=/*])", "%(?!=)", "\\+\\+", "--", "==", "!=", "(?<![->])>(?![>=])", "(?<![<])<(?![<=])", "(?<!>)>=", "(?<!<)<=", "&&", "\\|\\|", "!(?!=)", "(?<!\\|)\\|((?![|=]))", "\\^(?!=)", "~", "(?<![<])<<(?![<=])", "(?<![>])>>(?![>=])", ">>>(?!=)", "<<<", "(?<![-+!%^&*<>=:/|~^.]),(?![-+!%^&*<>=:/|~^.])", "->", "::", "\\+=", "-=", "\\*=", "\\/=", "(?<!>)>>>=", "\\|=", "&=", "%=", "(?<!<)<<=", "(?<!>)>>=", "\\^=", "(?<![!=<^%&|/*+>-])=(?!=)", "(?<![-+!%^&*<>=:\\|~^.])\\.(?![-+!%^&*<>=:\\|~^.])"];
                 var counter = 0;
