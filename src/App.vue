@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
+    <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app >
       <v-list dense nav>
         <!-- navigation list items -->
         <router-link to="/">
@@ -28,7 +28,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark>
+    <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark id="nav">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title style="width: 350px" class="ml-0 pl-4">
         <span class="hidden-sm-and-down">Code Complexity measurement tool</span>
@@ -49,7 +49,7 @@
         </v-row>
       </v-container>
     </v-content>
-    <v-btn bottom color="pink" dark fab fixed right @click="upload">
+    <v-btn bottom color="" dark fab fixed right @click="upload" id="fab">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
   </v-app>
@@ -123,5 +123,14 @@ export default {
   float: right;
   position: absolute;
   right: 30px;
+}
+
+#fab{
+background-image: linear-gradient(180deg, #23C5DA 0%, #5772A5 100%) !important;
+}
+
+#nav{
+    background: #258ad3 !important;
+    /* box-shadow: none !important; */
 }
 </style>
