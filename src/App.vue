@@ -3,28 +3,28 @@
     <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
       <v-list dense nav>
         <!-- navigation list items -->
+        <router-link to="/">
+          <v-list-item link>
+            <v-list-item-icon>
+              <v-icon>mdi-upload</v-icon>
+            </v-list-item-icon>
 
-        <v-list-item link>
-          <v-list-item-icon>
-            <v-icon>mdi-upload</v-icon>
-          </v-list-item-icon>
-          <router-link to="/">
             <v-list-item-content>
               <v-list-item-title class="navtext">Upload</v-list-item-title>
             </v-list-item-content>
-          </router-link>
-        </v-list-item>
+          </v-list-item>
+        </router-link>
+        <router-link to="/summery">
+          <v-list-item link>
+            <v-list-item-icon>
+              <v-icon>mdi-table</v-icon>
+            </v-list-item-icon>
 
-        <v-list-item link>
-          <v-list-item-icon>
-            <v-icon>mdi-upload</v-icon>
-          </v-list-item-icon>
-          <router-link to="/summery">
             <v-list-item-content>
-              <v-list-item-title class="navtext">Cs</v-list-item-title>
+              <v-list-item-title class="navtext">Summery</v-list-item-title>
             </v-list-item-content>
-          </router-link>
-        </v-list-item>
+          </v-list-item>
+        </router-link>
       </v-list>
     </v-navigation-drawer>
 
@@ -35,31 +35,17 @@
       </v-toolbar-title>
 
       <v-spacer />
-      <!-- <v-btn icon>
-                <v-icon>mdi-apps</v-icon>
-            </v-btn>
-            <v-btn icon>
-                <v-icon>mdi-bell</v-icon>
-            </v-btn>
-            <v-btn
-                    icon
-                    large
-            >
-                <v-avatar
-                        size="32px"
-                        item
-                >
-                   
-                </v-avatar>
-      </v-btn>-->
+
+      <v-btn icon large disabled="">
+        <v-img src="./assets/logo.svg" alt="Logo" class="logo"></v-img>
+      </v-btn>
     </v-app-bar>
     <v-content>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
-
- <transition name="fade" mode="out-in">
-          <router-view></router-view>
- </transition>
+          <transition name="fade" mode="out-in">
+            <router-view></router-view>
+          </transition>
         </v-row>
       </v-container>
     </v-content>
@@ -110,16 +96,15 @@ export default {
   }),
   methods: {
     upload() {
-     router.push('/');
+      router.push("/");
     }
   }
 };
 </script>
 
 <style scoped>
-.navtext{
-    font-size:15px !important;
-    
+.navtext {
+  font-size: 15px !important;
 }
 .fade-enter-active,
 .fade-leave-active {
@@ -130,6 +115,13 @@ export default {
 
 .fade-enter,
 .fade-leave-active {
-  opacity: 0
+  opacity: 0;
+}
+
+.logo {
+  transform: scale(1.6);
+  float: right;
+  position: absolute;
+  right: 30px;
 }
 </style>
