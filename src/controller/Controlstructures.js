@@ -6,12 +6,14 @@ var ifPattern = new RegExp("if\\s*\\([\\(\\)\\w\\.><=!%\\+\\*\\/\\- \\|\\&]*\\)"
 
 var switchPattern = new RegExp("(switch\\s*\\()(\\w+\\s*[><=!\\*\\+-]*[=]*\\s*[a-zA-Z0-9]*\\)*)(\\))");
 var whilePattern = new RegExp("(while\\s*\\()(\\w+\\s*[><=!]*[=]*\\s*[a-zA-Z0-9]*)((\\s*\\&\\&|\\s*\\|\\||\\s*\\&|\\s*\\|)(\\s*\\w+\\s*[><=!]*[=]*\\s*[a-zA-Z0-9]*))*(\\.\\w+\\(\\\"*\\w*\\\"*\\))*(\\)\\s*\\{?)");
-var scaner = [];
+//var scaner = [];
 export const Controlstructures = {
 
+/*
     sectionscaner: (cord) => {
 
     },
+*/
 
     wtcs: (line) => {
 
