@@ -5,10 +5,10 @@
             <tr>
                 <th class="text-left">#</th>
                 <th class="text-left"></th>
-                <th class="text-left">Wmrt</th>
-                <th class="text-left">Npdtp</th>
-                <th class="text-left">Ncdtp</th>
-                <th class="text-left">Cm</th>
+                <th class="text-left">Wtcs</th>
+                <th class="text-left">NC</th>
+                <th class="text-left">Ccspps</th>
+                <th class="text-left">Ccs</th>
             </tr>
             </thead>
             <tbody>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+    import  {Controlstructures} from "../controller/Controlstructures"
     export default {
         name: "contolStructerComplex",
         components: {},
@@ -52,24 +53,7 @@
             getComplexity(){
                 for (var i = 0; i < this.result.length; i++) {
                     this.Wtcs[i] =0;this.NC[i]=0;this.Ccspps[i]=0;this.Ccs[i]=0;
-                    this.Wtcs[32]=2; this.NC[32]=2;  this.Ccspps[32]=0
-                    this.Wtcs[36]=2; this.NC[36]=1 ; this.Ccspps[36]=4
-                    this.Wtcs[37]=1; this.NC[37]=1 ; this.Ccspps[37]=6
-                    this.Wtcs[38]=1; this.NC[38]=1 ; this.Ccspps[38]=6
-                    this.Wtcs[39]=1; this.NC[39]=1 ; this.Ccspps[39]=6
-                    this.Wtcs[40]=1; this.NC[40]=1 ; this.Ccspps[40]=6
-                    this.Wtcs[41]=1; this.NC[41]=1 ; this.Ccspps[41]=6
-                    this.Wtcs[42]=1; this.NC[42]=1 ; this.Ccspps[42]=6
-                    this.Wtcs[43]=1; this.NC[43]=1 ; this.Ccspps[43]=6
-                    this.Wtcs[47] =1; this.NC[47] = 1;  this.Ccspps[47] =6
-                    this.Wtcs[48]= 1; this.NC[48]= 1;  this.Ccspps[48]=6
-                    this.Wtcs[49]= 1; this.NC[49]= 1;  this.Ccspps[49]=6
-                    this.Wtcs[50]= 1; this.NC[50]= 1;  this.Ccspps[50]=6
-                    this.Wtcs[54]= 1; this.NC[54]= 1;  this.Ccspps[54]= 6;
-                    this.Wtcs[56]= 2; this.NC[56]= 1;  this.Ccspps[56]= 6;
-                    this.Wtcs[60]= 2; this.NC[60]= 3;  this.Ccspps[60]= 8;
-                    this.Wtcs[62]= 2; this.NC[62]= 1;  this.Ccspps[62]= 14;
-                    this.Wtcs[71]=2; this.NC[71]=1;  this.Ccspps[71]=14;
+                    this.Wtcs[i] = Controlstructures.wtcs(this.result[i]);
                     this.Ccs[i] = (this.Wtcs[i] * this.NC[i] )+ this.Ccspps[i]
                 }
             }

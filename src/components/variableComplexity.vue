@@ -27,6 +27,8 @@
 </template>
 
 <script>
+    import {variables} from "../controller/variables";
+
     export default {
         components: {},
 
@@ -46,7 +48,11 @@
             if (localStorage.filedata) {
                 this.result = localStorage.getItem("filedata").toString().split("\n");
                 this.cordoutput = localStorage.getItem("filedata").toString().split("\n");
+               variables.classDetecter(this.result);
+               variables.MethodsDetecter(this.result);
+
                 this.getComplexity();
+                variables.a();
             }
         },
         methods: {
@@ -55,33 +61,10 @@
                 this.MethodsDetecter();
                 for (var i = 0; i < this.result.length; i++) {
                     this.Wvs[i] = 0, this.Npdtv[i] = 0, this.Ncdtv[i] = 0;
-                    //this.getPrimitive(this.result[i], i);
-
-                    this.Npdtv[3]=1;
-                    this.Npdtv[4]=1;
-                    this.Ncdtv[5]=2;
-                    this.Npdtv[15]=1;
-                    this.Npdtv[16]=1;
-                    this.Ncdtv[17]=2;
-                    this.Npdtv[26]=1;
-                    this.Npdtv[28]=1;
-                    this.Ncdtv[29]=2;
-                    this.Npdtv[30]=1;
-
-                    this.Wvs[3]=1;
-                    this.Wvs[4]=1;
-                    this.Wvs[5]=1;
-                    this.Wvs[15]=1;
-                    this.Wvs[16]=1;
-                    this.Wvs[17]=1;
-                    this.Wvs[26]=2;
-                    this.Wvs[28]=1;
-                    this.Wvs[29]=1;
-                    this.Wvs[30]=1;
-
-                   // this.getglobalvariable(this.result[i], i);
-                   // this.getlocalvariable(this.result[i], i);
-                    this.Cv[i] = this.Wvs[i] + this.Npdtv[i] + this.Ncdtv[i];
+                    this.Wvs[i] = variables.Wvs(this.result[i],i);
+                    this.Npdtv[i]=variables.Npdtv(this.result[i],i);
+                    this.Ncdtv[i]= variables.Ncdtv(this.result[i],i);
+                    this.Cv[i] = this.Wvs[i]*( this.Npdtv[i] + this.Ncdtv[i]);
                 }
 
 
@@ -148,9 +131,7 @@
             },
 
             classDetecter() {
-
                 let startBracket = null, lastBracket = null, bracket = [];
-
                 for (var i = 0; i < this.result.length; i++) {
                     if (this.result[i].match(/{/g)) {
                         if (startBracket === null) {

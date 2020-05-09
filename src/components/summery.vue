@@ -1,40 +1,40 @@
 <template>
     <div>
-        <table >
+        <table>
 
-                <thead>
-                <tr>
-                    <th class="text-left">#</th>
-                    <th class="text-left"></th>
-                    <th class="text-left">Nkw</th>
-                    <th class="text-left">Nid</th>
-                    <th class="text-left">Nop</th>
-                    <th class="text-left">Nnv</th>
-                    <th class="text-left">Nsl</th>
-                    <th class="text-left">Cs</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="res in cordoutput.length" :key="res">
-                    <td>{{res-1}}</td>
-                    <td class="code">{{cordoutput[res-1]}}</td>
-                    <td>{{Nkw[res-1]}}</td>
-                    <td>{{Nid[res-1]}}</td>
-                    <td>{{Nop[res-1]}}</td>
-                    <td>{{Nnv[res-1]}}</td>
-                    <td>{{Nsl[res-1]}}</td>
-                    <td>{{Cs[res-1]}}</td>
+            <thead>
+            <tr>
+                <th class="text-left">#</th>
+                <th class="text-left"></th>
+                <th class="text-left">Nkw</th>
+                <th class="text-left">Nid</th>
+                <th class="text-left">Nop</th>
+                <th class="text-left">Nnv</th>
+                <th class="text-left">Nsl</th>
+                <th class="text-left">Cs</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="res in cordoutput.length" :key="res">
+                <td>{{res-1}}</td>
+                <td class="code">{{cordoutput[res-1]}}</td>
+                <td>{{Nkw[res-1]}}</td>
+                <td>{{Nid[res-1]}}</td>
+                <td>{{Nop[res-1]}}</td>
+                <td>{{Nnv[res-1]}}</td>
+                <td>{{Nsl[res-1]}}</td>
+                <td>{{Cs[res-1]}}</td>
 
-                </tr>
-                </tbody>
+            </tr>
+            </tbody>
 
         </table>
     </div>
 </template>
 
 <script>
-   // import home from './home';
-   import { Size } from "../controller/Size";
+    // import home from './home';
+    import {Size} from "../controller/Size";
     export default {
 
         name: 'notfound',
@@ -53,7 +53,7 @@
             Nsl: [],
             Cs: []
         }),
-        created(){
+        created() {
 
         },
 
@@ -64,21 +64,20 @@
                 this.multipalCommentidentify();
                 this.singalComment()
                 console.log(this.result)
-                Size.ad();
-             //   this.getComplexity();
+
+                this.getComplexity();
             }
         },
         methods: {
             getComplexity() {
                 for (var i = 0; i < this.result.length; i++) {
-                    this.getNkw(this.result[i], i);
-                    this.getNop(this.result[i], i);
-                    this.getNnv(this.result[i], i);
-                    this.getNsl(this.result[i], i);
-                    this.getNid(this.result[i], i);
+                    console.log(Size.getNkw(this.result[i]));
+                    this.Nkw[i] = Size.getNkw(this.result[i])
+                    this.Nnv[i] = Size.getNnv(this.result[i])
+                    this.Nop[i] = Size.getNop(this.result[i])
+                    this.Nsl[i] = Size.getNsl(this.result[i])
 
-
-                    this.Cs[i] = this.Nkw[i] + this.Nid[i] + this.Nop[i] + this.Nnv[i] + this.Nsl[i];
+                    this.Cs[i] = this.Nkw[i] + 0 + this.Nop[i] + this.Nnv[i] + this.Nsl[i];
                 }
 
             },
@@ -180,8 +179,7 @@
                     if (line.match(multiVariableIdentifier)) {
                         var splitByComma = line.split(",");
                         counter = counter + splitByComma.length;
-                    }
-                    else {
+                    } else {
                         counter = counter + 1;
                     }
 
@@ -316,11 +314,11 @@
 
             multipalCommentidentify() {
                 var start = [], end = [];
-                var a = new RegExp("\\/\\*.+","g")
-                var b = new RegExp(".\\*\\/","g")
+                var a = new RegExp("\\/\\*.+", "g")
+                var b = new RegExp(".\\*\\/", "g")
                 // console.log(a + " "+b);
                 for (var i = 0; i < this.result.length; i++) {
-                    console.log(this.result[i].trim().match("\\/\\*.+") );
+                    console.log(this.result[i].trim().match("\\/\\*.+"));
                     if (this.result[i].trim().match(a)) {
                         //  console.log(i)
                         start.push(i);
@@ -339,7 +337,7 @@
 
             },
             singalComment() {
-                var b = new RegExp("\\/\\/","g")
+                var b = new RegExp("\\/\\/", "g")
                 for (var i = 0; i < this.result.length; i++) {
                     if (this.result[i].trim().match(b)) {
                         // console.log(i)
