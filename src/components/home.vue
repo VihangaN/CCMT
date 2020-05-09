@@ -6,42 +6,48 @@
 
         <b-field class="centered">
             <b-upload v-model="files"
-                      multiple
-                      drag-drop>
+                multiple
+                drag-drop>
                 <section class="section">
                     <div class="content has-text-centered">
                         <p>
                             <b-icon
-                                    icon="upload"
-                                    size="is-large">
+                                icon="upload"
+                                size="is-large">
                             </b-icon>
                         </p>
                         <p>Drop your files here or click to upload</p>
                     </div>
                 </section>
             </b-upload>
-            <label>{{message}}</label>
+
+             <label>{{message}}</label>
         </b-field>
 
-        <div class="tags" id="tags">
+         <div class="tags" id="tags">
             <span v-for="(file, index) in files"
-                  :key="index"
-                  class="tag is-primary">
+                :key="index"
+                class="tag is-primary" >
                 {{file.name}}
                 <button class="delete is-small"
-                        type="button"
-                        @click="deletefile(index)">
+                    type="button"
+                    @click="deletefile(index)">
                 </button>
             </span>
         </div>
 
-
+        <div id="scan" v-if="files.length > 0">
+            <b-button type="is-danger"
+                icon-left="delete">
+                Start Now
+            </b-button>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
-        props: ['filedata'],
+
         data() {
             return {
                 text: '',
@@ -67,7 +73,7 @@
 
                 }
             },
-            deletefile(file) {
+             deletefile(file) {
                 this.files.splice(file, 1); // splice the files array by passed index value
             }
         }
@@ -76,15 +82,22 @@
 </script>
 
 <style scoped>
-    .centered {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
+.centered{
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+}
 
-    #tags {
-        margin-top: 300px;
-        display: block;
-    }
+#tags{
+    margin-top:300px;
+    display: block;
+}
+
+#scan{
+    position: absolute;
+    left:50%;
+    top:80%;
+    transform: translate(-50%,-50%);
+}
 </style>
