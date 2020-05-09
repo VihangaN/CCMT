@@ -20,6 +20,7 @@
                     </div>
                 </section>
             </b-upload>
+            
              <label>{{message}}</label>
         </b-field>
 
@@ -35,12 +36,17 @@
             </span>
         </div>
 
-
+        <div id="scan" v-if="files.length > 0">
+            <b-button type="is-danger"
+                icon-left="delete">
+                Start Now
+            </b-button>
+        </div>
     </div>
 </template>
 
 <script>
-    export default {
+    export default { *
         props: ['filedata'],
         data() {
             return {
@@ -86,5 +92,12 @@
 #tags{
     margin-top:300px;
     display: block;
+}
+
+#scan{
+    position: absolute;
+    left:50%;
+    top:80%;
+    transform: translate(-50%,-50%);
 }
 </style>
