@@ -28,8 +28,8 @@
             </tr>
             </tbody>
 
-        </table>
-    </div>
+</table>
+</div>
 </template>
 
 <script>
