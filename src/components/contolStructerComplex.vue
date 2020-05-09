@@ -54,6 +54,7 @@
                 for (var i = 0; i < this.result.length; i++) {
                     this.Wtcs[i] =0;this.NC[i]=0;this.Ccspps[i]=0;this.Ccs[i]=0;
                     this.Wtcs[i] = Controlstructures.wtcs(this.result[i]);
+                    this.NC[i] = Controlstructures.NC(this.result[i]);
                     this.Ccs[i] = (this.Wtcs[i] * this.NC[i] )+ this.Ccspps[i]
                 }
             }
