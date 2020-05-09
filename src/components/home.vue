@@ -46,8 +46,8 @@
 </template>
 
 <script>
-    export default { *
-        props: ['filedata'],
+    export default { 
+       
         data() {
             return {
                 text: '',
