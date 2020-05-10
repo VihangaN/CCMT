@@ -8,7 +8,8 @@
                 <button id="menubtn" @click="show = filename[filen-1]">{{filename[filen-1]}}</button>
 
             </div>
-            <br><hr>
+            <br>
+            <hr>
         </div>
         <div v-for="res in cordoutput.length" :key="res">
 
@@ -33,13 +34,13 @@
                     <tr v-for="line in cordoutput[res-1].length" :key="line">
                         <td>{{line}}</td>
                         <td class="code">{{cordoutput[res-1][line-1]}}</td>
-                        <td>{{Cs[line-1]}}</td>
-                        <td>{{Cv[line-1]}}</td>
-                        <td>{{Cm[line-1]}}</td>
-                        <td>{{Ci[line-1]}}</td>
-                        <td>{{Ccp[line-1]}}</td>
-                        <td>{{Ccs[line-1]}}</td>
-                        <td>{{TCps[line-1]}}</td>
+                        <td>{{0}}</td>
+                        <td>{{0}}</td>
+                        <td>{{0}}</td>
+                        <td>{{0}}</td>
+                        <td>{{0}}</td>
+                        <td>{{0}}</td>
+                        <td>{{0}}</td>
 
                     </tr>
                     </tbody>
@@ -50,6 +51,10 @@
 </template>
 
 <script>
+    import {Size} from "../controller/Size";
+    import {methods} from "../controller/methods";
+    import {variables} from "../controller/variables";
+
     export default {
         name: "totalComplex",
         components: {},
@@ -60,14 +65,14 @@
             result: [],
             cordoutput: [],
             filename: [],
-            Cs: [],
-            Cv: [],
-            Cm: [],
-            Ci: [],
-            Ccp: [],
-            Ccs: [],
-            TCps: [],
-            show:""
+            AllCs: [],
+            AllCv: [],
+            AllCm: [],
+            AllCi: [],
+            AllCcp: [],
+            AllCcs: [],
+            AllTCps: [],
+            show: ""
         }),
         mounted: function () {
             if (localStorage.fileindex) {
@@ -88,9 +93,85 @@
         methods: {
             getComplexity() {
                 for (var i = 0; i < this.result.length; i++) {
-
-                    this.TCps[i] = this.Cs[i] + this.Cv[i] + this.Cm[i] + this.Ci[i] + this.Ccp[i] + this.Ccs[i];
+                    this.Cs(this.result[i])
+                    this.Cm(this.result[i])
+                    this.Cv(this.result[i])
+                    //    this.TCps[i] = this.Cs[i] + this.Cv[i] + this.Cm[i] + this.Ci[i] + this.Ccp[i] + this.Ccs[i];
                 }
+            },
+            Cs(file) {
+                var fileCs = [];
+                var Cs = [];
+                var Nkw = [];
+                var Nop = [];
+                var Nnv = [];
+                var Nsl = [];
+                for (var i = 0; i < file.length; i++) {
+                    var lineCs = [];
+                    console.log(Size.getNkw(file[i]));
+                    Nkw[i] = Size.getNkw(file[i])
+                    Nnv[i] = Size.getNnv(file[i])
+                    Nop[i] = Size.getNop(file[i])
+                    Nsl[i] = Size.getNsl(file[i])
+
+                    Cs[i] = Nkw[i] + 0 + Nop[i] + Nnv[i] + Nsl[i];
+                    lineCs.push(Cs[i])
+                    lineCs.push(Nkw[i])
+                    lineCs.push(0)
+                    lineCs.push(Nop[i])
+                    lineCs.push(Nnv[i])
+                    lineCs.push(Nsl[i])
+                    fileCs.push(lineCs)
+                }
+                this.AllCs.push(fileCs);
+                console.log(this.AllCs);
+            },
+            Cm(file) {
+                var fileCm = [];
+                var Wmrt = [];
+                var Npdtp = [];
+                var Ncdtp = [];
+                var Cm = [];
+                for (var i = 0; i < file.length; i++) {
+                    var lineCm = [];
+                    Wmrt[i] = methods.Wmrt(file[i])
+                    Npdtp[i] = methods.Npdtp(file[i])
+                    Ncdtp[i] = methods.Ncdtp(file[i]);
+                    Cm[i] = Wmrt[i] + Npdtp[i] + Ncdtp[i];
+                    lineCm.push(Wmrt[i])
+                    lineCm.push(Npdtp[i])
+                    lineCm.push(Ncdtp[i])
+                    lineCm.push(Cm[i])
+                    fileCm.push(lineCm)
+                }
+                this.AllCm.push(fileCm);
+                console.log(this.AllCm);
+            },
+            Cv(file) {
+                var fileCv = [];
+                var Cv = [];
+                var Wvs = [];
+                var Npdtv = [];
+                var Ncdtv = [];
+
+                variables.classDetecter(file);
+                variables.MethodsDetecter(file);
+
+                for (var i = 0; i < file.length; i++) {
+                    var lineCv = [];
+                    Wvs[i] = 0; Npdtv[i] = 0; Ncdtv[i] = 0;
+                    Wvs[i] = variables.Wvs(file[i], i);
+                    Npdtv[i] = variables.Npdtv(file[i], i);
+                    Ncdtv[i] = variables.Ncdtv(file[i], i);
+                    Cv[i] = Wvs[i] * (Npdtv[i] + Ncdtv[i]);
+                    lineCv.push(Wvs[i]);
+                    lineCv.push(Npdtv[i]);
+                    lineCv.push(Ncdtv[i]);
+                    lineCv.push(Cv[i]);
+                    fileCv.push(lineCv);
+                }
+                this.AllCv.push(fileCv)
+                console.log(this.AllCv);
             }
         }
     }
@@ -127,19 +208,20 @@
         background-color: #eee;
     }
 
-    #menubtn{
+    #menubtn {
         outline: none;
         border-radius: 5px;
-        color:#fff;
+        color: #fff;
         background: #258ad3;
-        height:40px;
-        margin-left:10px;
+        height: 40px;
+        margin-left: 10px;
         padding: 5px 8px 5px 8px;
     }
-    #miniMenu{
+
+    #miniMenu {
         display: flex;
         align-items: center;
-        width:100%;
+        width: 100%;
         justify-content: center;
 
     }
