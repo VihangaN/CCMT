@@ -1,5 +1,6 @@
 <template>
     <div>
+          
         <table>
             <thead>
             <tr>
@@ -23,7 +24,8 @@
             </tr>
             </tbody>
         </table>
-    </div>
+          </div>
+  
 </template>
 
 <script>

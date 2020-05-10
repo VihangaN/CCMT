@@ -1,6 +1,6 @@
 <template>
     <div>
-
+       
         <div id="miniMenu">
 
 
@@ -46,7 +46,8 @@
                 </table>
             </div>
         </div>
-    </div>
+          </div>
+ 
 </template>
 
 <script>

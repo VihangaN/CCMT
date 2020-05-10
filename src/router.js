@@ -8,8 +8,10 @@ import cuplingComplex from './components/cuplingComplex.vue'
 import inheritanceComplex from './components/inheritanceComplex.vue'
 import contolStructerComplex from './components/contolStructerComplex.vue'
 import totalComplex from './components/totalComplex.vue'
+import weight from './components/weight.vue'
 
 Vue.use(Router)
+
 Vue.component('app-fileupload',home);
 let router =  new Router({
     routes:[
@@ -21,11 +23,16 @@ let router =  new Router({
         {path:'/inheritanceComplex' , component:inheritanceComplex},
         {path:'/contolStructerComplex' , component:contolStructerComplex},
         {path:'/totalComplex' , component:totalComplex},
+        {path:'/weight' , component:weight},
 
     ],
     mode:'history',
     linkExactActiveClass: 'active',
+
+   
     
   });
+
+  
 
   export default router;

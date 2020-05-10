@@ -43,6 +43,7 @@
       <b-button type="is-info" icon-left="autorenew" @click="selectedFile">Start Now</b-button>
     </div>
         </div>
+        
     </div>
 
    
@@ -55,6 +56,7 @@
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import {mapState , mapGetters , mapMutations} from 'vuex'
+import router from '../router'
 
 
 export default {
@@ -62,12 +64,14 @@ export default {
 computed:{
     ...mapGetters([
       'getnav',
-      'getsub'
+      'getsub',
+      'getfiles'
 
     ]),
     ...mapState([
       'nav',
-      'sub'
+      'sub',
+      'files'
     ]),
 },
 
@@ -83,6 +87,7 @@ computed:{
       files: function (n) {
          if(n.length > 0){
         this.setType(true);
+        this.setUp(true);
          }
       }
   },
@@ -90,7 +95,8 @@ computed:{
   methods: {
       ...mapMutations([
       'setnav',
-      'setsub'
+      'setsub',
+      'setfiles'
     ]),
     setType: function(status) {
       this.setnav(status)
@@ -100,18 +106,24 @@ computed:{
       this.setsub(status)
   
     },
+    setUp: function(status) {
+      this.setfiles(status)
+  
+    },
 
     checkSuccess() {
          
       if (this.files.length > 0) {
            this.setSub(true);
+          
         this.$buefy.toast.open({
           duration: 1000,
           message: "Files uploaded successfully !",
           position: "is-bottom-right",
           type: "is-success"
         });
-      
+         
+      router.push('/totalComplex');
       } else {
         this.$buefy.toast.open({
           duration: 1000,
