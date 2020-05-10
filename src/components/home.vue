@@ -39,27 +39,119 @@
         </div>
 
         <div id="scan" v-if="files.length > 0">
-            <b-button type="is-danger"
-                      @click="selectedFile"
-                      icon-left="delete">
-                Start Now
-            </b-button>
+            <div id="scan" v-if="files.length > 0">
+      <b-button type="is-info" icon-left="autorenew" @click="selectedFile">Start Now</b-button>
+    </div>
         </div>
     </div>
+
+   
+<!-- 
+    <button @click="exportToPDF"> {{test}}</button> -->
+
 </template>
 
 <script>
-    export default {
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import {mapState , mapGetters , mapMutations} from 'vuex'
 
-        data() {
-            return {
-                text: '',
-                message: '',
-                textWithoutComment: '',
-                files: [] //  store multiple files
-            }
+
+export default {
+
+computed:{
+    ...mapGetters([
+      'getnav',
+      'getsub'
+
+    ]),
+    ...mapState([
+      'nav',
+      'sub'
+    ]),
+},
+
+  data() {
+    return {
+      text: "",
+      message: "",
+      textWithoutComment: "",
+      files: [] //  store multiple files
+    };
+  },
+  watch:{
+      files: function (n) {
+         if(n.length > 0){
+        this.setType(true);
+         }
+      }
+  },
+  
+  methods: {
+      ...mapMutations([
+      'setnav',
+      'setsub'
+    ]),
+    setType: function(status) {
+      this.setnav(status)
+  
+    },
+    setSub: function(status) {
+      this.setsub(status)
+  
+    },
+
+    checkSuccess() {
+         
+      if (this.files.length > 0) {
+           this.setSub(true);
+        this.$buefy.toast.open({
+          duration: 1000,
+          message: "Files uploaded successfully !",
+          position: "is-bottom-right",
+          type: "is-success"
+        });
+      
+      } else {
+        this.$buefy.toast.open({
+          duration: 1000,
+          message: "Files not uploaded successfully",
+          position: "is-bottom-right",
+          type: "is-danger"
+        });
+      }
+    },
+
+    exportToPDF() {
+      window.html2canvas = html2canvas;
+
+      var doc = new jsPDF("p", "pt", "a4");
+
+    
+      var source = document.getElementById("print").innerHTML;
+
+      var margins = {
+        top: 10,
+        bottom: 10,
+        left: 10,
+        width: 595
+      };
+
+      doc.fromHTML(
+        source, 
+        margins.left,
+        margins.top,
+        {
+          width: margins.width
         },
-        methods: {
+         function() {
+          
+          doc.save("Test.pdf");
+        },
+        margins
+      );
+    },
+   
             selectedFile() {
                 console.log(this.files);
                 this.checkSuccess();
@@ -89,48 +181,30 @@
                 this.files.splice(file, 1); // splice the files array by passed index value
             },
 
-            checkSuccess(){
-
-                if(this.files.length > 0){
-                    this.$buefy.toast.open({
-                        duration: 5000,
-                        message: 'Files uploaded successfully !',
-                        position: 'is-bottom',
-                        type: 'is-success'
-                    })
-                }
-                else{
-                    this.$buefy.toast.open({
-                        duration: 5000,
-                        message: 'Files not uploaded successfully',
-                        position: 'is-bottom',
-                        type: 'is-danger'
-                    })
-                }
-
-            },
         }
 
-    }
+       
+
+};
 </script>
 
 <style scoped>
-    .centered {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
+.centered {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 
-    #tags {
-        margin-top: 300px;
-        display: block;
-    }
+#tags {
+  margin-top: 300px;
+  display: block;
+}
 
-    #scan {
-        position: absolute;
-        left: 50%;
-        top: 80%;
-        transform: translate(-50%, -50%);
-    }
+#scan {
+  position: absolute;
+  left: 50%;
+  top: 80%;
+  transform: translate(-50%, -50%);
+}
 </style>
