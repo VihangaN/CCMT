@@ -27,6 +27,7 @@
 </template>
 
 <script>
+    import {Inheritance} from "../controller/Inheritance"
     export default {
         name: "inheritanceComplex",
         components: {},
@@ -45,21 +46,27 @@
             if (localStorage.filedata) {
                 this.result = localStorage.getItem("filedata").toString().split("\n");
                 this.cordoutput = localStorage.getItem("filedata").toString().split("\n");
+                Inheritance.classnamesIdenfy(this.result);
+
                 this.getComplexity();
             }
         },
         methods: {
             getComplexity(){
                 for (var i = 0; i < this.result.length; i++) {
-                    this.Ndi[i]=0; this.Nidi[i]=0; this.Ti[i]=0;
+                    this.Ndi[i] =  Inheritance.Ndi(this.result[i]);
+                    this.Nidi[i] = Inheritance.Nidi(this.result[i]);
+
+                   /* this.Ndi[i]=0; this.Nidi[i]=0; this.Ti[i]=0;
                     this.Ndi[13]=1;
-                    this.Ndi[25]=1; this.Nidi[25]=1;
+                    this.Ndi[25]=1; this.Nidi[25]=1;*/
                     this.Ci[i] = this.Ndi[i]+ this.Nidi[i];
                     this.Ti[i] = this.Ci[i];
                 }
             }
         }
     }
+
 </script>
 
 <style scoped>

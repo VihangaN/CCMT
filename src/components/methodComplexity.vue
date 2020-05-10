@@ -27,6 +27,7 @@
 </template>
 
 <script>
+    import {methods} from "../controller/methods";
     export default {
         name: "methodComplexity",
         components: {},
@@ -52,8 +53,9 @@
             getComplexity() {
                 for (var i = 0; i < this.result.length; i++) {
                     this.Wmrt[i] = 0, this.Npdtp[i] = 0, this.Ncdtp[i] = 0;
-                    this.byparameters(this.result[i], i);
-                    this.byreturntypes(this.result[i], i);
+                    this.Wmrt[i] = methods.Wmrt(this.result[i])
+                    this.Npdtp[i] = methods.Npdtp(this.result[i])
+                    this.Ncdtp[i] = methods.Ncdtp(this.result[i]);
                     this.Cm[i] = this.Wmrt[i] + this.Npdtp[i] + this.Ncdtp[i];
                 }
             },
@@ -94,6 +96,7 @@
             }
         }
     }
+
 </script>
 
 <style scoped>
