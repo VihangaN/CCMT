@@ -1,45 +1,54 @@
-<template >
-  <div id="print">
-    <!-- <input type="file" ref="myFile" @change="selectedFile"><br/> -->
+<template>
+    <div>
 
-    <b-field class="centered">
-      <b-upload
-        v-model="files"
-        multiple
-        accept=".java"
-        type="is-info"
-        id="up"
-        drag-drop
-        ref="document"
-      >
-        <section class="section">
-          <div class="content has-text-centered">
-            <p>
-              <b-icon icon="upload" size="is-large"></b-icon>
-            </p>
-            <p>Drop your java files here or click to upload</p>
-          </div>
-        </section>
-      </b-upload>
+        <!-- <input type="file" ref="myFile" @change="selectedFile"><br/> -->
 
-      <label>{{message}}</label>
-    </b-field>
 
-    <div class="tags" id="tags">
-      <span v-for="(file, index) in files" :key="index" class="tag is-primary">
-        {{file.name}}
-        <button class="delete is-small" type="button" @click="deletefile(index)"></button>
-      </span>
-    </div>
+        <b-field class="centered">
+            <b-upload v-model="files"
+                      accept=".java"
+                      type="is-info"
+                      multiple
+                      drag-drop>
+                <section class="section">
+                    <div class="content has-text-centered">
+                        <p>
+                            <b-icon
+                                    icon="upload"
+                                    size="is-large">
+                            </b-icon>
+                        </p>
+                        <p>Drop your java files here or click to upload</p>
+                    </div>
+                </section>
+            </b-upload>
 
-    <div id="scan" v-if="files.length > 0">
+            <label>{{message}}</label>
+        </b-field>
+
+        <div class="tags" id="tags">
+            <span v-for="(file, index) in files"
+                  :key="index"
+                  class="tag is-primary">
+                {{file.name}}
+                <button class="delete is-small"
+                        type="button"
+                        @click="deletefile(index)">
+                </button>
+            </span>
+        </div>
+
+        <div id="scan" v-if="files.length > 0">
+            <div id="scan" v-if="files.length > 0">
       <b-button type="is-info" icon-left="autorenew" @click="selectedFile">Start Now</b-button>
+    </div>
+        </div>
     </div>
 
    
+<!-- 
+    <button @click="exportToPDF"> {{test}}</button> -->
 
-    <button @click="exportToPDF"> {{test}}</button>
-  </div>
 </template>
 
 <script>
@@ -92,26 +101,6 @@ computed:{
   
     },
 
-    selectedFile() {
-        this.setType(true);
-      console.log("File uploaded");
-      this.checkSuccess();
-      let file = this.$refs.myFile.files[0];
-      let reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-      reader.onload = evt => {
-        this.text = evt.target.result;
-        localStorage.setItem("filedata", this.text);
-        this.message = "File upload successful";
-      };
-      reader.onerror = evt => {
-        this.message = console.error(evt);
-      };
-       
-    },
-    deletefile(file) {
-      this.files.splice(file, 1); // splice the files array by passed index value
-    },
     checkSuccess() {
          
       if (this.files.length > 0) {
@@ -155,15 +144,47 @@ computed:{
         {
           width: margins.width
         },
-
-        function() {
+         function() {
           
           doc.save("Test.pdf");
         },
         margins
       );
-    }
-  }
+    },
+   
+            selectedFile() {
+                console.log(this.files);
+                this.checkSuccess();
+                localStorage.clear();
+                localStorage.setItem(`fileindex`, this.files.length);
+                for (let i = 0; i < this.files.length; i++) {
+
+                    let file = this.files[i];
+
+                    let reader = new FileReader();
+                    reader.readAsText(file, "UTF-8");
+                    reader.onload = evt => {
+                        this.text = evt.target.result;
+                        localStorage.setItem(`filedata${i}`, this.text);
+                        localStorage.setItem(`filedataNmae${i}`, file.name);
+                        this.message = "File upload successful"
+                    }
+                    reader.onerror = evt => {
+                        this.message = console.error(evt);
+
+                    }
+
+
+                }
+            },
+            deletefile(file) {
+                this.files.splice(file, 1); // splice the files array by passed index value
+            },
+
+        }
+
+       
+
 };
 </script>
 
