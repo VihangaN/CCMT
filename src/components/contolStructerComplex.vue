@@ -1,33 +1,52 @@
 <template>
     <div>
-        <table>
-            <thead>
-            <tr>
-                <th class="text-left">#</th>
-                <th class="text-left"></th>
-                <th class="text-left">Wtcs</th>
-                <th class="text-left">NC</th>
-                <th class="text-left">Ccspps</th>
-                <th class="text-left">Ccs</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="res in cordoutput.length" :key="res">
-                <td>{{res-1}}</td>
-                <td class="code">{{cordoutput[res-1]}}</td>
-                <td>{{Wtcs[res-1]}}</td>
-                <td>{{NC[res-1]}}</td>
-                <td>{{Ccspps[res-1]}}</td>
-                <td>{{Ccs[res-1]}}</td>
 
-            </tr>
-            </tbody>
-        </table>
+        <div id="miniMenu">
+
+
+            <div v-for="filen in filename.length" :key="filen">
+                <button id="menubtn" @click="show = filename[filen-1]">{{filename[filen-1]}}</button>
+
+            </div>
+            <br>
+            <hr>
+        </div>
+        <div v-for="res in cordoutput.length" :key="res">
+
+            <div :id="filename[res-1]" v-if="show == filename[res-1]">
+                <h3>{{filename[res-1]}}</h3>
+                <br>
+                <table>
+                    <thead>
+                    <tr>
+                        <th class="text-left">#</th>
+                        <th class="text-left"></th>
+                        <th class="text-left">Wtcs</th>
+                        <th class="text-left">NC</th>
+                        <th class="text-left">Ccspps</th>
+                        <th class="text-left">Ccs</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="line in cordoutput[res-1].length" :key="line">
+                        <td>{{line-1}}</td>
+                        <td class="code">{{cordoutput[res-1][line-1]}}</td>
+                        <td>{{Ccs[res-1][line-1][0]}}</td>
+                        <td>{{Ccs[res-1][line-1][1]}}</td>
+                        <td>{{Ccs[res-1][line-1][2]}}</td>
+                        <td>{{Ccs[res-1][line-1][3]}}</td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-    import  {Controlstructures} from "../controller/Controlstructures"
+    import {Controlstructures} from "../controller/Controlstructures"
+
     export default {
         name: "contolStructerComplex",
         components: {},
@@ -35,27 +54,34 @@
         data: () => ({
             swap: false,
             link: 'mdi-link',
-            result: '',
-            cordoutput: '',
-            Wtcs: [],
-            NC: [],
-            Ccspps: [],
+            result: [],
+            cordoutput: [],
+            filename: [],
+            show: "",
             Ccs: []
         }),
         mounted: function () {
-            if (localStorage.filedata) {
-                this.result = localStorage.getItem("filedata").toString().split("\n");
-                this.cordoutput = localStorage.getItem("filedata").toString().split("\n");
-                this.getComplexity();
+            if (localStorage.fileindex) {
+                for (let i = 0; i < localStorage.getItem("fileindex"); i++) {
+                    this.result.push(localStorage.getItem(`filedata${i}`).toString().split("\n"))
+                    this.cordoutput.push(localStorage.getItem(`filedata${i}`).toString().split("\n"));
+                    this.filename.push(localStorage.getItem(`filedataNmae${i}`).toString());
+                }
+                this.show = localStorage.getItem(`filedataNmae${0}`).toString();
+                this.Ccs = JSON.parse(localStorage.getItem(`Ccs`).toString());
+                //this.getComplexity();
             }
         },
         methods: {
-            getComplexity(){
+            getComplexity() {
                 for (var i = 0; i < this.result.length; i++) {
-                    this.Wtcs[i] =0;this.NC[i]=0;this.Ccspps[i]=0;this.Ccs[i]=0;
+                    this.Wtcs[i] = 0;
+                    this.NC[i] = 0;
+                    this.Ccspps[i] = 0;
+                    this.Ccs[i] = 0;
                     this.Wtcs[i] = Controlstructures.wtcs(this.result[i]);
                     this.NC[i] = Controlstructures.NC(this.result[i]);
-                    this.Ccs[i] = (this.Wtcs[i] * this.NC[i] )+ this.Ccspps[i]
+                    this.Ccs[i] = (this.Wtcs[i] * this.NC[i]) + this.Ccspps[i]
                 }
             }
         }
@@ -91,5 +117,23 @@
 
     tr:nth-child(odd) {
         background-color: #eee;
+    }
+
+    #menubtn {
+        outline: none;
+        border-radius: 5px;
+        color: #fff;
+        background: #258ad3;
+        height: 40px;
+        margin-left: 10px;
+        padding: 5px 8px 5px 8px;
+    }
+
+    #miniMenu {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+
     }
 </style>

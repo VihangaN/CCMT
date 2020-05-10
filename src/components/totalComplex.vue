@@ -34,14 +34,18 @@
                     <tr v-for="line in cordoutput[res-1].length" :key="line">
                         <td>{{line}}</td>
                         <td class="code">{{cordoutput[res-1][line-1]}}</td>
-                        <td>{{0}}</td>
-                        <td>{{0}}</td>
-                        <td>{{0}}</td>
-                        <td>{{0}}</td>
-                        <td>{{0}}</td>
-                        <td>{{0}}</td>
-                        <td>{{0}}</td>
+                        <td>{{AllTCps[res-1][line-1][0]}}</td>
+                        <td>{{AllTCps[res-1][line-1][1]}}</td>
+                        <td>{{AllTCps[res-1][line-1][2]}}</td>
+                        <td>{{AllTCps[res-1][line-1][3]}}</td>
+                        <td>{{AllTCps[res-1][line-1][4]}}</td>
+                        <td>{{AllTCps[res-1][line-1][5]}}</td>
+                        <td>{{AllTCps[res-1][line-1][6]}}</td>
 
+                    </tr>
+                    <tr>
+                        <td colspan="8"><b>Total</b></td>
+                        <td>{{Total[res-1]}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -54,6 +58,8 @@
     import {Size} from "../controller/Size";
     import {methods} from "../controller/methods";
     import {variables} from "../controller/variables";
+    import {Inheritance} from "../controller/Inheritance";
+    import {Controlstructures} from "../controller/Controlstructures";
 
     export default {
         name: "totalComplex",
@@ -72,6 +78,7 @@
             AllCcp: [],
             AllCcs: [],
             AllTCps: [],
+            Total: [],
             show: ""
         }),
         mounted: function () {
@@ -93,11 +100,18 @@
         methods: {
             getComplexity() {
                 for (var i = 0; i < this.result.length; i++) {
-                    this.Cs(this.result[i])
-                    this.Cm(this.result[i])
-                    this.Cv(this.result[i])
-                    //    this.TCps[i] = this.Cs[i] + this.Cv[i] + this.Cm[i] + this.Ci[i] + this.Ccp[i] + this.Ccs[i];
+                    this.Cs(this.result[i]);
+                    this.Cm(this.result[i]);
+                    this.Cv(this.result[i]);
+                    this.Ci(this.result[i]);
+                    this.Ccs(this.result[i]);
+                    this.TCps(i);
                 }
+                localStorage.setItem(`Cs`,JSON.stringify(this.AllCs));
+                localStorage.setItem(`Cv`,JSON.stringify(this.AllCv));
+                localStorage.setItem(`Cm`,JSON.stringify(this.AllCm));
+                localStorage.setItem(`Ci`,JSON.stringify(this.AllCi));
+                localStorage.setItem(`Ccs`,JSON.stringify(this.AllCcs));
             },
             Cs(file) {
                 var fileCs = [];
@@ -115,16 +129,16 @@
                     Nsl[i] = Size.getNsl(file[i])
 
                     Cs[i] = Nkw[i] + 0 + Nop[i] + Nnv[i] + Nsl[i];
-                    lineCs.push(Cs[i])
                     lineCs.push(Nkw[i])
                     lineCs.push(0)
                     lineCs.push(Nop[i])
                     lineCs.push(Nnv[i])
                     lineCs.push(Nsl[i])
+                    lineCs.push(Cs[i])
                     fileCs.push(lineCs)
                 }
                 this.AllCs.push(fileCs);
-                console.log(this.AllCs);
+              //  console.log(this.AllCs);
             },
             Cm(file) {
                 var fileCm = [];
@@ -145,7 +159,7 @@
                     fileCm.push(lineCm)
                 }
                 this.AllCm.push(fileCm);
-                console.log(this.AllCm);
+               // console.log(this.AllCm);
             },
             Cv(file) {
                 var fileCv = [];
@@ -159,7 +173,9 @@
 
                 for (var i = 0; i < file.length; i++) {
                     var lineCv = [];
-                    Wvs[i] = 0; Npdtv[i] = 0; Ncdtv[i] = 0;
+                    Wvs[i] = 0;
+                    Npdtv[i] = 0;
+                    Ncdtv[i] = 0;
                     Wvs[i] = variables.Wvs(file[i], i);
                     Npdtv[i] = variables.Npdtv(file[i], i);
                     Ncdtv[i] = variables.Ncdtv(file[i], i);
@@ -171,7 +187,86 @@
                     fileCv.push(lineCv);
                 }
                 this.AllCv.push(fileCv)
-                console.log(this.AllCv);
+              //  console.log(this.AllCv);
+            },
+            Ci(file) {
+                var fileCi = [];
+                var Ci = [];
+                var Ndi = [];
+                var Nidi = [];
+                var Ti = []
+                Inheritance.classnamesIdenfy(file);
+                for (var i = 0; i < file.length; i++) {
+                    var lineCi = [];
+                    Ndi[i] = Inheritance.Ndi(file[i]);
+                    Nidi[i] = Inheritance.Nidi(file[i]);
+                    Ti[i] = Ndi[i]+Nidi[i];
+                    Ci[i] = Inheritance.Ci(Ti[i]);
+
+                    lineCi.push(Ndi[i])
+                    lineCi.push(Nidi[i])
+                    lineCi.push(Ti[i])
+                    lineCi.push(Ci[i])
+                    fileCi.push(lineCi)
+                }
+                this.AllCi.push(fileCi)
+               // console.log(this.AllCi);
+            },
+            Ccs(file) {
+                var fileCcs = [];
+                var Wtcs = [i];
+                var NC = [];
+                var Ccspps = [];
+                var Ccs = [];
+                for (var i = 0; i < file.length; i++) {
+                    var lineCcs = [];
+                    Wtcs[i] = 0;
+                    NC[i] = 0;
+                    Ccspps[i] = 0;
+                    Ccs[i] = 0;
+                    Wtcs[i] = Controlstructures.wtcs(file[i]);
+                    NC[i] = Controlstructures.NC(file[i]);
+                    Ccs[i] = (Wtcs[i] * NC[i]) + Ccspps[i]
+                    lineCcs.push(Wtcs[i])
+                    lineCcs.push(NC[i])
+                    lineCcs.push(Ccspps[i])
+                    lineCcs.push(Ccs[i])
+                    fileCcs.push(lineCcs)
+                }
+                this.AllCcs.push(fileCcs);
+               // console.log(this.AllCcs);
+            },
+            TCps(i) {
+                var Cs = this.AllCs[i]
+                var Cv = this.AllCv[i]
+                var Cm = this.AllCm[i]
+                var Ci = this.AllCi[i]
+                var Ccs = this.AllCcs[i]
+                var fileTCps=[];
+                var total =0;
+                for (let j = 0; j < Cs.length ; j++) {
+                    var lineTCps=[];
+                    var s = Cs[j];
+                    var v = Cv[j];
+                    var m = Cm[j];
+                    var inh = Ci[j];
+                    var cs = Ccs[j];
+                  //  var  = Cs[j];
+                    lineTCps.push(s[s.length-1])
+                    lineTCps.push(v[v.length-1])
+                    lineTCps.push(m[m.length-1])
+                    lineTCps.push(inh[inh.length-1])
+                    lineTCps.push(0)
+                    lineTCps.push(cs[cs.length-1])
+                    var TCps = s[s.length-1]+v[v.length-1]+m[m.length-1]+inh[inh.length-1]+0+cs[cs.length-1]
+                    lineTCps.push(TCps);
+                    total = total+TCps;
+                    fileTCps.push(lineTCps)
+                }
+                this.AllTCps.push(fileTCps);
+                this.Total.push(total);
+                console.log(this.AllTCps);
+                console.log(this.Total);
             }
         }
     }

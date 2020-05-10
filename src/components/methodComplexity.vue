@@ -1,33 +1,52 @@
 <template>
     <div>
-        <table>
-            <thead>
-            <tr>
-                <th class="text-left">#</th>
-                <th class="text-left"></th>
-                <th class="text-left">Wmrt</th>
-                <th class="text-left">Npdtp</th>
-                <th class="text-left">Ncdtp</th>
-                <th class="text-left">Cm</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="res in cordoutput.length" :key="res">
-                <td>{{res-1}}</td>
-                <td class="code">{{cordoutput[res-1]}}</td>
-                <td>{{Wmrt[res-1]}}</td>
-                <td>{{Npdtp[res-1]}}</td>
-                <td>{{Ncdtp[res-1]}}</td>
-                <td>{{Cm[res-1]}}</td>
 
-            </tr>
-            </tbody>
-        </table>
+        <div id="miniMenu">
+
+
+            <div v-for="filen in filename.length" :key="filen">
+                <button id="menubtn" @click="show = filename[filen-1]">{{filename[filen-1]}}</button>
+
+            </div>
+            <br>
+            <hr>
+        </div>
+        <div v-for="res in cordoutput.length" :key="res">
+
+            <div :id="filename[res-1]" v-if="show == filename[res-1]">
+                <h3>{{filename[res-1]}}</h3>
+                <br>
+                <table>
+                    <thead>
+                    <tr>
+                        <th class="text-left">#</th>
+                        <th class="text-left"></th>
+                        <th class="text-left">Wmrt</th>
+                        <th class="text-left">Npdtp</th>
+                        <th class="text-left">Ncdtp</th>
+                        <th class="text-left">Cm</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="line in cordoutput[res-1].length" :key="line">
+                        <td>{{line-1}}</td>
+                        <td class="code">{{cordoutput[res-1][line-1]}}</td>
+                        <td>{{Cm[res-1][line-1][0]}}</td>
+                        <td>{{Cm[res-1][line-1][1]}}</td>
+                        <td>{{Cm[res-1][line-1][2]}}</td>
+                        <td>{{Cm[res-1][line-1][3]}}</td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     import {methods} from "../controller/methods";
+
     export default {
         name: "methodComplexity",
         components: {},
@@ -35,18 +54,22 @@
         data: () => ({
             swap: false,
             link: 'mdi-link',
-            result: '',
-            cordoutput: '',
-            Wmrt: [],
-            Npdtp: [],
-            Ncdtp: [],
+            result: [],
+            cordoutput: [],
+            filename: [],
+            show: "",
             Cm: []
         }),
         mounted: function () {
-            if (localStorage.filedata) {
-                this.result = localStorage.getItem("filedata").toString().split("\n");
-                this.cordoutput = localStorage.getItem("filedata").toString().split("\n");
-                this.getComplexity();
+            if (localStorage.fileindex) {
+                for (let i = 0; i < localStorage.getItem("fileindex"); i++) {
+                    this.result.push(localStorage.getItem(`filedata${i}`).toString().split("\n"))
+                    this.cordoutput.push(localStorage.getItem(`filedata${i}`).toString().split("\n"));
+                    this.filename.push(localStorage.getItem(`filedataNmae${i}`).toString());
+                }
+                this.show = localStorage.getItem(`filedataNmae${0}`).toString();
+                this.Cm = JSON.parse(localStorage.getItem(`Cm`).toString());
+                //this.getComplexity();
             }
         },
         methods: {
@@ -82,7 +105,7 @@
                     codeline = codeline.split(/\(|\)/g);
                     console.log(codeline);
                     if (codeline[1] != "") {
-                         var words = codeline[1].split(" ");
+                        var words = codeline[1].split(" ");
                         for (var j = 0; j < words.length; j++) {
 
                             if (words[j].match(/(\bboolean\s\b)|(\bbool\s\b)|(\blong\s\b)|(\bbyte\s\b)|(\bshort\s\b)|(\bdouble\s\b)|(\bint\s\b)|(\bfloat\s\b)|(\bstring\s\b)|(\bString\s\b)|(\bchar\s\b)/g)) {
@@ -128,5 +151,23 @@
 
     tr:nth-child(odd) {
         background-color: #eee;
+    }
+
+    #menubtn {
+        outline: none;
+        border-radius: 5px;
+        color: #fff;
+        background: #258ad3;
+        height: 40px;
+        margin-left: 10px;
+        padding: 5px 8px 5px 8px;
+    }
+
+    #miniMenu {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+
     }
 </style>

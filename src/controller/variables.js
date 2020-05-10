@@ -89,7 +89,13 @@ export const variables = {
             return 0;
         }
     },
+
     classDetecter: (result) => {
+        console.log(result);
+         classstart = [];
+         classend = [];
+         allv = [];
+         primitiv = [];
         var startBracket = null, lastBracket = null, bracket = [];
         for (var i = 0; i < result.length; i++) {
             if (result[i].match(/{/g)) {
@@ -119,6 +125,8 @@ export const variables = {
 
     },
     MethodsDetecter: (result) => {
+         methedstart = [];
+         methedend = [];
         let startBracket = null, lastBracket = null, bracket = [];
         let methad = result;
         for (let j = 0; j < classstart.length; j++) {
