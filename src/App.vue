@@ -174,8 +174,8 @@ export default {
  created(){
  
  if(performance.navigation.type == 1){
-  // this.setType(true)
-  // this.setSub(true)
+  this.setType(true)
+  this.setSub(true)
  }
 
  
@@ -185,17 +185,17 @@ export default {
  beforeMount() {
 
 
-    window.addEventListener("beforeunload", event => {
+//     window.addEventListener("beforeunload", event => {
 
-      if(this.$route.path === '/'){
-     return
-   }else{
-event.preventDefault()
-      event.returnValue = "All of your uploaded files and calculations are may lost , please confirm"
-   }
+//       if(this.$route.path === '/'){
+//      return
+//    }else{
+// event.preventDefault()
+//       event.returnValue = "All of your uploaded files and calculations are may lost , please confirm"
+//    }
      
      
-    })
+//     })
   },
 
 
