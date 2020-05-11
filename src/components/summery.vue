@@ -1,40 +1,56 @@
+<script src="../controller/Controlstructures.js"></script>
 <template>
     <div>
-        <table>
 
-            <thead>
-            <tr>
-                <th class="text-left">#</th>
-                <th class="text-left"></th>
-                <th class="text-left">Nkw</th>
-                <th class="text-left">Nid</th>
-                <th class="text-left">Nop</th>
-                <th class="text-left">Nnv</th>
-                <th class="text-left">Nsl</th>
-                <th class="text-left">Cs</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="res in cordoutput.length" :key="res">
-                <td>{{res-1}}</td>
-                <td class="code">{{cordoutput[res-1]}}</td>
-                <td>{{Nkw[res-1]}}</td>
-                <td>{{Nid[res-1]}}</td>
-                <td>{{Nop[res-1]}}</td>
-                <td>{{Nnv[res-1]}}</td>
-                <td>{{Nsl[res-1]}}</td>
-                <td>{{Cs[res-1]}}</td>
+        <div id="miniMenu">
 
-            </tr>
-            </tbody>
 
-</table>
-</div>
+            <div v-for="filen in filename.length" :key="filen">
+                <button id="menubtn" @click="show = filename[filen-1]">{{filename[filen-1]}}</button>
+
+            </div>
+            <br>
+            <hr>
+        </div>
+        <div v-for="res in cordoutput.length" :key="res">
+
+            <div :id="filename[res-1]" v-if="show == filename[res-1]">
+                <h3>{{filename[res-1]}}</h3>
+                <br>
+                <table>
+                    <thead>
+                    <tr>
+                        <th class="text-left">#</th>
+                        <th class="text-left"></th>
+                        <th class="text-left">Nkw</th>
+                        <th class="text-left">Nid</th>
+                        <th class="text-left">Nop</th>
+                        <th class="text-left">Nnv</th>
+                        <th class="text-left">Nsl</th>
+                        <th class="text-left">Cs</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="line in cordoutput[res-1].length" :key="line">
+                        <td>{{line-1}}</td>
+                        <td class="code">{{cordoutput[res-1][line-1]}}</td>
+                        <td>{{Cs[res-1][line-1][0]}}</td>
+                        <td>{{Cs[res-1][line-1][1]}}</td>
+                        <td>{{Cs[res-1][line-1][2]}}</td>
+                        <td>{{Cs[res-1][line-1][3]}}</td>
+                        <td>{{Cs[res-1][line-1][4]}}</td>
+                        <td>{{Cs[res-1][line-1][5]}}</td>
+
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-    // import home from './home';
-    import {Size} from "../controller/Size";
     export default {
 
         name: 'notfound',
@@ -44,28 +60,26 @@
         data: () => ({
             swap: false,
             link: 'mdi-link',
-            result: '',
-            cordoutput: '',
-            Nkw: [],
-            Nid: [],
-            Nop: [],
-            Nnv: [],
-            Nsl: [],
-            Cs: []
+            result: [],
+            cordoutput: [],
+            filename: [],
+            show: "",
+            Cs: [],
         }),
         created() {
 
         },
 
         mounted: function () {
-            if (localStorage.filedata) {
-                this.result = localStorage.getItem("filedata").toString().split("\n");
-                this.cordoutput = localStorage.getItem("filedata").toString().split("\n");
-                this.multipalCommentidentify();
-                this.singalComment()
-                console.log(this.result)
+            if (localStorage.fileindex) {
+                for (let i = 0; i < localStorage.getItem("fileindex"); i++) {
+                    this.result.push(localStorage.getItem(`filedata${i}`).toString().split("\n"))
+                    this.cordoutput.push(localStorage.getItem(`filedata${i}`).toString().split("\n"));
+                    this.filename.push(localStorage.getItem(`filedataNmae${i}`).toString());
+                }
+                this.show = localStorage.getItem(`filedataNmae${0}`).toString();
+                this.Cs = JSON.parse(localStorage.getItem(`Cs`).toString());
 
-                this.getComplexity();
             }
         },
         methods: {
@@ -352,7 +366,6 @@
 </script>
 
 <style scoped>
-
     table {
         font-family: arial;
         width: 100%;
@@ -383,4 +396,21 @@
         background-color: #eee;
     }
 
-</style>>
+    #menubtn {
+        outline: none;
+        border-radius: 5px;
+        color: #fff;
+        background: #258ad3;
+        height: 40px;
+        margin-left: 10px;
+        padding: 5px 8px 5px 8px;
+    }
+
+    #miniMenu {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+
+    }
+</style>
