@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         nav: false,
-        sub: false
+        sub: false,
+        files:false,
     },
     getters: {
         getnav: state => {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
         getsub: state => {
             return state.sub
         },
+        getfiles: state => {
+            return state.files
+        },
     },
     mutations: {
         setnav: (state, type) => {
@@ -22,6 +26,9 @@ export default new Vuex.Store({
         },
         setsub: (state, type) => {
             state.sub = type
+        },
+        setfiles: (state, type) => {
+            state.files = type
         },
     },
     actions: {

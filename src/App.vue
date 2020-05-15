@@ -1,11 +1,30 @@
 <template>
   <v-app id="inspire">
+
+    <!-- dialog -->
+
+  
+    <v-dialog v-model="dialog" persistent max-width="290">
+      <v-card id="card">
+        <img src="./assets/confirm2.png" class="confirmImg">
+        <v-card-title class="headline justify-center">Are you sure ?</v-card-title>
+        <v-card-text>All your uploaded files and calculations are may lost.<br>please confirm</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+           <v-btn color="blue darken-1" text @click="dialog = false,confirmup=true">yes</v-btn>
+          <v-btn color="blue darken-1" text @click="dialog = false,confirmup=false">no</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+ 
+
+
     <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app v-if="getnav">
       <v-list dense nav link >
         <!-- navigation list items -->
 
         <v-list-item id="upload">
-          <router-link to="/">
+          
             <v-list-item-content id="lic">
               <!-- <v-list-item-title>Upload</v-list-item-title> -->
               <v-btn class="ma-2 white--text"
@@ -17,7 +36,7 @@
                 <v-icon right dark>mdi-cloud-upload</v-icon>
               </v-btn>
             </v-list-item-content>
-          </router-link>
+        
         </v-list-item>
 <v-list-item-group v-show="getsub">
         <v-list-item>
@@ -116,16 +135,20 @@
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
           <transition name="fade" mode="out-in">
-     
-            <router-view></router-view>
+       <nofile v-if="this.$route.path !== '/' && !this.$store.state.files"></nofile>
+            <router-view>
+            </router-view>
+            
           </transition>
         </v-row>
       </v-container>
     </v-content>
-    <v-btn bottom color dark fab fixed right @click="upload" id="fab">
+    <v-btn bottom color dark fab fixed right @click="upload" id="fab" v-if="getnav">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
 
+  
+  
     
   </v-app>
 </template>
@@ -149,32 +172,38 @@ export default {
     ]),
 },
  created(){
-  
-      if (performance.navigation.type == 1) {
-        if(this.$route.path != '/') {
-          if (confirm('Reload site?. Change you made may not be saved.')) {
-               this.setSub(false)
-               this.setType(false)
-                 this.$router.push({path: '/'})
-           
-          } else {
-            console.log('reload page now');
-            
-         
-                this.setSub(true)
-               this.setType(true)
-           
-               
-             
-        }
-      }
-  }
+ 
+ if(performance.navigation.type == 1){
+  this.setType(true)
+  this.setSub(true)
+ }
+
+ 
+ 
+
  },
+ beforeMount() {
+
+
+//     window.addEventListener("beforeunload", event => {
+
+//       if(this.$route.path === '/'){
+//      return
+//    }else{
+// event.preventDefault()
+//       event.returnValue = "All of your uploaded files and calculations are may lost , please confirm"
+//    }
+     
+     
+//     })
+  },
+
+
 
  
   data: () => ({
     
-    confirm:false,
+    confirmup:false,
     dialog: false,
     drawer: null,
     items: [
@@ -207,12 +236,33 @@ export default {
       { icon: "mdi-keyboard", text: "Go to the old version" }
     ]
   }),
+  watch:{
+   confirmup:function(up){
+      if(up == true){
+      this.setType(false)
+      router.push("/");
+      
+      
+      this.confirmup =false;
+       
+      }else{
+        
+        this.setType(false)
+          this.setSub(false)
+      }
+   }
+  },
 
   
   methods: {
+
+    test(){
+      alert('')
+    },
     upload() {
-      router.push("/");
-      this.setType(false)
+      this.dialog = !this.dialog
+      
+      
     },
      ...mapMutations([
       'setnav',
@@ -292,4 +342,19 @@ export default {
     #5772a5 100%
   ) !important;
 }
+
+#card{
+  text-align: center !important;
+}
+
+.confirmImg{
+width: 94px !important;
+justify-content: center !important;
+align-items: center !important;
+text-align: center !important;
+margin-top:10px;
+}
+/* #nf{
+  z-index:9999;
+} */
 </style>
