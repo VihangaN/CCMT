@@ -35,7 +35,6 @@
                         <td>{{Cm[res-1][line-1][1]}}</td>
                         <td>{{Cm[res-1][line-1][2]}}</td>
                         <td>{{Cm[res-1][line-1][3]}}</td>
-
                     </tr>
                     </tbody>
                 </table>

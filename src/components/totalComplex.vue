@@ -11,7 +11,8 @@
             <br>
             <hr>
         </div>
-        <div v-for="res in cordoutput.length" :key="res">
+        <button @click="exportToPDF">dfgdfg</button>
+        <div id="print" v-for="res in cordoutput.length" :key="res">
 
             <div :id="filename[res-1]" v-if="show == filename[res-1]">
                 <h3>{{filename[res-1]}}</h3>
@@ -51,6 +52,7 @@
                 </table>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -60,6 +62,9 @@
     import {variables} from "../controller/variables";
     import {Inheritance} from "../controller/Inheritance";
     import {Controlstructures} from "../controller/Controlstructures";
+    import {comment} from "../controller/comment";
+    import jsPDF from "jspdf";
+    import html2canvas from "html2canvas";
 
     export default {
         name: "totalComplex",
@@ -83,7 +88,8 @@
         }),
         mounted: function () {
             if (localStorage.fileindex) {
-                //   this.result = localStorage.getItem("filedata").toString().split("\n");
+
+
 
                 for (let i = 0; i < localStorage.getItem("fileindex"); i++) {
                     this.result.push(localStorage.getItem(`filedata${i}`).toString().split("\n"))
@@ -94,6 +100,13 @@
                 console.log(this.result)
                 console.log(this.constructor)
                 console.log(this.filename);
+
+                for (var i = 0; i < this.result.length; i++) {
+
+                    this.result[i]= comment.multipalCommentidentify(this.result[i])
+                    this.result[i]=comment.singalComment(this.result[i])
+                }
+
                 this.getComplexity();
             }
         },
@@ -267,6 +280,35 @@
                 this.Total.push(total);
                 console.log(this.AllTCps);
                 console.log(this.Total);
+            },
+            exportToPDF() {
+                window.html2canvas = html2canvas;
+
+                var doc = new jsPDF("p", "pt", "a4");
+
+
+                var source = document.getElementById("print").innerHTML;
+
+                var margins = {
+                    top: 10,
+                    bottom: 10,
+                    left: 10,
+                    width: 595
+                };
+
+                doc.fromHTML(
+                    source,
+                    margins.left,
+                    margins.top,
+                    {
+                        width: margins.width
+                    },
+                    function() {
+
+                        doc.save("Test.pdf");
+                    },
+                    margins
+                );
             }
         }
     }

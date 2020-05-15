@@ -330,19 +330,15 @@
                 var start = [], end = [];
                 var a = new RegExp("\\/\\*.+", "g")
                 var b = new RegExp(".\\*\\/", "g")
-                // console.log(a + " "+b);
                 for (var i = 0; i < this.result.length; i++) {
                     console.log(this.result[i].trim().match("\\/\\*.+"));
                     if (this.result[i].trim().match(a)) {
-                        //  console.log(i)
                         start.push(i);
                     }
                     if (this.result[i].trim().match(b)) {
-                        //  console.log(i)
                         end.push(i);
                     }
                 }
-                // console.log(start)
                 for (var j = 0; j < start.length; j++) {
                     for (var x = start[j]; x <= end[j]; x++) {
                         this.result[x] = "";
@@ -354,11 +350,9 @@
                 var b = new RegExp("\\/\\/", "g")
                 for (var i = 0; i < this.result.length; i++) {
                     if (this.result[i].trim().match(b)) {
-                        // console.log(i)
                         var filter = this.result[i].split(b);
                         this.result[i] = filter[0];
                     }
-
                 }
             }
         }
