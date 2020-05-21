@@ -16,14 +16,14 @@ export const Size = {
     getNid:(line) => {
 
         var objectVariableMethodClassIdentifier = Size.objectVariableMethodClassIdentifier(line);
-         var ForIdentifier = Size.ForIdentifier(line);
+       //  var ForIdentifier = Size.ForIdentifier(line);
         // var ForeachIdentifier = Size.ForeachIdentifier(line);
         // var IfIdentifier = Size.IfIdentifier(line);
         // var SwitchiIdentifier = Size.SwitchiIdentifier(line);
         // var WhileIdentifier = Size.WhileIdentifier(line);
         // var MethadCallIdentifier = Size.MethadCallIdentifier(line);
-        console.log(objectVariableMethodClassIdentifier + " " + ForIdentifier)// + " " + ForeachIdentifier + " " + IfIdentifier + " " + SwitchiIdentifier + " " + WhileIdentifier + " " + MethadCallIdentifier);
-        return  objectVariableMethodClassIdentifier + ForIdentifier// + ForeachIdentifier + IfIdentifier + SwitchiIdentifier + WhileIdentifier + MethadCallIdentifier;
+        console.log(objectVariableMethodClassIdentifier) //+ " " + ForIdentifier)// + " " + ForeachIdentifier + " " + IfIdentifier + " " + SwitchiIdentifier + " " + WhileIdentifier + " " + MethadCallIdentifier);
+        return  objectVariableMethodClassIdentifier// + ForIdentifier// + ForeachIdentifier + IfIdentifier + SwitchiIdentifier + WhileIdentifier + MethadCallIdentifier;
 
     },
     getNop:(line) => {
@@ -73,34 +73,31 @@ export const Size = {
     },
     objectVariableMethodClassIdentifier(line) {
         var classIdentyfer = "\\bclass\\b";
-        var methodsIdentyfer = "((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\w\\s\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*";
-        var variablesIdentyfer = "(?<=(\\bboolean\\s\\b)|(\\bbool\\s\\b)|(\\blong\\s\\b)|(\\bbyte\\s\\b)|(\\bshort\\s\\b)|(\\bdouble\\s\\b)|(\\bint\\s\\b)|(\\bfloat\\s\\b)|(\\bstring\\s\\b)|(\\bString\\s\\b)|(\\bchar\\s\\b))(\\w*)";
-        var multiVariableIdentifier = "(?<=(\\bboolean\\s\\b)|(\\bbool\\s\\b)|(\\blong\\s\\b)|(\\bbyte\\s\\b)|(\\bshort\\s\\b)|(\\bdouble\\s\\b)|(\\bint\\s\\b)|(\\bfloat\\s\\b)|(\\bstring\\s\\b)|(\\bString\\s\\b)|(\\bchar\\s\\b))(\\w*(,(.*)))(?=;)";
-        var objectIdentyfer = "\\=?[\" \"]*\\bnew\\b";
-
+        var methodsIdentyfer = "((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\w\\s\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*"
+        var variabals = new RegExp("(\\w+\\s\\w+;|\\w+\\s\\w+\\s?=\\s?\\w?.+;|(\\w*(,(.*)))(?=;)|(\\w+\\[\\]))","g");
+        var other = new RegExp("(public|private|protected|static|final|native|synchronized|abstract|transient|void|class|(\\bboolean\\s\\b)|(\\bbool\\s\\b)|(\\blong\\s\\b)|(\\bbyte\\s\\b)|(\\bshort\\s\\b)|(\\bdouble\\s\\b)|(\\bint\\s\\b)|(\\bfloat\\s\\b)|(\\bstring\\s\\b)|(\\bString\\s\\b)|(\\bchar\\s\\b)|\\(|\\)|\"[^\"]*\"|=|\\+|-|<|>|\\.|{|}|;|for|while|if|switch|\\d|\\s)","g");
         var counter = 0;
 
         if (line.match(classIdentyfer)) {
             counter = counter + 1;
-        }
-
-        if (line.match(methodsIdentyfer)) {
+        }else if (line.match(methodsIdentyfer)) {
             counter = counter + 1;
+        }else {
+           if (!line.match(variabals)||line.match(new RegExp("for|while|if|switch","g"))){
+               var afterRepase = line.replace(other," ");
+               var afterSpit = afterRepase.split(" ")
+               for (var i=0 ; i < afterSpit.length;i++){
+                   if (afterSpit[i]!=""){
+                       counter = counter + 1;
+                   }
+               }
+               console.log(afterSpit);
+           }
         }
 
-        if (line.match(objectIdentyfer)) {
-            counter = counter + 1;
-        }
 
-        if (line.match(variablesIdentyfer)) {
-            if (line.match(multiVariableIdentifier)) {
-               // var splitByComma = line.split(",");
-               // counter = counter + splitByComma.length;
-            } else {
-              //  counter = counter + 1;
-            }
 
-        }
+
         return counter;
 
     },

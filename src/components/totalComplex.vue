@@ -244,8 +244,8 @@
                     NC[i] = 0;
                     Ccspps[i] = 0;
                     Ccs[i] = 0;
-                    Wtcs[i] = Controlstructures.wtcs(file[i]);
-                    NC[i] = Controlstructures.NC(file[i]);
+                    Wtcs[i] = Controlstructures.wtcs(file[i],i);
+                    NC[i] = Controlstructures.NC(file[i]),i;
                     Ccs[i] = (Wtcs[i] * NC[i]) + Ccspps[i]
                     lineCcs.push(Wtcs[i])
                     lineCcs.push(NC[i])

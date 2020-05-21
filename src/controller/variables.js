@@ -45,7 +45,7 @@ export const variables = {
         var variable = new RegExp("(?<=(\\bboolean\\s\\b)|(\\bbool\\s\\b)|(\\blong\\s\\b)|(\\bbyte\\s\\b)|(\\bshort\\s\\b)|(\\bdouble\\s\\b)|(\\bint\\s\\b)|(\\bfloat\\s\\b)|(\\bstring\\s\\b)|(\\bString\\s\\b)|(\\bchar\\s\\b))(\\w*)", "g");
         var maltyvariable = new RegExp("(?<=(\\bboolean\\s\\b)|(\\bbool\\s\\b)|(\\blong\\s\\b)|(\\bbyte\\s\\b)|(\\bshort\\s\\b)|(\\bdouble\\s\\b)|(\\bint\\s\\b)|(\\bfloat\\s\\b)|(\\bstring\\s\\b)|(\\bString\\s\\b)|(\\bchar\\s\\b))(\\w*(,(.*)))(?=;)", "g")
         if (line.match(/(\w+\s\w+;|\w+\s\w+\s?=\s?\w?.+;|(\w*(,(.*)))(?=;)|(\w+\[\]))/g)) {
-            if (!line.match(/return/g) && !line.match(metherdpatrn)) {
+            if (!line.match(/return/g) && !line.match(metherdpatrn)&&!line.match(new RegExp("for|while|if|switch","g"))) {
                 if (line.match(maltyvariable)) {
                     var veribalMul = line.split(",");
                     primitiv.push(i);

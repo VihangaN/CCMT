@@ -16,6 +16,7 @@ var methedstart = [];
 var methedend = [];
 var classstart = [];
 var classend = [];
+
 var metherdpatrn1 = new RegExp("((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\w\\s\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*");
 var metherdpatrn2 = new RegExp("((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\w\\s\\[\\]]*\\s");
 var variableKeyWordRemover = new RegExp("(public|private|protected|static|final|native|synchronized|abstract|transient|boolean|bool|long|byte|short|double|int|float|string|String|char|.+]|.+>)", "g");
