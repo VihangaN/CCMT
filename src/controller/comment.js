@@ -6,7 +6,7 @@ export const comment = {
         var a = new RegExp("\\/\\*.+", "g")
         var b = new RegExp(".\\*\\/", "g")
         for (var i = 0; i < filetext.length; i++) {
-            console.log(filetext[i].trim().match("\\/\\*.+"));
+           // console.log(filetext[i].trim().match("\\/\\*.+"));
             if (filetext[i].trim().match(a)) {
                 start.push(i);
             }

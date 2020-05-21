@@ -18,7 +18,7 @@ export const variables = {
         var metherdpatrn = new RegExp("((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\w\\s\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*");
 
         if (line.match(/(\w+\s\w+;|\w+\s\w+\s?=\s?\w?.+;|(\w*(,(.*)))(?=;)|(\w+\[\]))/g)) {
-            if (!line.match(/return/g) && !line.match(metherdpatrn)) {
+            if (!line.match(/return/g) && !line.match(metherdpatrn)  && !line.match(new RegExp("for","g"))) {
                 var flag = false;
                 for (var x = 0; x < methedstart.length; x++) {
 
