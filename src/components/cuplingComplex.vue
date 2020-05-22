@@ -83,6 +83,7 @@
 
         }),
         mounted: function () {
+            // get file data ,file name and Ccp values from localStorage
             if (localStorage.fileindex) {
                 for (let i = 0; i < localStorage.getItem("fileindex"); i++) {
                     this.result.push(localStorage.getItem(`filedata${i}`).toString().split("\n"))

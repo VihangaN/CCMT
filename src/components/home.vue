@@ -57,6 +57,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import {mapState , mapGetters , mapMutations} from 'vuex'
 import router from '../router'
+import weight from '../assets/Weight.json'
 
 
 export default {
@@ -83,6 +84,9 @@ computed:{
       files: [] //  store multiple files
     };
   },
+    mounted: function () {
+        localStorage.setItem("weight",JSON.stringify(weight));
+},
   watch:{
       files: function (n) {
          if(n.length > 0){

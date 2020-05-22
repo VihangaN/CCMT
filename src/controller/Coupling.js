@@ -1,4 +1,5 @@
-var weight = require("../assets/Weight.json");
+var weight = require("../assets/Weight.json"); // import weight json file
+// Initialize arrays
 var recarsueMetherd = [];
 var recarsueMetherdFile = [];
 var recarsuemethedstart = [];
@@ -17,6 +18,7 @@ var methedend = [];
 var classstart = [];
 var classend = [];
 
+// Initialize checking patent
 var metherdpatrn1 = new RegExp("((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\w\\s\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*");
 var metherdpatrn2 = new RegExp("((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\w\\s\\[\\]]*\\s");
 var variableKeyWordRemover = new RegExp("(public|private|protected|static|final|native|synchronized|abstract|transient|boolean|bool|long|byte|short|double|int|float|string|String|char|.+]|.+>)", "g");
@@ -24,12 +26,12 @@ var methodCall = new RegExp("([^\\W:.,()\\s]+)\\s*\\(|::([^W:.,()\\s]+)");
 export const Coupling = {
 
 
-    Nr: (line) => {
+    Nr: (line) => { // Identify  recarsu method
         if (recarsueMetherdFile.length != 0) {
             for (let i = 0; i < recarsueMetherd.length; i++) {
 
                 if (line.match(new RegExp("(" + recarsueMetherd[i] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
-                    console.log(line);
+
                     return weight.Ccp.Wr;
 
                 } else {
@@ -40,8 +42,8 @@ export const Coupling = {
             return 0;
         }
     },
-    Nmcms: (line, fileindex, lineindex) => {
-        console.log(line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch")));
+    Nmcms: (line, fileindex, lineindex) => { // Identify  normal method call normal method same file
+
         if (line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch"))) {
             for (let i = 0; i < nomalMetherdFile.length; i++) {
 
@@ -51,7 +53,7 @@ export const Coupling = {
                         for (let j = 0; j < nomalMetherd.length; j++) {
 
                             if (line.match(new RegExp("(" + nomalMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
-                                console.log(line);
+
                                 if (nomalMetherdFile[j] == fileindex) {
                                     return weight.Ccp.Wmcms;
                                 } else {
@@ -73,7 +75,7 @@ export const Coupling = {
             return 0;
         }
     },
-    Nmcmd: (line, fileindex, lineindex) => {
+    Nmcmd: (line, fileindex, lineindex) => { // Identify  normal method call normal method different file
         if (line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch"))) {
             for (let i = 0; i < nomalMetherdFile.length; i++) {
 
@@ -105,7 +107,7 @@ export const Coupling = {
             return 0;
         }
     },
-    Nmcrms: (line, fileindex, lineindex) => {
+    Nmcrms: (line, fileindex, lineindex) => { // Identify  normal method call recrsue method same file
         if (line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch"))) {
             for (let i = 0; i < nomalMetherdFile.length; i++) {
 
@@ -136,7 +138,7 @@ export const Coupling = {
             return 0;
         }
     },
-    Nmcrmd: (line, fileindex, lineindex) => {
+    Nmcrmd: (line, fileindex, lineindex) => { // Identify  normal method call recersue method different file
         if (line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch"))) {
             for (let i = 0; i < nomalMetherdFile.length; i++) {
 
@@ -167,7 +169,7 @@ export const Coupling = {
             return 0;
         }
     },
-    Nrmcrms: (line, fileindex, lineindex) => {
+    Nrmcrms: (line, fileindex, lineindex) => { // Identify  recercue method call recersue method same file
         if (line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch"))) {
             for (let i = 0; i < recarsueMetherdFile.length; i++) {
 
@@ -198,7 +200,7 @@ export const Coupling = {
             return 0;
         }
     },
-    Nrmcrmd: (line, fileindex, lineindex) => {
+    Nrmcrmd: (line, fileindex, lineindex) => { // Identify  recersue method call recersue method different file
         if (line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch"))) {
             for (let i = 0; i < recarsueMetherdFile.length; i++) {
 
@@ -229,7 +231,7 @@ export const Coupling = {
             return 0;
         }
     },
-    Nrmcms: (line, fileindex, lineindex) => {
+    Nrmcms: (line, fileindex, lineindex) => {  // Identify  recersue method call normal method same file
         if (line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch"))) {
             for (let i = 0; i < recarsueMetherdFile.length; i++) {
 
@@ -261,7 +263,7 @@ export const Coupling = {
             return 0;
         }
     },
-    Nrmcmd: (line, fileindex, lineindex) => {
+    Nrmcmd: (line, fileindex, lineindex) => { // Identify  recersue method call normal method different file
         if (line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch"))) {
             for (let i = 0; i < recarsueMetherdFile.length; i++) {
 
@@ -293,7 +295,7 @@ export const Coupling = {
             return 0;
         }
     },
-    Nmrgvs: (line, fileindex, lineindex) => {
+    Nmrgvs: (line, fileindex, lineindex) => { // Identify  A regular method referencing a global variable in the same file
 
         for (let i = 0; i < nomalMetherdFile.length; i++) {
             if (nomalMetherdFile[i] == fileindex) {
@@ -325,7 +327,7 @@ export const Coupling = {
             }
         }
     },
-    Nmrgvd: (line, fileindex, lineindex) => {
+    Nmrgvd: (line, fileindex, lineindex) => { // identify A regular method referencing a global variable in a different file
         for (let i = 0; i < nomalMetherdFile.length; i++) {
             if (nomalMetherdFile[i] == fileindex) {
                 if (nomalmethedstart[i] <= lineindex && lineindex <= nomalmethedend[i]) {
@@ -356,7 +358,7 @@ export const Coupling = {
             }
         }
     },
-    Nrmrgvs: (line, fileindex, lineindex) => {
+    Nrmrgvs: (line, fileindex, lineindex) => { // Identify A recursive method referencing a global variable in the same file
         if (recarsueMetherdFile.length != 0) {
             for (let i = 0; i < recarsueMetherdFile.length; i++) {
                 if (recarsueMetherdFile[i] == fileindex) {
@@ -391,7 +393,7 @@ export const Coupling = {
             return 0;
         }
     },
-    Nrmrgvd: (line, fileindex, lineindex) => {
+    Nrmrgvd: (line, fileindex, lineindex) => { //Identify A recursive method referencing a global variable in a different file
         if (recarsueMetherdFile.length != 0) {
             for (let i = 0; i < recarsueMetherdFile.length; i++) {
                 if (recarsueMetherdFile[i] == fileindex) {
@@ -426,7 +428,7 @@ export const Coupling = {
             return 0;
         }
     },
-    methodTypeIdentyfer: (file, index) => {
+    methodTypeIdentyfer: (file, index) => { // identify method types normal or recurse
         for (var i = 0; i < methedstart.length; i++) {
             var functionNmae = '';
             var line, lineSplit;
@@ -455,11 +457,13 @@ export const Coupling = {
             }
 
             if (flag) {
+                //push recurse method data to array
                 recarsueMetherd.push(functionNmae)
                 recarsueMetherdFile.push(index)
                 recarsuemethedstart.push(start);
                 recarsuemethedend.push(end)
             } else {
+                //push recurse normal data to array
                 nomalMetherd.push(functionNmae);
                 nomalMetherdFile.push(index);
                 nomalmethedstart.push(start);
@@ -467,7 +471,7 @@ export const Coupling = {
             }
         }
     },
-    GlobalVariabalsIdentyfer: (file, index) => {
+    GlobalVariabalsIdentyfer: (file, index) => { // identify global variables
         for (var i = 0; i < file.length; i++) {
             if (file[i].match(/(\w+\s\w+;|\w+\s\w+\s?=\s?\w?.+;|(\w*(,(.*)))(?=;)|(\w+\[\]))/g)) {
                 if (!file[i].match(/return/g) && !file[i].match(metherdpatrn1) && !file[i].match(new RegExp("for", "g"))) {
@@ -495,7 +499,7 @@ export const Coupling = {
             }
         }
     },
-    classDetecter: (file) => {
+    classDetecter: (file) => { // identify class length
         console.log(file);
         classstart = [];
         classend = [];
@@ -526,7 +530,7 @@ export const Coupling = {
 
 
     },
-    MethodsDetecter: (file) => {
+    MethodsDetecter: (file) => { // identify method length
         methedstart = [];
         methedend = [];
         let startBracket = null, lastBracket = null, bracket = [];

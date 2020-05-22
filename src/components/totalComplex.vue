@@ -71,7 +71,7 @@
         name: "totalComplex",
         components: {},
 
-        data: () => ({
+        data: () => ({ // verbals declarations
             swap: false,
             link: 'mdi-link',
             result: [],
@@ -84,10 +84,18 @@
             AllCcp: [],
             AllCcs: [],
             AllTCps: [],
+            AllByColCs: 0,
+            AllByColCv: 0,
+            AllByColCm: 0,
+            AllByColCi: 0,
+            AllByColCcp: 0,
+            AllByColCcs: 0,
+            AllByColTCps: 0,
             Total: [],
             show: ""
         }),
         mounted: function () {
+            // get file data and file name  from localStorage
             if (localStorage.fileindex) {
                 for (let i = 0; i < localStorage.getItem("fileindex"); i++) {
                     this.result.push(localStorage.getItem(`filedata${i}`).toString().split("\n"))
@@ -95,23 +103,19 @@
                     this.filename.push(localStorage.getItem(`filedataNmae${i}`).toString());
                 }
                 this.show = localStorage.getItem(`filedataNmae${0}`).toString();
-                console.log(this.result)
-                console.log(this.constructor)
-                console.log(this.filename);
 
-                for (var i = 0; i < this.result.length; i++) {
+                for (var i = 0; i < this.result.length; i++) { // Loop by file by file
                     this.result[i] = comment.multipalCommentidentify(this.result[i])
                     this.result[i] = comment.singalComment(this.result[i])
-                    Coupling.classDetecter(this.result[i]);
-                    Coupling.MethodsDetecter(this.result[i]);
-                    Coupling.methodTypeIdentyfer(this.result[i], i);
-                    Coupling.GlobalVariabalsIdentyfer(this.result[i], i);
+                    Coupling.classDetecter(this.result[i]); // call class detector in coupling
+                    Coupling.MethodsDetecter(this.result[i]); // call class methods in coupling
+                    Coupling.methodTypeIdentyfer(this.result[i], i); // call class methods type detect in coupling
+                    Coupling.GlobalVariabalsIdentyfer(this.result[i], i); // call global variables detector in coupling
                 }
                 this.getComplexity();
             }
         },
         methods: {
-
             getComplexity() {
 
                 for (var i = 0; i < this.result.length; i++) {
@@ -123,6 +127,7 @@
                     this.Ccp(this.result[i], i)
                     this.TCps(i);
                 }
+                // save renault to localStorage
                 localStorage.setItem(`Cs`, JSON.stringify(this.AllCs));
                 localStorage.setItem(`Cv`, JSON.stringify(this.AllCv));
                 localStorage.setItem(`Cm`, JSON.stringify(this.AllCm));
@@ -130,7 +135,6 @@
                 localStorage.setItem(`Ccs`, JSON.stringify(this.AllCcs));
                 localStorage.setItem(`Ccp`, JSON.stringify(this.AllCcp));
             },
-
             Cs(file) {
                 var fileCs = [];
                 var Cs = [];
@@ -297,8 +301,8 @@
                     Nmrgvd[i] = Coupling.Nmrgvd(file[i]);
                     Nrmrgvs[i] = Coupling.Nrmrgvs(file[i]);
                     Nrmrgvd[i] = Coupling.Nrmrgvd(file[i]);
-                    Ccp[i] = Nr[i]+ Nmcms[i]+ Nmcmd[i]+ Nmcrms[i]+ Nmcrmd[i]+ Nrmcrms[i]+ Nrmcrmd[i]+ Nrmcms[i]+ Nrmcmd[i]+ Nmrgvs[i]+ Nmrgvd[i]+ Nrmrgvs[i]+Nrmrgvd[i];
-                    lineCcp.push(Nr[i], Nmcms[i], Nmcmd[i], Nmcrms[i], Nmcrmd[i], Nrmcrms[i], Nrmcrmd[i], Nrmcms[i], Nrmcmd[i], Nmrgvs[i], Nmrgvd[i], Nrmrgvs[i], Nrmrgvd[i],Ccp[i]);
+                    Ccp[i] = Nr[i] + Nmcms[i] + Nmcmd[i] + Nmcrms[i] + Nmcrmd[i] + Nrmcrms[i] + Nrmcrmd[i] + Nrmcms[i] + Nrmcmd[i] + Nmrgvs[i] + Nmrgvd[i] + Nrmrgvs[i] + Nrmrgvd[i];
+                    lineCcp.push(Nr[i], Nmcms[i], Nmcmd[i], Nmcrms[i], Nmcrmd[i], Nrmcrms[i], Nrmcrmd[i], Nrmcms[i], Nrmcmd[i], Nmrgvs[i], Nmrgvd[i], Nrmrgvs[i], Nrmrgvd[i], Ccp[i]);
                     fileCcp.push(lineCcp);
                     console.log(Coupling.Nr(file[i]))
                     console.log(Coupling.Nmcms(file[i], fileindex, i))
@@ -307,7 +311,6 @@
                 this.AllCcp.push(fileCcp);
                 console.log(this.AllCcp)
             },
-
             TCps(i) {
                 var Cs = this.AllCs[i]
                 var Cv = this.AllCv[i]
@@ -333,6 +336,14 @@
                     lineTCps.push(cp[cp.length - 1])
                     lineTCps.push(cs[cs.length - 1])
                     var TCps = s[s.length - 1] + v[v.length - 1] + m[m.length - 1] + inh[inh.length - 1] + cp[cp.length - 1] + cs[cs.length - 1]
+
+                    this.AllByColCs += s[s.length - 1];
+                    this.AllByColCv += v[v.length - 1]
+                    this.AllByColCm += m[m.length - 1]
+                    this.AllByColCi += inh[inh.length - 1]
+                    this.AllByColCcp += cp[cp.length - 1]
+                    this.AllByColCcs += cs[cs.length - 1]
+                    this.AllByColTCps += TCps
                     lineTCps.push(TCps);
                     total = total + TCps;
                     fileTCps.push(lineTCps)
