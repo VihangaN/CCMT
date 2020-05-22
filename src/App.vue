@@ -18,7 +18,7 @@
       </v-card>
     </v-dialog>
 
-    <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app v-if="getnav">
+    <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
       <v-list dense nav link>
         <!-- navigation list items -->
 
@@ -31,7 +31,7 @@
             </v-btn>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item-group v-show="getsub">
+        <v-list-item-group >
           <router-link to="/totalComplex">
             <v-list-item>
               <v-list-item-icon>

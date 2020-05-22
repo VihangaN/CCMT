@@ -1,4 +1,5 @@
 var weight = require("../assets/Weight.json"); // import weight json file
+var numbers = JSON.parse(localStorage.getItem('number'));
 // Initialize arrays
 var recarsueMetherd = [];
 var recarsueMetherdFile = [];
@@ -31,8 +32,11 @@ export const Coupling = {
             for (let i = 0; i < recarsueMetherd.length; i++) {
 
                 if (line.match(new RegExp("(" + recarsueMetherd[i] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
-
-                    return weight.Ccp.Wr;
+                    if(numbers.length == 0) {
+                        return weight.Ccp.Wr;
+                    }else {
+                        return numbers.ccp.wr;
+                    }
 
                 } else {
                     return 0;
@@ -55,7 +59,11 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + nomalMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
 
                                 if (nomalMetherdFile[j] == fileindex) {
-                                    return weight.Ccp.Wmcms;
+                                    if(numbers.length == 0) {
+                                        return weight.Ccp.Wmcms;
+                                    }else {
+                                        return numbers.ccp.wmcms;
+                                    }
                                 } else {
                                     return 0;
                                 }
@@ -87,7 +95,11 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + nomalMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
                                 console.log(line);
                                 if (nomalMetherdFile[j] != fileindex) {
-                                    return weight.Ccp.Wmcmd;
+                                    if (numbers.length == 0) {
+                                        return weight.Ccp.Wmcmd;
+                                    }else {
+                                        return numbers.ccp.wmcmd;
+                                    }
                                 } else {
                                     return 0;
                                 }
@@ -119,7 +131,11 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + recarsueMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
                                 console.log(line);
                                 if (recarsueMetherdFile[j] == fileindex) {
-                                    return weight.Ccp.Wmcrms;
+                                    if (numbers.length == 0) {
+                                        return weight.Ccp.Wmcrms;
+                                    }else {
+                                        return numbers.ccp.Wmcrms;
+                                    }
                                 } else {
                                     return 0;
                                 }
@@ -150,7 +166,11 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + recarsueMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
                                 console.log(line);
                                 if (recarsueMetherdFile[j] != fileindex) {
-                                    return weight.Ccp.Wmcrmd;
+                                    if (numbers.length == 0) {
+                                        return weight.Ccp.Wmcrmd;
+                                    }else {
+                                        return numbers.ccp.Wmcrmd;
+                                    }
                                 } else {
                                     return 0;
                                 }
@@ -181,7 +201,11 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + recarsueMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
                                 console.log(line);
                                 if (recarsueMetherdFile[j] == fileindex) {
-                                    return weight.Ccp.Wrmcrms;
+                                    if (numbers.length == 0) {
+                                        return weight.Ccp.Wrmcrms;
+                                    }else {
+                                        return numbers.ccp.Wrmcrms;
+                                    }
                                 } else {
                                     return 0;
                                 }
@@ -212,7 +236,11 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + recarsueMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
                                 console.log(line);
                                 if (recarsueMetherdFile[j] != fileindex) {
-                                    return weight.Ccp.Wrmcrmd;
+                                    if (numbers.length == 0) {
+                                        return weight.Ccp.Wrmcrmd;
+                                    }else {
+                                        return numbers.ccp.Wrmcrmd;
+                                    }
                                 } else {
                                     return 0;
                                 }
@@ -243,7 +271,11 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + nomalMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
                                 console.log(line);
                                 if (nomalMetherdFile[j] == fileindex) {
-                                    return weight.Ccp.Wrmcms;
+                                    if (numbers.length == 0) {
+                                        return weight.Ccp.Wrmcms;
+                                    }else {
+                                        return numbers.ccp.Wrmcms;
+                                    }
                                 } else {
                                     return 0;
                                 }
@@ -275,7 +307,11 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + nomalMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
                                 console.log(line);
                                 if (nomalMetherdFile[j] != fileindex) {
-                                    return weight.Ccp.Wrmcms;
+                                    if (numbers.length == 0) {
+                                        return weight.Ccp.Wrmcmd;
+                                    }else {
+                                        return numbers.ccp.Wrmcmd;
+                                    }
                                 } else {
                                     return 0;
                                 }
@@ -305,7 +341,12 @@ export const Coupling = {
                             for (var j = 0; j < GlobalVariabals.length; j++) {
                                 if (line.match(new RegExp(GlobalVariabals[j]))) {
                                     if (fileindex == GlobalVariabalsFile[j]) {
-                                        weight.Ccp.Wmrgvs;
+                                        if (numbers.length == 0) {
+                                            return weight.Ccp.Wmrgvs;
+                                        }else {
+                                            return numbers.ccp.Wmrgvs;
+                                        }
+
                                     } else {
                                         return 0;
                                     }
@@ -337,7 +378,12 @@ export const Coupling = {
                             for (var j = 0; j < GlobalVariabals.length; j++) {
                                 if (line.match(new RegExp(GlobalVariabals[j]))) {
                                     if (fileindex != GlobalVariabalsFile[j]) {
-                                        weight.Ccp.Wmrgvd;
+                                        if (numbers.length == 0) {
+                                            return weight.Ccp.Wmrgvd;
+                                        }else {
+                                            return numbers.ccp.Wmrgvd;
+                                        }
+
                                     } else {
                                         return 0;
                                     }
@@ -370,7 +416,12 @@ export const Coupling = {
                                 for (var j = 0; j < GlobalVariabals.length; j++) {
                                     if (line.match(new RegExp(GlobalVariabals[j]))) {
                                         if (fileindex == GlobalVariabalsFile[j]) {
-                                            weight.Ccp.Wrmrgvs;
+                                            if (numbers.length == 0) {
+                                                return weight.Ccp.Wrmrgvs;
+                                            }else {
+                                                return numbers.ccp.Wrmrgvs;
+                                            }
+
                                         } else {
                                             return 0;
                                         }
@@ -405,7 +456,13 @@ export const Coupling = {
                                 for (var j = 0; j < GlobalVariabals.length; j++) {
                                     if (line.match(new RegExp(GlobalVariabals[j]))) {
                                         if (fileindex != GlobalVariabalsFile[j]) {
-                                            weight.Ccp.Wrmrgvd;
+                                            if (numbers.length == 0) {
+                                                return weight.Ccp.Wrmrgvd;
+                                            }else {
+                                                return numbers.ccp.Wrmrgvd;
+                                            }
+
+
                                         } else {
                                             return 0;
                                         }

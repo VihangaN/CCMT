@@ -89,6 +89,8 @@
             AllCcs: [],
             AllTCps: [],
 
+            // summery by file
+            summery_by_file:[],
             // summery
             summery:{
             AllByColCs: 0,
@@ -146,6 +148,7 @@
                 localStorage.setItem(`Ccp`, JSON.stringify(this.AllCcp));
 
                  localStorage.setItem('summery',JSON.stringify(this.summery));
+                 localStorage.setItem('summery_by_file',JSON.stringify(this.summery_by_file));
             },
             Cs(file) {
                 var fileCs = [];
@@ -335,6 +338,15 @@
                 var Ci = this.AllCi[i]
                 var Ccs = this.AllCcs[i]
                 var Ccp = this.AllCcp[i]
+
+                var CsByFile = 0
+                var CvByFile = 0
+                var CmByFile = 0
+                var CiByFile = 0
+                var CcsByFile = 0
+                var CcpByFile = 0
+                var TCpsByFile = 0
+
                 var fileTCps = [];
                 var total = 0;
                 for (let j = 0; j < Cs.length; j++) {
@@ -345,7 +357,6 @@
                     var inh = Ci[j];
                     var cs = Ccs[j];
                     var cp = Ccp[j];
-                    //  var  = Cs[j];
                     lineTCps.push(s[s.length - 1])
                     lineTCps.push(v[v.length - 1])
                     lineTCps.push(m[m.length - 1])
@@ -355,20 +366,42 @@
                     var TCps = s[s.length - 1] + v[v.length - 1] + m[m.length - 1] + inh[inh.length - 1] + cp[cp.length - 1] + cs[cs.length - 1]
 
                     this.summery.AllByColCs += s[s.length - 1];
-                    this.summery.AllByColCv += v[v.length - 1]
-                    this.summery.AllByColCm += m[m.length - 1]
-                    this.summery.AllByColCi += inh[inh.length - 1]
-                    this.summery.AllByColCcp += cp[cp.length - 1]
-                    this.summery.AllByColCcs += cs[cs.length - 1]
+                    this.summery.AllByColCv += v[v.length - 1];
+                    this.summery.AllByColCm += m[m.length - 1];
+                    this.summery.AllByColCi += inh[inh.length - 1];
+                    this.summery.AllByColCcp += cp[cp.length - 1];
+                    this.summery.AllByColCcs += cs[cs.length - 1];
                     this.summery.AllByColTCps += TCps
+
+                     CsByFile += s[s.length - 1]
+                     CvByFile += v[v.length - 1]
+                     CmByFile += m[m.length - 1]
+                     CiByFile += inh[inh.length - 1]
+                     CcsByFile += cp[cp.length - 1]
+                     CcpByFile += cp[cp.length - 1]
+                     TCpsByFile += TCps
+
                     lineTCps.push(TCps);
                     total = total + TCps;
                     fileTCps.push(lineTCps)
                 }
                 this.AllTCps.push(fileTCps);
                 this.Total.push(total);
+                this.summery_by_file.push(
+                    {
+                        name:this.filename[i],
+                        Cs: CsByFile,
+                        Cv: CvByFile,
+                        Cm: CmByFile,
+                        Ci: CiByFile,
+                        Ccs: CcsByFile,
+                        Ccp: CcpByFile,
+                        TCps: TCpsByFile,
+                    }
+                    )
                 console.log(this.AllTCps);
                 console.log(this.Total);
+                console.log(this.summery_by_file);
             },
             exportToPDF() {
                 window.html2canvas = html2canvas;
