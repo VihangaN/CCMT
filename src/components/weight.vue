@@ -51,7 +51,7 @@
           <div class="column">
             <b-field>
               <b-numberinput
-                v-model="numbers.cs.wnp"
+                v-model="numbers.cs.wnv"
                 min="0"
                 controls-position="compact"
                 type="is-info"
@@ -610,7 +610,7 @@ export default {
       this.numbers.cs.wkv = this.weight.Cs.Wkw;
       this.numbers.cs.wid = this.weight.Cs.Wid;
       this.numbers.cs.wop = this.weight.Cs.Wop;
-      this.numbers.cs.wnp = this.weight.Cs.Wnv;
+      this.numbers.cs.wnv = this.weight.Cs.Wnv;
       this.numbers.cs.wsl = this.weight.Cs.Wsl;
 
       //cv
@@ -668,6 +668,7 @@ export default {
 
   created() {
     this.getWeight();
+
   }
 };
 </script>
