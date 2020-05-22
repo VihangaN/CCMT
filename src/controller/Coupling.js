@@ -326,6 +326,7 @@ export const Coupling = {
                 return 0;
             }
         }
+        return 0
     },
     Nmrgvd: (line, fileindex, lineindex) => { // identify A regular method referencing a global variable in a different file
         for (let i = 0; i < nomalMetherdFile.length; i++) {
@@ -357,6 +358,7 @@ export const Coupling = {
                 return 0;
             }
         }
+        return 0;
     },
     Nrmrgvs: (line, fileindex, lineindex) => { // Identify A recursive method referencing a global variable in the same file
         if (recarsueMetherdFile.length != 0) {
