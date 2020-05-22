@@ -1,4 +1,6 @@
 var weight = require('../assets/Weight.json');
+var numbers = JSON.parse(localStorage.getItem('number'));
+
 export const Size = {
 
     getNkw: (line) => { // Identify number of key words in a line
@@ -6,7 +8,13 @@ export const Size = {
         var counter = 0;
         for (var i = 0; i < keywords.length; i++) {
             if (line.match(keywords[i])) {
-                counter = counter + weight.Cs.Wkw;
+                if (numbers.length == 0) {
+                    console.log("if Nkw");
+                    counter = counter + weight.Cs.Wkw;
+                }else {
+                    counter = counter + numbers.cs.wkv;
+                    console.log("else Nkw");
+                }
 
             }
 
@@ -21,25 +29,34 @@ export const Size = {
         var counter = 0;
 
         if (line.match(classIdentyfer)) {
-            counter = counter + 1;
+            if (numbers.length == 0) {
+                counter = counter + weight.Cs.Wid;
+            }else {
+                counter = counter + numbers.cs.wid;
+            }
+
         }else if (line.match(methodsIdentyfer)) {
-            counter = counter + 1;
+            if (numbers.length == 0) {
+                counter = counter + weight.Cs.Wid;
+            }else {
+                counter = counter + numbers.cs.wid;
+            }
         }else {
             if (!line.match(variabals)||line.match(new RegExp("for|while|if|switch","g"))){
                 var afterRepase = line.replace(other," ");
                 var afterSpit = afterRepase.split(" ")
                 for (var i=0 ; i < afterSpit.length;i++){
                     if (afterSpit[i]!=""){
-                        counter = counter + 1;
+                        if (numbers.length == 0) {
+                            counter = counter + weight.Cs.Wid;
+                        }else {
+                            counter = counter + numbers.cs.wid;
+                        }
                     }
                 }
                 console.log(afterSpit);
             }
         }
-
-
-
-
         return counter;
 
     },
@@ -50,7 +67,11 @@ export const Size = {
         for (var operater = 0; operater < operaters.length; operater++) {
             var rejex = new RegExp(operaters[operater], "g");
             templine.replace(rejex, function (finder) {
-                counter = counter + weight.Cs.Wop;
+                if (numbers.length == 0) {
+                    counter = counter + weight.Cs.Wop;
+                }else {
+                    counter = counter + numbers.cs.wop;
+                }
                 console.log(finder);
                 finder = " ";
                 return finder;
@@ -71,7 +92,11 @@ export const Size = {
         for (var i = 0; i < line.length; i++) {
             if (line[i] != "") {
                 if (Number.isInteger(Number(line[i]))) {
-                    counter = counter + weight.Cs.Wnv;
+                    if (numbers.length == 0) {
+                        counter = counter + weight.Cs.Wnv;
+                    }else {
+                        counter = counter + numbers.cs.wnv;
+                    }
                 }
             }
 
@@ -83,7 +108,11 @@ export const Size = {
         var splitByPlus = line.split("+");
         for (var i = 0; i < splitByPlus.length; i++) {
             if (splitByPlus[i].match("\"[^\"]*\"")) {
-                counter = counter + weight.Cs.Wsl;
+                if (numbers.length == 0) {
+                    counter = counter + weight.Cs.Wsl;
+                }else {
+                    counter = counter + numbers.cs.wsl;
+                }
             }
         }
         return counter;

@@ -1,4 +1,5 @@
 var weight = require("../assets/Weight.json");
+var numbers = JSON.parse(localStorage.getItem('number'));
 // Initialize patent
 var forPattern = new RegExp("((?<!\\S)(for\\s*\\())|(while\\s*\\(.*\\)\\s*(?!\\s*;)|do\\s*\\{|do\\s*(?!.))");
 var ifPattern = new RegExp("if\\s*\\([\\(\\)\\w\\.><=!%\\+\\*\\/\\- \\|\\&]*\\)")
@@ -18,20 +19,46 @@ export const Controlstructures = {
 
         wtcs: (line) => {
             if (line.match(forPattern)) { // check line equals to for paten
-                wtcs.push(weight.Ccs.loop);
-                return weight.Ccs.loop
+                if(numbers.length == 0) {
+                    wtcs.push(weight.Ccs.loop);
+                    return weight.Ccs.loop
+                }
+                else {
+                    wtcs.push(numbers.ccs.loop);
+                    return numbers.ccs.loop
+                }
             } else if (line.match(ifPattern)) {// check line equals to if paten
-                wtcs.push(weight.Ccs.if_ifelse);
-                return weight.Ccs.if_ifelse;
+                if(numbers.length == 0) {
+                    wtcs.push(weight.Ccs.if_ifelse);
+                    return weight.Ccs.if_ifelse;
+                } else {
+                    wtcs.push(numbers.ccs.if_ifelse);
+                    return numbers.ccs.if_ifelse;
+                }
             } else if (line.match(switchPattern)) {// check line equals to switch paten
-                wtcs.push(weight.Ccs.switch);
-                return weight.Ccs.switch
+                if(numbers.length == 0) {
+                    wtcs.push(weight.Ccs.switch);
+                    return weight.Ccs.switch
+                }else {
+                    wtcs.push(numbers.ccs.switch);
+                    return numbers.ccs.switch
+                }
             } else if (line.match(whilePattern)) { // check line equals to while paten
-                wtcs.push(weight.Ccs.loop);
-                return weight.Ccs.loop
+                if(numbers.length == 0) {
+                    wtcs.push(weight.Ccs.loop);
+                    return weight.Ccs.loop
+                }else {
+                    wtcs.push(numbers.ccs.loop);
+                    return numbers.ccs.loop
+                }
             } else if (line.match(/case/g)) { // check line equals to case paten
-                wtcs.push(weight.Ccs.case);
-                return weight.Ccs.case
+                if(numbers.length == 0) {
+                    wtcs.push(weight.Ccs.case);
+                    return weight.Ccs.case
+                }else {
+                    wtcs.push(numbers.ccs.case);
+                    return numbers.ccs.case
+                }
             } else {
                 wtcs.push(0)
                 return 0

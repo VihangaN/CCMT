@@ -50,7 +50,7 @@
           <div class="column">
             <b-field>
               <b-numberinput
-                v-model="numbers.cs.wnp"
+                v-model="numbers.cs.wnv"
                 min="0"
                 controls-position="compact"
                 type="is-info"
@@ -644,15 +644,17 @@ export default {
       this.numbers.ccs.case = this.weight.Ccs.case;
     },
 
-    setWeight() {
-      localStorage.setItem("number", JSON.stringify(this.numbers));
-    },
+    setWeight(){
+      localStorage.setItem('number', JSON.stringify(this.numbers));
+      window.location.href='/totalComplex';
+    }
 
    
   },
 
   created() {
     this.getWeight();
+
   }
 };
 </script>

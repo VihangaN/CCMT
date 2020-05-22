@@ -1,4 +1,6 @@
 var weight = require('../assets/Weight.json');
+var numbers = JSON.parse(localStorage.getItem('number'));
+
 // Initialize arrays
 var methedstart = [];
 var methedend = [];
@@ -21,9 +23,17 @@ export const variables = {
                 }
                 allv.push(i);
                 if (flag) {
-                    return weight.Cv.Local
+                    if (numbers.length == 0) {
+                        return weight.Cv.Local
+                    }else {
+                        return numbers.cv.local
+                    }
                 } else {
-                    return weight.Cv.Global
+                    if (numbers.length == 0) {
+                        return weight.Cv.Global
+                    }else {
+                        return numbers.cv.global
+                    }
                 }
 
             } else {
@@ -42,10 +52,18 @@ export const variables = {
                 if (line.match(maltyvariable)) {
                     var veribalMul = line.split(",");
                     primitiv.push(i);
-                    return veribalMul.length * weight.Cv.Primitive;
+                    if (numbers.length == 0) {
+                        return veribalMul.length * weight.Cv.Primitive;
+                    }else {
+                        return veribalMul.length * numbers.cv.primitive;
+                    }
                 } else if (line.match(variable)) {
                     primitiv.push(i);
-                    return weight.Cv.Primitive;
+                    if (numbers.length == 0) {
+                        return weight.Cv.Primitive;
+                    }else {
+                        return numbers.cv.primitive;
+                    }
                 } else {
                     return 0;
                 }
@@ -72,7 +90,11 @@ export const variables = {
                 if (flag) {
                     return 0
                 } else {
-                    return weight.Cv.Composite
+                    if (numbers.length == 0) {
+                        return weight.Cv.Composite
+                    }else {
+                        return numbers.cv.composite;
+                    }
                 }
             }
 
