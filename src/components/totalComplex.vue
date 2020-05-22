@@ -401,7 +401,7 @@ export default {
     print(id) {
       htmlToImage.toPng(document.getElementById(id))
   .then(function (dataUrl) {
-    download(dataUrl, 'my-node.png');
+    download(dataUrl,new Date().toLocaleString());
   });
     }
   }
