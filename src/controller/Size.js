@@ -67,7 +67,7 @@ export const Size = {
         for (var operater = 0; operater < operaters.length; operater++) {
             var rejex = new RegExp(operaters[operater], "g");
             templine.replace(rejex, function (finder) {
-                if (numbers.length == 0) {
+                if (!localStorage.getItem('number')) {
                     counter = counter + weight.Cs.Wop;
                 }else {
                     counter = counter + numbers.cs.wop;

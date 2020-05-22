@@ -32,7 +32,7 @@ export const Coupling = {
             for (let i = 0; i < recarsueMetherd.length; i++) {
 
                 if (line.match(new RegExp("(" + recarsueMetherd[i] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
-                    if(numbers.length == 0) {
+                    if(!localStorage.getItem('number')) {
                         return weight.Ccp.Wr;
                     }else {
                         return numbers.ccp.wr;
@@ -59,7 +59,7 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + nomalMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
 
                                 if (nomalMetherdFile[j] == fileindex) {
-                                    if(numbers.length == 0) {
+                                    if(!localStorage.getItem('number')) {
                                         return weight.Ccp.Wmcms;
                                     }else {
                                         return numbers.ccp.wmcms;
@@ -95,7 +95,7 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + nomalMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
                                 console.log(line);
                                 if (nomalMetherdFile[j] != fileindex) {
-                                    if (numbers.length == 0) {
+                                    if (!localStorage.getItem('number')) {
                                         return weight.Ccp.Wmcmd;
                                     }else {
                                         return numbers.ccp.wmcmd;
@@ -131,7 +131,7 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + recarsueMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
                                 console.log(line);
                                 if (recarsueMetherdFile[j] == fileindex) {
-                                    if (numbers.length == 0) {
+                                    if (!localStorage.getItem('number')) {
                                         return weight.Ccp.Wmcrms;
                                     }else {
                                         return numbers.ccp.Wmcrms;
@@ -166,7 +166,7 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + recarsueMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
                                 console.log(line);
                                 if (recarsueMetherdFile[j] != fileindex) {
-                                    if (numbers.length == 0) {
+                                    if (!localStorage.getItem('number')) {
                                         return weight.Ccp.Wmcrmd;
                                     }else {
                                         return numbers.ccp.Wmcrmd;
@@ -201,7 +201,7 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + recarsueMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
                                 console.log(line);
                                 if (recarsueMetherdFile[j] == fileindex) {
-                                    if (numbers.length == 0) {
+                                    if (!localStorage.getItem('number')) {
                                         return weight.Ccp.Wrmcrms;
                                     }else {
                                         return numbers.ccp.Wrmcrms;
@@ -236,7 +236,7 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + recarsueMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
                                 console.log(line);
                                 if (recarsueMetherdFile[j] != fileindex) {
-                                    if (numbers.length == 0) {
+                                    if (!localStorage.getItem('number')) {
                                         return weight.Ccp.Wrmcrmd;
                                     }else {
                                         return numbers.ccp.Wrmcrmd;
@@ -271,7 +271,7 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + nomalMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
                                 console.log(line);
                                 if (nomalMetherdFile[j] == fileindex) {
-                                    if (numbers.length == 0) {
+                                    if (!localStorage.getItem('number')) {
                                         return weight.Ccp.Wrmcms;
                                     }else {
                                         return numbers.ccp.Wrmcms;
@@ -307,7 +307,7 @@ export const Coupling = {
                             if (line.match(new RegExp("(" + nomalMetherd[j] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
                                 console.log(line);
                                 if (nomalMetherdFile[j] != fileindex) {
-                                    if (numbers.length == 0) {
+                                    if (!localStorage.getItem('number')) {
                                         return weight.Ccp.Wrmcmd;
                                     }else {
                                         return numbers.ccp.Wrmcmd;
@@ -341,7 +341,7 @@ export const Coupling = {
                             for (var j = 0; j < GlobalVariabals.length; j++) {
                                 if (line.match(new RegExp(GlobalVariabals[j]))) {
                                     if (fileindex == GlobalVariabalsFile[j]) {
-                                        if (numbers.length == 0) {
+                                        if (!localStorage.getItem('number')) {
                                             return weight.Ccp.Wmrgvs;
                                         }else {
                                             return numbers.ccp.Wmrgvs;
@@ -378,7 +378,7 @@ export const Coupling = {
                             for (var j = 0; j < GlobalVariabals.length; j++) {
                                 if (line.match(new RegExp(GlobalVariabals[j]))) {
                                     if (fileindex != GlobalVariabalsFile[j]) {
-                                        if (numbers.length == 0) {
+                                        if (!localStorage.getItem('number')) {
                                             return weight.Ccp.Wmrgvd;
                                         }else {
                                             return numbers.ccp.Wmrgvd;
@@ -416,7 +416,7 @@ export const Coupling = {
                                 for (var j = 0; j < GlobalVariabals.length; j++) {
                                     if (line.match(new RegExp(GlobalVariabals[j]))) {
                                         if (fileindex == GlobalVariabalsFile[j]) {
-                                            if (numbers.length == 0) {
+                                            if (!localStorage.getItem('number')) {
                                                 return weight.Ccp.Wrmrgvs;
                                             }else {
                                                 return numbers.ccp.Wrmrgvs;
@@ -456,7 +456,7 @@ export const Coupling = {
                                 for (var j = 0; j < GlobalVariabals.length; j++) {
                                     if (line.match(new RegExp(GlobalVariabals[j]))) {
                                         if (fileindex != GlobalVariabalsFile[j]) {
-                                            if (numbers.length == 0) {
+                                            if (!localStorage.getItem('number')) {
                                                 return weight.Ccp.Wrmrgvd;
                                             }else {
                                                 return numbers.ccp.Wrmrgvd;

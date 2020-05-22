@@ -19,7 +19,7 @@ export const Controlstructures = {
 
         wtcs: (line) => {
             if (line.match(forPattern)) { // check line equals to for paten
-                if(numbers.length == 0) {
+                if(!localStorage.getItem('number')) {
                     wtcs.push(weight.Ccs.loop);
                     return weight.Ccs.loop
                 }
@@ -28,7 +28,7 @@ export const Controlstructures = {
                     return numbers.ccs.loop
                 }
             } else if (line.match(ifPattern)) {// check line equals to if paten
-                if(numbers.length == 0) {
+                if(!localStorage.getItem('number')) {
                     wtcs.push(weight.Ccs.if_ifelse);
                     return weight.Ccs.if_ifelse;
                 } else {
@@ -36,7 +36,7 @@ export const Controlstructures = {
                     return numbers.ccs.if_ifelse;
                 }
             } else if (line.match(switchPattern)) {// check line equals to switch paten
-                if(numbers.length == 0) {
+                if(!localStorage.getItem('number')) {
                     wtcs.push(weight.Ccs.switch);
                     return weight.Ccs.switch
                 }else {
@@ -44,7 +44,7 @@ export const Controlstructures = {
                     return numbers.ccs.switch
                 }
             } else if (line.match(whilePattern)) { // check line equals to while paten
-                if(numbers.length == 0) {
+                if(!localStorage.getItem('number')) {
                     wtcs.push(weight.Ccs.loop);
                     return weight.Ccs.loop
                 }else {
@@ -52,7 +52,7 @@ export const Controlstructures = {
                     return numbers.ccs.loop
                 }
             } else if (line.match(/case/g)) { // check line equals to case paten
-                if(numbers.length == 0) {
+                if(!localStorage.getItem('number')) {
                     wtcs.push(weight.Ccs.case);
                     return weight.Ccs.case
                 }else {

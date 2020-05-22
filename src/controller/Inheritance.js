@@ -61,25 +61,25 @@ export const Inheritance = {
     Ci:(tid)=>{  // return weight for number of inheritances
 
         if (tid == 1){
-            if(numbers.length == 0) {
+            if(!localStorage.getItem('number')) {
                 return weight.Ci.by_one_class
             }else {
                 return numbers.ci.by_one_class
             }
         }else if (tid == 2){
-            if(numbers.length == 0) {
+            if(!localStorage.getItem('number')) {
                 return weight.Ci.by_two_class
             }else {
                 return numbers.ci.by_two_class
             }
         }else if (tid == 3){
-            if(numbers.length == 0) {
+            if(!localStorage.getItem('number')) {
                 return weight.Ci.by_three_class
             }else {
                 return numbers.ci.by_three_class
             }
         }else if (tid >= 4){
-            if(numbers.length == 0) {
+            if(!localStorage.getItem('number')) {
             return weight.Ci.by_more_than_three_class
             }else {
                 return numbers.ci.by_more_than_three_class

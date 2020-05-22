@@ -23,13 +23,13 @@ export const variables = {
                 }
                 allv.push(i);
                 if (flag) {
-                    if (numbers.length == 0) {
+                    if (!localStorage.getItem('number')) {
                         return weight.Cv.Local
                     }else {
                         return numbers.cv.local
                     }
                 } else {
-                    if (numbers.length == 0) {
+                    if (!localStorage.getItem('number')) {
                         return weight.Cv.Global
                     }else {
                         return numbers.cv.global
@@ -52,14 +52,14 @@ export const variables = {
                 if (line.match(maltyvariable)) {
                     var veribalMul = line.split(",");
                     primitiv.push(i);
-                    if (numbers.length == 0) {
+                    if (!localStorage.getItem('number')) {
                         return veribalMul.length * weight.Cv.Primitive;
                     }else {
                         return veribalMul.length * numbers.cv.primitive;
                     }
                 } else if (line.match(variable)) {
                     primitiv.push(i);
-                    if (numbers.length == 0) {
+                    if (!localStorage.getItem('number')) {
                         return weight.Cv.Primitive;
                     }else {
                         return numbers.cv.primitive;
@@ -90,7 +90,7 @@ export const variables = {
                 if (flag) {
                     return 0
                 } else {
-                    if (numbers.length == 0) {
+                    if (!localStorage.getItem('number')) {
                         return weight.Cv.Composite
                     }else {
                         return numbers.cv.composite;

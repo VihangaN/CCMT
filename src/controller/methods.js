@@ -7,19 +7,19 @@ export const methods = {
             var codeline = line;
             codeline = codeline.split("(");
             if (codeline[0].match(/(\bboolean\s\b)|(\bbool\s\b)|(\blong\s\b)|(\bbyte\s\b)|(\bshort\s\b)|(\bdouble\s\b)|(\bint\s\b)|(\bfloat\s\b)|(\bstring\s\b)|(\bString\s\b)|(\bchar\s\b)/g)) { // Identify method return type
-                if (numbers.length == 0) {
+                if (!localStorage.getItem('number')) {
                     return weight.Cm.primitive_return;
                 }else {
                     return numbers.cm.primitive_return;
                 }
             } else if (codeline[0].match(/(\bvoid\s\b)/g)) {
-                if (numbers.length == 0) {
+                if (!localStorage.getItem('number')) {
                     return weight.Cm.void_return;
                 }else {
                     return numbers.cm.void_return;
                 }
             } else {
-                if (numbers.length == 0) {
+                if (!localStorage.getItem('number')) {
                     return weight.Cm.composite_return;
                 }else {
                     return numbers.cm.composite_return;
@@ -40,7 +40,7 @@ export const methods = {
                 for (var j = 0; j < words.length; j++) {
 
                     if (words[j].match(/(\bboolean\s\b)|(\bbool\s\b)|(\blong\s\b)|(\bbyte\s\b)|(\bshort\s\b)|(\bdouble\s\b)|(\bint\s\b)|(\bfloat\s\b)|(\bstring\s\b)|(\bString\s\b)|(\bchar\s\b)/g)) {
-                        if (numbers.length == 0) {
+                        if (!localStorage.getItem('number')) {
                             return weight.Cm.primitive_data_type
                         }else {
                             return numbers.cm.primitive_dt;
@@ -67,7 +67,7 @@ export const methods = {
                 for (var j = 0; j < words.length; j++) {
 
                     if (!words[j].match(/(\bboolean\s\b)|(\bbool\s\b)|(\blong\s\b)|(\bbyte\s\b)|(\bshort\s\b)|(\bdouble\s\b)|(\bint\s\b)|(\bfloat\s\b)|(\bstring\s\b)|(\bString\s\b)|(\bchar\s\b)/g)) {
-                        if (numbers.length == 0) {
+                        if (!localStorage.getItem('number')) {
                             return weight.Cm.composite_data_type
                         }else {
                             return numbers.cm.composite_dt;
