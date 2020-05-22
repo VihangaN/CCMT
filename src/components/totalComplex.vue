@@ -145,14 +145,14 @@
                 var Nid = [];
                 for (var i = 0; i < file.length; i++) {
                     var lineCs = [];
-                    console.log(Size.getNkw(file[i]));
+                   // call methods are defied in Size.js file and put in to array line by line
                     Nkw[i] = Size.getNkw(file[i])
                     Nnv[i] = Size.getNnv(file[i])
                     Nop[i] = Size.getNop(file[i])
                     Nsl[i] = Size.getNsl(file[i])
                     Nid[i] = Size.getNid(file[i])
 
-                    Cs[i] = Nkw[i] + Nid[i] + Nop[i] + Nnv[i] + Nsl[i];
+                    Cs[i] = Nkw[i] + Nid[i] + Nop[i] + Nnv[i] + Nsl[i]; //Cs calculation
                     lineCs.push(Nkw[i])
                     lineCs.push(Nid[i])
                     lineCs.push(Nop[i])
@@ -162,7 +162,6 @@
                     fileCs.push(lineCs)
                 }
                 this.AllCs.push(fileCs);
-                //  console.log(this.AllCs);
             },
             Cm(file) {
                 var fileCm = [];
@@ -171,6 +170,7 @@
                 var Ncdtp = [];
                 var Cm = [];
                 for (var i = 0; i < file.length; i++) {
+                    // call methods are defied in methods.js file and put in to array line by line
                     var lineCm = [];
                     Wmrt[i] = methods.Wmrt(file[i])
                     Npdtp[i] = methods.Npdtp(file[i])
@@ -196,6 +196,7 @@
                 variables.MethodsDetecter(file);
 
                 for (var i = 0; i < file.length; i++) {
+                    // call methods are defied in variables.js file and put in to array line by line
                     var lineCv = [];
                     Wvs[i] = 0;
                     Npdtv[i] = 0;
@@ -221,6 +222,7 @@
                 var Ti = []
                 Inheritance.classnamesIdenfy(file);
                 for (var i = 0; i < file.length; i++) {
+                    // call methods are defied in Inheritance.js file and put in to array line by line
                     var lineCi = [];
                     Ndi[i] = Inheritance.Ndi(file[i]);
                     Nidi[i] = Inheritance.Nidi(file[i]);
@@ -237,6 +239,8 @@
                 // console.log(this.AllCi);
             },
             Ccs(file) {
+                // call methods are defied in Inheritance.js file and put in to array file by file
+
                 Controlstructures.classDetecter(file);
                 Controlstructures.MethodsDetecter(file);
                 Controlstructures.sectionscaner(file);
@@ -286,21 +290,22 @@
                 var Nrmrgvd = [];
                 var Ccp = [];
                 for (var i = 0; i < file.length; i++) {
+                    // call methods are defied in Inheritance.js file and put in to array line by line
                     var lineCcp = [];
 
                     Nr[i] = Coupling.Nr(file[i]);
-                    Nmcms[i] = Coupling.Nmcms(file[i]);
-                    Nmcmd[i] = Coupling.Nmcmd(file[i]);
-                    Nmcrms[i] = Coupling.Nmcrms(file[i]);
-                    Nmcrmd[i] = Coupling.Nmcrmd(file[i]);
-                    Nrmcrms[i] = Coupling.Nrmcrms(file[i]);
-                    Nrmcrmd[i] = Coupling.Nrmcrmd(file[i]);
-                    Nrmcms[i] = Coupling.Nrmcms(file[i]);
-                    Nrmcmd[i] = Coupling.Nrmcmd(file[i]);
-                    Nmrgvs[i] = Coupling.Nmrgvs(file[i]);
-                    Nmrgvd[i] = Coupling.Nmrgvd(file[i]);
-                    Nrmrgvs[i] = Coupling.Nrmrgvs(file[i]);
-                    Nrmrgvd[i] = Coupling.Nrmrgvd(file[i]);
+                    Nmcms[i] = Coupling.Nmcms(file[i], fileindex, i);
+                    Nmcmd[i] = Coupling.Nmcmd(file[i], fileindex, i);
+                    Nmcrms[i] = Coupling.Nmcrms(file[i], fileindex, i);
+                    Nmcrmd[i] = Coupling.Nmcrmd(file[i], fileindex, i);
+                    Nrmcrms[i] = Coupling.Nrmcrms(file[i], fileindex, i);
+                    Nrmcrmd[i] = Coupling.Nrmcrmd(file[i], fileindex, i);
+                    Nrmcms[i] = Coupling.Nrmcms(file[i], fileindex, i);
+                    Nrmcmd[i] = Coupling.Nrmcmd(file[i], fileindex, i);
+                    Nmrgvs[i] = Coupling.Nmrgvs(file[i], fileindex, i);
+                    Nmrgvd[i] = Coupling.Nmrgvd(file[i], fileindex, i);
+                    Nrmrgvs[i] = Coupling.Nrmrgvs(file[i], fileindex, i);
+                    Nrmrgvd[i] = Coupling.Nrmrgvd(file[i], fileindex, i);
                     Ccp[i] = Nr[i] + Nmcms[i] + Nmcmd[i] + Nmcrms[i] + Nmcrmd[i] + Nrmcrms[i] + Nrmcrmd[i] + Nrmcms[i] + Nrmcmd[i] + Nmrgvs[i] + Nmrgvd[i] + Nrmrgvs[i] + Nrmrgvd[i];
                     lineCcp.push(Nr[i], Nmcms[i], Nmcmd[i], Nmcrms[i], Nmcrmd[i], Nrmcrms[i], Nrmcrmd[i], Nrmcms[i], Nrmcmd[i], Nmrgvs[i], Nmrgvd[i], Nrmrgvs[i], Nrmrgvd[i], Ccp[i]);
                     fileCcp.push(lineCcp);
