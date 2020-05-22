@@ -2,7 +2,7 @@
   <div id="contain">
     <!-- 1 -->
 
-    <button @click="log">log</button>
+   
     <div class="tile is-parent">
       <div class="tile is-child box">
         <p class="title">(cs) Weights related to the size factor</p>
@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">Wid</div>
           <div class="column">
             <b-field>
               <b-numberinput
@@ -34,157 +34,237 @@
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">Wop</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                min="0"
+                controls-position="compact"
+                type="is-info"
+                v-model="numbers.cs.wop"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">Wnp</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.cs.wnp"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">Wnv</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.cs.wsl"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 2 -->
+    <!-- cv -->
 
     <div class="tile is-parent">
       <div class="tile is-child box">
         <p class="title">(cv) Weights related to the variable factor</p>
 
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">Global</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.cv.global"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">Local</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.cv.local"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">Primitive</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.cv.primitive"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">Composite</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.cv.composite"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 3 -->
+    <!-- cm -->
 
     <div class="tile is-parent">
       <div class="tile is-child box">
         <p class="title">(cm) Weights related to the method factor</p>
 
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">Void return</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.cm.void_return"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">Primitive return</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.cm.primitive_return"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">Composite return</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.cm.composite_return"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">Primitive data type</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.cm.primitive_dt"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">Composite data type</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.cm.composite_dt"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 4 -->
+    <!-- ci -->
 
     <div class="tile is-parent">
       <div class="tile is-child box">
         <p class="title">(ci) Weights related to the inheritance factor</p>
 
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">by one class</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.ci.by_one_class"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">by two classes</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.ci.by_two_class"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">by three classes</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.ci.by_three_class"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">bu more than three classes</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.ci.by_more_than_three_class"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
@@ -195,74 +275,265 @@
 
     <div class="tile is-parent">
       <div class="tile is-child box">
-        <p class="title">Title</p>
+        <p class="title">(Ccp) Weights related to the coupling factor</p>
 
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">Wr</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.ccp.wr"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">Wmcms</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.ccp.wmcms"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
+            </b-field>
+          </div>
+        </div>
+        <div class="columns is-mobile">
+          <div class="column">Wmcmd</div>
+          <div class="column">
+            <b-field>
+              <b-numberinput
+                v-model="numbers.ccp.wmcmd"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
+            </b-field>
+          </div>
+        </div>
+        <div class="columns is-mobile">
+          <div class="column">Wmcrms</div>
+          <div class="column">
+            <b-field>
+              <b-numberinput
+                v-model="numbers.ccp.Wmcrms"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
+            </b-field>
+          </div>
+        </div>
+        <div class="columns is-mobile">
+          <div class="column">Wmcrmd</div>
+          <div class="column">
+            <b-field>
+              <b-numberinput
+                v-model="numbers.ccp.Wmcrmd"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
+            </b-field>
+          </div>
+        </div>
+        <div class="columns is-mobile">
+          <div class="column">Wrmcrms</div>
+          <div class="column">
+            <b-field>
+              <b-numberinput
+                v-model="numbers.ccp.Wrmcrms"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
+            </b-field>
+          </div>
+        </div>
+        <div class="columns is-mobile">
+          <div class="column">Wrmcrmd</div>
+          <div class="column">
+            <b-field>
+              <b-numberinput
+                v-model="numbers.ccp.Wrmcrmd"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
+            </b-field>
+          </div>
+        </div>
+        <div class="columns is-mobile">
+          <div class="column">Wrmcms</div>
+          <div class="column">
+            <b-field>
+              <b-numberinput
+                v-model="numbers.ccp.Wrmcms"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
+            </b-field>
+          </div>
+        </div>
+        <div class="columns is-mobile">
+          <div class="column">Wrmcmd</div>
+          <div class="column">
+            <b-field>
+              <b-numberinput
+                v-model="numbers.ccp.Wrmcmd"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
+            </b-field>
+          </div>
+        </div>
+        <div class="columns is-mobile">
+          <div class="column">Wmrgvs</div>
+          <div class="column">
+            <b-field>
+              <b-numberinput
+                v-model="numbers.ccp.Wmrgvs"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
+            </b-field>
+          </div>
+        </div>
+        <div class="columns is-mobile">
+          <div class="column">Wmrgvd</div>
+          <div class="column">
+            <b-field>
+              <b-numberinput
+                v-model="numbers.ccp.Wmrgvd"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
+            </b-field>
+          </div>
+        </div>
+        <div class="columns is-mobile">
+          <div class="column">Wrmrgvs</div>
+          <div class="column">
+            <b-field>
+              <b-numberinput
+                v-model="numbers.ccp.Wrmrgvs"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
+            </b-field>
+          </div>
+        </div>
+        <div class="columns is-mobile">
+          <div class="column">Wrmrgvd</div>
+          <div class="column">
+            <b-field>
+              <b-numberinput
+                v-model="numbers.ccp.Wrmrgvd"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 6 -->
+    <!-- ccs -->
 
     <div class="tile is-parent">
       <div class="tile is-child box">
-        <p class="title">Title</p>
+        <p class="title">(Ccs) Weights related to the control structure factor</p>
 
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">if / if else</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.ccs.if_ifelse"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column">1</div>
+          <div class="column">loop</div>
           <div class="column">
             <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
+              <b-numberinput
+                v-model="numbers.ccs.loop"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
             </b-field>
           </div>
         </div>
+        <div class="columns is-mobile">
+          <div class="column">switch</div>
+          <div class="column">
+            <b-field>
+              <b-numberinput
+                v-model="numbers.ccs.switch"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
+            </b-field>
+          </div>
+        </div>
+        <div class="columns is-mobile">
+          <div class="column">case</div>
+          <div class="column">
+            <b-field>
+              <b-numberinput
+                v-model="numbers.ccs.case"
+                min="0"
+                controls-position="compact"
+                type="is-info"
+              ></b-numberinput>
+            </b-field>
+          </div>
+        </div>
+
+        
+
+       
+
+
       </div>
     </div>
 
-    <!-- 7 -->
+    <!-- button -->
+
 
     <div class="tile is-parent">
       <div class="tile is-child box">
-        <p class="title">Title</p>
+        
 
-        <div class="columns is-mobile">
-          <div class="column">1</div>
-          <div class="column">
-            <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
-            </b-field>
+        <div class="columns is-mobile ">
+          <div class="column has-text-centered">
+
+            <b-button @click="setWeight"
+                type="is-info">
+                Save weight
+            </b-button>
           </div>
         </div>
-        <div class="columns is-mobile">
-          <div class="column">1</div>
-          <div class="column">
-            <b-field>
-              <b-numberinput min="0" controls-position="compact" type="is-info"></b-numberinput>
-            </b-field>
-          </div>
-        </div>
+      
+
       </div>
     </div>
   </div>
@@ -359,16 +630,39 @@ export default {
 
       //ci
 
-      this.numbers.ci.void_return = this.weight.Cm.void_return;
-      this.numbers.ci.primitive_return = this.weight.Cm.primitive_return;
-      this.numbers.ci.composite_return = this.weight.Cm.composite_return;
-      this.numbers.ci.primitive_dt = this.weight.Cm.primitive_data_type;
-      this.numbers.ci.composite_dt = this.weight.Cm.composite_data_type;
+      this.numbers.ci.by_one_class = this.weight.Ci.by_one_class;
+      this.numbers.ci.by_two_class = this.weight.Ci.by_two_class;
+      this.numbers.ci.by_three_class = this.weight.Ci.by_three_class;
+      this.numbers.ci.by_more_than_three_class = this.weight.Ci.by_more_than_three_class;
+
+      //ccp
+
+      this.numbers.ccp.wr = this.weight.Ccp.Wr;
+      this.numbers.ccp.wmcms = this.weight.Ccp.Wmcms;
+      this.numbers.ccp.wmcmd = this.weight.Ccp.Wmcmd;
+      this.numbers.ccp.Wmcrms = this.weight.Ccp.Wmcrms;
+      this.numbers.ccp.Wmcrmd = this.weight.Ccp.Wmcrmd;
+      this.numbers.ccp.Wrmcrms = this.weight.Ccp.Wrmcrms;
+      this.numbers.ccp.Wrmcrmd = this.weight.Ccp.Wrmcrmd;
+      this.numbers.ccp.Wrmcms = this.weight.Ccp.Wrmcms;
+      this.numbers.ccp.Wrmcmd = this.weight.Ccp.Wrmcmd;
+      this.numbers.ccp.Wmrgvs = this.weight.Ccp.Wmrgvs;
+      this.numbers.ccp.Wmrgvd = this.weight.Ccp.Wmrgvd;
+      this.numbers.ccp.Wrmrgvs = this.weight.Ccp.Wrmrgvs;
+      this.numbers.ccp.Wrmrgvd = this.weight.Ccp.Wrmrgvd;
+
+      //ccs
+
+       this.numbers.ccs.if_ifelse = this.weight.Ccs.if_ifelse;
+      this.numbers.ccs.loop = this.weight.Ccs.loop;
+      this.numbers.ccs.switch = this.weight.Ccs.switch;
+      this.numbers.ccs.case = this.weight.Ccs.case;
     },
 
-    log() {
-      console.log(this.numbers.cs, this.numbers.cv);
+    setWeight(){
+      localStorage.setItem('number', JSON.stringify(this.numbers));
     }
+
   },
 
   created() {

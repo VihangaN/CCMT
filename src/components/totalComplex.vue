@@ -14,7 +14,11 @@
         <div v-for="res in cordoutput.length" :key="res">
 
             <div :id="filename[res-1]" v-if="show == filename[res-1]">
-                <h3>{{filename[res-1]}}</h3>
+                <br>
+                <h3>{{filename[res-1]}} 
+                  <b-button type="is-info">Print</b-button>
+                
+                </h3> 
                 <br>
                 <table>
                     <thead>
