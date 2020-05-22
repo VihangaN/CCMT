@@ -1,3 +1,4 @@
+
 <script>
 import { Bar } from "vue-chartjs";
 
@@ -24,6 +25,9 @@ export default {
       },
       { responsive: true, maintainAspectRatio: false }
     );
+  },
+  methods:{
+    
   }
 };
 </script>

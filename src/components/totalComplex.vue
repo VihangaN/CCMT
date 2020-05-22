@@ -1,79 +1,73 @@
 <template>
-    <div>
-
-        <div id="miniMenu">
-
-
-            <div v-for="filen in filename.length" :key="filen">
-                <button id="menubtn" @click="show = filename[filen-1]">{{filename[filen-1]}}</button>
-
-            </div>
-            <br>
-            <hr>
-        </div>
-        <button @click="exportToPDF">dfgdfg</button>
-        <div id="print" v-for="res in cordoutput.length" :key="res">
-
-            <div :id="filename[res-1]" v-if="show == filename[res-1]">
-                <br>
-                <h3>{{filename[res-1]}} 
-                  <b-button type="is-info">Print</b-button>
-                
-                </h3> 
-                <br>
-                <table>
-                    <thead>
-                    <tr>
-                        <th class="text-left">#</th>
-                        <th class="text-left"></th>
-                        <th class="text-left">Cs</th>
-                        <th class="text-left">Cv</th>
-                        <th class="text-left">Cm</th>
-                        <th class="text-left">Ci</th>
-                        <th class="text-left">Ccp</th>
-                        <th class="text-left">Ccs</th>
-                        <th class="text-left">TCps</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="line in cordoutput[res-1].length" :key="line">
-                        <td>{{line}}</td>
-                        <td class="code">{{cordoutput[res-1][line-1]}}</td>
-                        <td>{{AllTCps[res-1][line-1][0]}}</td>
-                        <td>{{AllTCps[res-1][line-1][1]}}</td>
-                        <td>{{AllTCps[res-1][line-1][2]}}</td>
-                        <td>{{AllTCps[res-1][line-1][3]}}</td>
-                        <td>{{AllTCps[res-1][line-1][4]}}</td>
-                        <td>{{AllTCps[res-1][line-1][5]}}</td>
-                        <td>{{AllTCps[res-1][line-1][6]}}</td>
-
-                    </tr>
-                    <tr>
-                        <td colspan="8"><b>Total</b></td>
-                        <td>{{Total[res-1]}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
+  <div>
+    <div id="miniMenu">
+      <div v-for="filen in filename.length" :key="filen">
+        <button id="menubtn" @click="show = filename[filen-1]">{{filename[filen-1]}}</button>
+      </div>
+      <br />
+      <hr />
     </div>
+
+    <div id="print" v-for="res in cordoutput.length" :key="res">
+      <div :id="filename[res-1]" v-if="show == filename[res-1]">
+        <br />
+        <h3>
+          {{filename[res-1]}}
+          <b-button type="is-info" @click="print('print'+filename[res-1])">Print</b-button>
+        </h3>
+        <br />
+        <table :id="'print'+filename[res-1]" class="printBg">
+          <thead>
+            <tr>
+              <th class="text-left">#</th>
+              <th class="text-left"></th>
+              <th class="text-left">Cs</th>
+              <th class="text-left">Cv</th>
+              <th class="text-left">Cm</th>
+              <th class="text-left">Ci</th>
+              <th class="text-left">Ccp</th>
+              <th class="text-left">Ccs</th>
+              <th class="text-left">TCps</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="line in cordoutput[res-1].length" :key="line">
+              <td>{{line}}</td>
+              <td class="code">{{cordoutput[res-1][line-1]}}</td>
+              <td>{{AllTCps[res-1][line-1][0]}}</td>
+              <td>{{AllTCps[res-1][line-1][1]}}</td>
+              <td>{{AllTCps[res-1][line-1][2]}}</td>
+              <td>{{AllTCps[res-1][line-1][3]}}</td>
+              <td>{{AllTCps[res-1][line-1][4]}}</td>
+              <td>{{AllTCps[res-1][line-1][5]}}</td>
+              <td>{{AllTCps[res-1][line-1][6]}}</td>
+            </tr>
+            <tr>
+              <td colspan="8">
+                <b>Total</b>
+              </td>
+              <td>{{Total[res-1]}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-    import {Size} from "../controller/Size";
-    import {methods} from "../controller/methods";
-    import {variables} from "../controller/variables";
-    import {Inheritance} from "../controller/Inheritance";
-    import {Controlstructures} from "../controller/Controlstructures";
-    import {comment} from "../controller/comment";
-    import jsPDF from "jspdf";
-    import html2canvas from "html2canvas";
-    import {Coupling} from "../controller/Coupling";
-
-    export default {
-        name: "totalComplex",
-        components: {},
+import { Size } from "../controller/Size";
+import { methods } from "../controller/methods";
+import { variables } from "../controller/variables";
+import { Inheritance } from "../controller/Inheritance";
+import { Controlstructures } from "../controller/Controlstructures";
+import { comment } from "../controller/comment";
+import { Coupling } from "../controller/Coupling";
+import htmlToImage from "html-to-image";
+import download from 'downloadjs'
+export default {
+  name: "totalComplex",
+  components: {},
 
         data: () => ({ // variable declarations
             swap: false,
@@ -403,37 +397,15 @@
                 console.log(this.Total);
                 console.log(this.summery_by_file);
             },
-            exportToPDF() {
-                window.html2canvas = html2canvas;
 
-                var doc = new jsPDF("p", "pt", "a4");
-
-
-                var source = document.getElementById("print").innerHTML;
-
-                var margins = {
-                    top: 10,
-                    bottom: 10,
-                    left: 10,
-                    width: 595
-                };
-
-                doc.fromHTML(
-                    source,
-                    margins.left,
-                    margins.top,
-                    {
-                        width: margins.width
-                    },
-                    function () {
-
-                        doc.save("Test.pdf");
-                    },
-                    margins
-                );
-            }
-        }
+    print(id) {
+      htmlToImage.toPng(document.getElementById(id))
+  .then(function (dataUrl) {
+    download(dataUrl, 'my-node.png');
+  });
     }
+  }
+};
 </script>
 
 <style scoped>
@@ -467,21 +439,27 @@
         background-color: #eee;
     }
 
-    #menubtn {
-        outline: none;
-        border-radius: 5px;
-        color: #fff;
-        background: #258ad3;
-        height: 40px;
-        margin-left: 10px;
-        padding: 5px 8px 5px 8px;
-    }
+tr:nth-child(even) {
+  background-color: #fff;
+}
+
+#menubtn {
+  outline: none;
+  border-radius: 5px;
+  color: #fff;
+  background: #258ad3;
+  height: 40px;
+  margin-left: 10px;
+  padding: 5px 8px 5px 8px;
+}
 
     #miniMenu {
         display: flex;
         align-items: center;
         width: 100%;
         justify-content: center;
-
     }
+.printBg{
+    background-color: #fff;
+}
 </style>

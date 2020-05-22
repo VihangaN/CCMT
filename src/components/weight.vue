@@ -2,7 +2,6 @@
   <div id="contain">
     <!-- 1 -->
 
-   
     <div class="tile is-parent">
       <div class="tile is-child box">
         <p class="title">(cs) Weights related to the size factor</p>
@@ -507,39 +506,25 @@
             </b-field>
           </div>
         </div>
-
-        
-
-       
-
-
       </div>
     </div>
 
     <!-- button -->
 
-
     <div class="tile is-parent">
       <div class="tile is-child box">
-        
-
-        <div class="columns is-mobile ">
+        <div class="columns is-mobile">
           <div class="column has-text-centered">
-
-            <b-button @click="setWeight"
-                type="is-info">
-                Save weight
-            </b-button>
+            <b-button @click="setWeight" type="is-info">Save weight</b-button>
           </div>
         </div>
-      
-
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
 var weights = require("../assets/Weight.json");
 export default {
   name: "weight",
@@ -653,7 +638,7 @@ export default {
 
       //ccs
 
-       this.numbers.ccs.if_ifelse = this.weight.Ccs.if_ifelse;
+      this.numbers.ccs.if_ifelse = this.weight.Ccs.if_ifelse;
       this.numbers.ccs.loop = this.weight.Ccs.loop;
       this.numbers.ccs.switch = this.weight.Ccs.switch;
       this.numbers.ccs.case = this.weight.Ccs.case;
@@ -664,6 +649,7 @@ export default {
       window.location.href='/totalComplex';
     }
 
+   
   },
 
   created() {
