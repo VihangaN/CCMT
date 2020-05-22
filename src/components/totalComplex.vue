@@ -377,7 +377,7 @@
                      CvByFile += v[v.length - 1]
                      CmByFile += m[m.length - 1]
                      CiByFile += inh[inh.length - 1]
-                     CcsByFile += cp[cp.length - 1]
+                     CcsByFile += cs[cs.length - 1]
                      CcpByFile += cp[cp.length - 1]
                      TCpsByFile += TCps
 

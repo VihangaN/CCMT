@@ -8,7 +8,7 @@ export const Size = {
         var counter = 0;
         for (var i = 0; i < keywords.length; i++) {
             if (line.match(keywords[i])) {
-                if (numbers.length == 0) {
+                if (!localStorage.getItem('number')) {
                     console.log("if Nkw");
                     counter = counter + weight.Cs.Wkw;
                 }else {
@@ -29,14 +29,14 @@ export const Size = {
         var counter = 0;
 
         if (line.match(classIdentyfer)) {
-            if (numbers.length == 0) {
+            if (!localStorage.getItem('number')) {
                 counter = counter + weight.Cs.Wid;
             }else {
                 counter = counter + numbers.cs.wid;
             }
 
         }else if (line.match(methodsIdentyfer)) {
-            if (numbers.length == 0) {
+            if (!localStorage.getItem('number')) {
                 counter = counter + weight.Cs.Wid;
             }else {
                 counter = counter + numbers.cs.wid;
@@ -47,7 +47,7 @@ export const Size = {
                 var afterSpit = afterRepase.split(" ")
                 for (var i=0 ; i < afterSpit.length;i++){
                     if (afterSpit[i]!=""){
-                        if (numbers.length == 0) {
+                        if (!localStorage.getItem('number')) {
                             counter = counter + weight.Cs.Wid;
                         }else {
                             counter = counter + numbers.cs.wid;
@@ -92,7 +92,7 @@ export const Size = {
         for (var i = 0; i < line.length; i++) {
             if (line[i] != "") {
                 if (Number.isInteger(Number(line[i]))) {
-                    if (numbers.length == 0) {
+                    if (!localStorage.getItem('number')) {
                         counter = counter + weight.Cs.Wnv;
                     }else {
                         counter = counter + numbers.cs.wnv;
@@ -108,7 +108,7 @@ export const Size = {
         var splitByPlus = line.split("+");
         for (var i = 0; i < splitByPlus.length; i++) {
             if (splitByPlus[i].match("\"[^\"]*\"")) {
-                if (numbers.length == 0) {
+                if (!localStorage.getItem('number')) {
                     counter = counter + weight.Cs.Wsl;
                 }else {
                     counter = counter + numbers.cs.wsl;
