@@ -1,4 +1,5 @@
 var weight = require('../assets/Weight.json');
+// Initialize arrays
 var methedstart = [];
 var methedend = [];
 var classstart = [];
@@ -6,19 +7,11 @@ var classend = [];
 var allv = [];
 var primitiv = [];
 export const variables = {
-    a: () => {
-        console.log(methedstart);
-        console.log(methedend);
-        console.log(classstart);
-        console.log(classend);
-        console.log(allv);
-        console.log(primitiv);
-    },
-    Wvs: (line, i) => {
+    Wvs: (line, i) => { //Identify variable scope
         var metherdpatrn = new RegExp("((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\w\\s\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*");
 
         if (line.match(/(\w+\s\w+;|\w+\s\w+\s?=\s?\w?.+;|(\w*(,(.*)))(?=;)|(\w+\[\]))/g)) {
-            if (!line.match(/return/g) && !line.match(metherdpatrn)) {
+            if (!line.match(/return/g) && !line.match(metherdpatrn)  && !line.match(new RegExp("for","g"))) {
                 var flag = false;
                 for (var x = 0; x < methedstart.length; x++) {
 
@@ -40,12 +33,12 @@ export const variables = {
             return 0
         }
     },
-    Npdtv: (line, i) => {
+    Npdtv: (line, i) => { //Identify primitive data type variables
         var metherdpatrn = new RegExp("((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\w\\s\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*", "g");
         var variable = new RegExp("(?<=(\\bboolean\\s\\b)|(\\bbool\\s\\b)|(\\blong\\s\\b)|(\\bbyte\\s\\b)|(\\bshort\\s\\b)|(\\bdouble\\s\\b)|(\\bint\\s\\b)|(\\bfloat\\s\\b)|(\\bstring\\s\\b)|(\\bString\\s\\b)|(\\bchar\\s\\b))(\\w*)", "g");
         var maltyvariable = new RegExp("(?<=(\\bboolean\\s\\b)|(\\bbool\\s\\b)|(\\blong\\s\\b)|(\\bbyte\\s\\b)|(\\bshort\\s\\b)|(\\bdouble\\s\\b)|(\\bint\\s\\b)|(\\bfloat\\s\\b)|(\\bstring\\s\\b)|(\\bString\\s\\b)|(\\bchar\\s\\b))(\\w*(,(.*)))(?=;)", "g")
         if (line.match(/(\w+\s\w+;|\w+\s\w+\s?=\s?\w?.+;|(\w*(,(.*)))(?=;)|(\w+\[\]))/g)) {
-            if (!line.match(/return/g) && !line.match(metherdpatrn)) {
+            if (!line.match(/return/g) && !line.match(metherdpatrn)&&!line.match(new RegExp("for|while|if|switch","g"))) {
                 if (line.match(maltyvariable)) {
                     var veribalMul = line.split(",");
                     primitiv.push(i);
@@ -64,7 +57,7 @@ export const variables = {
         }
 
     },
-    Ncdtv: (line, i) => {
+    Ncdtv: (line, i) => { //Identify composite data type variables
         var flag1 = false
         for (var j = 0; j < allv.length; j++) {
             if (allv[j] == i) {
@@ -90,7 +83,7 @@ export const variables = {
         }
     },
 
-    classDetecter: (result) => {
+    classDetecter: (result) => { //Identify class length
         console.log(result);
          classstart = [];
          classend = [];
@@ -124,7 +117,7 @@ export const variables = {
 
 
     },
-    MethodsDetecter: (result) => {
+    MethodsDetecter: (result) => { //Identify method length
          methedstart = [];
          methedend = [];
         let startBracket = null, lastBracket = null, bracket = [];

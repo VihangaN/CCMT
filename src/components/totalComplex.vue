@@ -1,6 +1,6 @@
 <template>
     <div>
-       
+
         <div id="miniMenu">
 
 
@@ -11,7 +11,8 @@
             <br>
             <hr>
         </div>
-        <div v-for="res in cordoutput.length" :key="res">
+        <button @click="exportToPDF">dfgdfg</button>
+        <div id="print" v-for="res in cordoutput.length" :key="res">
 
             <div :id="filename[res-1]" v-if="show == filename[res-1]">
                 <br>
@@ -55,8 +56,8 @@
                 </table>
             </div>
         </div>
-          </div>
- 
+
+    </div>
 </template>
 
 <script>
@@ -65,12 +66,16 @@
     import {variables} from "../controller/variables";
     import {Inheritance} from "../controller/Inheritance";
     import {Controlstructures} from "../controller/Controlstructures";
+    import {comment} from "../controller/comment";
+    import jsPDF from "jspdf";
+    import html2canvas from "html2canvas";
+    import {Coupling} from "../controller/Coupling";
 
     export default {
         name: "totalComplex",
         components: {},
 
-        data: () => ({
+        data: () => ({ // variable declarations
             swap: false,
             link: 'mdi-link',
             result: [],
@@ -83,40 +88,64 @@
             AllCcp: [],
             AllCcs: [],
             AllTCps: [],
+
+            // summery
+            summery:{
+            AllByColCs: 0,
+            AllByColCv: 0,
+            AllByColCm: 0,
+            AllByColCi: 0,
+            AllByColCcp: 0,
+            AllByColCcs: 0,
+            AllByColTCps: 0
+            },
             Total: [],
-            show: ""
+            show: "",
         }),
         mounted: function () {
+            // get file data and file name  from localStorage
             if (localStorage.fileindex) {
-                //   this.result = localStorage.getItem("filedata").toString().split("\n");
-
                 for (let i = 0; i < localStorage.getItem("fileindex"); i++) {
                     this.result.push(localStorage.getItem(`filedata${i}`).toString().split("\n"))
                     this.cordoutput.push(localStorage.getItem(`filedata${i}`).toString().split("\n"));
                     this.filename.push(localStorage.getItem(`filedataNmae${i}`).toString());
                 }
                 this.show = localStorage.getItem(`filedataNmae${0}`).toString();
-                console.log(this.result)
-                console.log(this.constructor)
-                console.log(this.filename);
+
+                for (var i = 0; i < this.result.length; i++) { // Loop by file by file
+                    this.result[i] = comment.multipalCommentidentify(this.result[i])
+                    this.result[i] = comment.singalComment(this.result[i])
+                    Coupling.classDetecter(this.result[i]); // call class detector in coupling
+                    Coupling.MethodsDetecter(this.result[i]); // call class methods in coupling
+                    Coupling.methodTypeIdentyfer(this.result[i], i); // call class methods type detect in coupling
+                    Coupling.GlobalVariabalsIdentyfer(this.result[i], i); // call global variables detector in coupling
+                }
                 this.getComplexity();
             }
+
+           
         },
         methods: {
             getComplexity() {
+
                 for (var i = 0; i < this.result.length; i++) {
                     this.Cs(this.result[i]);
                     this.Cm(this.result[i]);
                     this.Cv(this.result[i]);
                     this.Ci(this.result[i]);
                     this.Ccs(this.result[i]);
+                    this.Ccp(this.result[i], i)
                     this.TCps(i);
                 }
-                localStorage.setItem(`Cs`,JSON.stringify(this.AllCs));
-                localStorage.setItem(`Cv`,JSON.stringify(this.AllCv));
-                localStorage.setItem(`Cm`,JSON.stringify(this.AllCm));
-                localStorage.setItem(`Ci`,JSON.stringify(this.AllCi));
-                localStorage.setItem(`Ccs`,JSON.stringify(this.AllCcs));
+                // save renault to localStorage
+                localStorage.setItem(`Cs`, JSON.stringify(this.AllCs));
+                localStorage.setItem(`Cv`, JSON.stringify(this.AllCv));
+                localStorage.setItem(`Cm`, JSON.stringify(this.AllCm));
+                localStorage.setItem(`Ci`, JSON.stringify(this.AllCi));
+                localStorage.setItem(`Ccs`, JSON.stringify(this.AllCcs));
+                localStorage.setItem(`Ccp`, JSON.stringify(this.AllCcp));
+
+                 localStorage.setItem('summery',JSON.stringify(this.summery));
             },
             Cs(file) {
                 var fileCs = [];
@@ -125,6 +154,7 @@
                 var Nop = [];
                 var Nnv = [];
                 var Nsl = [];
+                var Nid = [];
                 for (var i = 0; i < file.length; i++) {
                     var lineCs = [];
                     console.log(Size.getNkw(file[i]));
@@ -132,10 +162,11 @@
                     Nnv[i] = Size.getNnv(file[i])
                     Nop[i] = Size.getNop(file[i])
                     Nsl[i] = Size.getNsl(file[i])
+                    Nid[i] = Size.getNid(file[i])
 
-                    Cs[i] = Nkw[i] + 0 + Nop[i] + Nnv[i] + Nsl[i];
+                    Cs[i] = Nkw[i] + Nid[i] + Nop[i] + Nnv[i] + Nsl[i];
                     lineCs.push(Nkw[i])
-                    lineCs.push(0)
+                    lineCs.push(Nid[i])
                     lineCs.push(Nop[i])
                     lineCs.push(Nnv[i])
                     lineCs.push(Nsl[i])
@@ -143,7 +174,7 @@
                     fileCs.push(lineCs)
                 }
                 this.AllCs.push(fileCs);
-              //  console.log(this.AllCs);
+                //  console.log(this.AllCs);
             },
             Cm(file) {
                 var fileCm = [];
@@ -164,7 +195,7 @@
                     fileCm.push(lineCm)
                 }
                 this.AllCm.push(fileCm);
-               // console.log(this.AllCm);
+                // console.log(this.AllCm);
             },
             Cv(file) {
                 var fileCv = [];
@@ -192,7 +223,7 @@
                     fileCv.push(lineCv);
                 }
                 this.AllCv.push(fileCv)
-              //  console.log(this.AllCv);
+                //  console.log(this.AllCv);
             },
             Ci(file) {
                 var fileCi = [];
@@ -205,7 +236,7 @@
                     var lineCi = [];
                     Ndi[i] = Inheritance.Ndi(file[i]);
                     Nidi[i] = Inheritance.Nidi(file[i]);
-                    Ti[i] = Ndi[i]+Nidi[i];
+                    Ti[i] = Ndi[i] + Nidi[i];
                     Ci[i] = Inheritance.Ci(Ti[i]);
 
                     lineCi.push(Ndi[i])
@@ -215,11 +246,17 @@
                     fileCi.push(lineCi)
                 }
                 this.AllCi.push(fileCi)
-               // console.log(this.AllCi);
+                // console.log(this.AllCi);
             },
             Ccs(file) {
+                Controlstructures.classDetecter(file);
+                Controlstructures.MethodsDetecter(file);
+                Controlstructures.sectionscaner(file);
+                Controlstructures.sortAlgo();
+                Controlstructures.CcsppsAndCcsCal();
+                Controlstructures.d();
                 var fileCcs = [];
-                var Wtcs = [i];
+                var Wtcs = [];
                 var NC = [];
                 var Ccspps = [];
                 var Ccs = [];
@@ -229,9 +266,12 @@
                     NC[i] = 0;
                     Ccspps[i] = 0;
                     Ccs[i] = 0;
-                    Wtcs[i] = Controlstructures.wtcs(file[i]);
-                    NC[i] = Controlstructures.NC(file[i]);
-                    Ccs[i] = (Wtcs[i] * NC[i]) + Ccspps[i]
+                    var obj = Controlstructures.resultFeder(i);
+
+                    Wtcs[i] = obj.wtcs// Controlstructures.wtcs(file[i]);
+                    NC[i] = obj.NC// Controlstructures.NC(file[i]);
+                    Ccs[i] = obj.Ccs //(Wtcs[i] * NC[i]) + Ccspps[i]
+                    Ccspps[i] = obj.Ccspps
                     lineCcs.push(Wtcs[i])
                     lineCcs.push(NC[i])
                     lineCcs.push(Ccspps[i])
@@ -239,7 +279,49 @@
                     fileCcs.push(lineCcs)
                 }
                 this.AllCcs.push(fileCcs);
-               // console.log(this.AllCcs);
+                // console.log(this.AllCcs);
+            },
+            Ccp(file, fileindex) {
+                var fileCcp = [];
+                var Nr = [];
+                var Nmcms = [];
+                var Nmcmd = [];
+                var Nmcrms = [];
+                var Nmcrmd = [];
+                var Nrmcrms = [];
+                var Nrmcrmd = [];
+                var Nrmcms = [];
+                var Nrmcmd = [];
+                var Nmrgvs = [];
+                var Nmrgvd = [];
+                var Nrmrgvs = [];
+                var Nrmrgvd = [];
+                var Ccp = [];
+                for (var i = 0; i < file.length; i++) {
+                    var lineCcp = [];
+
+                    Nr[i] = Coupling.Nr(file[i]);
+                    Nmcms[i] = Coupling.Nmcms(file[i]);
+                    Nmcmd[i] = Coupling.Nmcmd(file[i]);
+                    Nmcrms[i] = Coupling.Nmcrms(file[i]);
+                    Nmcrmd[i] = Coupling.Nmcrmd(file[i]);
+                    Nrmcrms[i] = Coupling.Nrmcrms(file[i]);
+                    Nrmcrmd[i] = Coupling.Nrmcrmd(file[i]);
+                    Nrmcms[i] = Coupling.Nrmcms(file[i]);
+                    Nrmcmd[i] = Coupling.Nrmcmd(file[i]);
+                    Nmrgvs[i] = Coupling.Nmrgvs(file[i]);
+                    Nmrgvd[i] = Coupling.Nmrgvd(file[i]);
+                    Nrmrgvs[i] = Coupling.Nrmrgvs(file[i]);
+                    Nrmrgvd[i] = Coupling.Nrmrgvd(file[i]);
+                    Ccp[i] = Nr[i] + Nmcms[i] + Nmcmd[i] + Nmcrms[i] + Nmcrmd[i] + Nrmcrms[i] + Nrmcrmd[i] + Nrmcms[i] + Nrmcmd[i] + Nmrgvs[i] + Nmrgvd[i] + Nrmrgvs[i] + Nrmrgvd[i];
+                    lineCcp.push(Nr[i], Nmcms[i], Nmcmd[i], Nmcrms[i], Nmcrmd[i], Nrmcrms[i], Nrmcrmd[i], Nrmcms[i], Nrmcmd[i], Nmrgvs[i], Nmrgvd[i], Nrmrgvs[i], Nrmrgvd[i], Ccp[i]);
+                    fileCcp.push(lineCcp);
+                    console.log(Coupling.Nr(file[i]))
+                    console.log(Coupling.Nmcms(file[i], fileindex, i))
+                    console.log(Coupling.Nmcmd(file[i], fileindex, i))
+                }
+                this.AllCcp.push(fileCcp);
+                console.log(this.AllCcp)
             },
             TCps(i) {
                 var Cs = this.AllCs[i]
@@ -247,31 +329,70 @@
                 var Cm = this.AllCm[i]
                 var Ci = this.AllCi[i]
                 var Ccs = this.AllCcs[i]
-                var fileTCps=[];
-                var total =0;
-                for (let j = 0; j < Cs.length ; j++) {
-                    var lineTCps=[];
+                var Ccp = this.AllCcp[i]
+                var fileTCps = [];
+                var total = 0;
+                for (let j = 0; j < Cs.length; j++) {
+                    var lineTCps = [];
                     var s = Cs[j];
                     var v = Cv[j];
                     var m = Cm[j];
                     var inh = Ci[j];
                     var cs = Ccs[j];
-                  //  var  = Cs[j];
-                    lineTCps.push(s[s.length-1])
-                    lineTCps.push(v[v.length-1])
-                    lineTCps.push(m[m.length-1])
-                    lineTCps.push(inh[inh.length-1])
-                    lineTCps.push(0)
-                    lineTCps.push(cs[cs.length-1])
-                    var TCps = s[s.length-1]+v[v.length-1]+m[m.length-1]+inh[inh.length-1]+0+cs[cs.length-1]
+                    var cp = Ccp[j];
+                    //  var  = Cs[j];
+                    lineTCps.push(s[s.length - 1])
+                    lineTCps.push(v[v.length - 1])
+                    lineTCps.push(m[m.length - 1])
+                    lineTCps.push(inh[inh.length - 1])
+                    lineTCps.push(cp[cp.length - 1])
+                    lineTCps.push(cs[cs.length - 1])
+                    var TCps = s[s.length - 1] + v[v.length - 1] + m[m.length - 1] + inh[inh.length - 1] + cp[cp.length - 1] + cs[cs.length - 1]
+
+                    this.summery.AllByColCs += s[s.length - 1];
+                    this.summery.AllByColCv += v[v.length - 1]
+                    this.summery.AllByColCm += m[m.length - 1]
+                    this.summery.AllByColCi += inh[inh.length - 1]
+                    this.summery.AllByColCcp += cp[cp.length - 1]
+                    this.summery.AllByColCcs += cs[cs.length - 1]
+                    this.summery.AllByColTCps += TCps
                     lineTCps.push(TCps);
-                    total = total+TCps;
+                    total = total + TCps;
                     fileTCps.push(lineTCps)
                 }
                 this.AllTCps.push(fileTCps);
                 this.Total.push(total);
                 console.log(this.AllTCps);
                 console.log(this.Total);
+            },
+            exportToPDF() {
+                window.html2canvas = html2canvas;
+
+                var doc = new jsPDF("p", "pt", "a4");
+
+
+                var source = document.getElementById("print").innerHTML;
+
+                var margins = {
+                    top: 10,
+                    bottom: 10,
+                    left: 10,
+                    width: 595
+                };
+
+                doc.fromHTML(
+                    source,
+                    margins.left,
+                    margins.top,
+                    {
+                        width: margins.width
+                    },
+                    function () {
+
+                        doc.save("Test.pdf");
+                    },
+                    margins
+                );
             }
         }
     }

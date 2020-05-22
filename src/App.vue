@@ -157,7 +157,7 @@
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
           <transition name="fade" mode="out-in">
-       <!-- <nofile v-if="this.$route.path !== '/' && !this.$store.state.files"></nofile> -->
+<!--       <nofile v-if="this.$route.path !== '/' && !this.$store.state.files"></nofile>-->
             <router-view>
             </router-view>
             

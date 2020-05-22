@@ -1,6 +1,22 @@
 <template>
     <div>
-        <table>
+
+        <div id="miniMenu">
+
+
+            <div v-for="filen in filename.length" :key="filen">
+                <button id="menubtn" @click="show = filename[filen-1]">{{filename[filen-1]}}</button>
+
+            </div>
+            <br>
+            <hr>
+        </div>
+        <div v-for="res in cordoutput.length" :key="res">
+
+            <div :id="filename[res-1]" v-if="show == filename[res-1]">
+                <h3>{{filename[res-1]}}</h3>
+                <br>
+                <table>
             <thead>
             <tr>
                 <th class="text-left">#</th>
@@ -13,24 +29,39 @@
                 <th class="text-left">Nrmcrms</th>
                 <th class="text-left">Nrmcrmd</th>
                 <th class="text-left">Nrmcms</th>
+                <th class="text-left">Nrmcmd</th>
+                <th class="text-left">Nmrgvs</th>
+                <th class="text-left">Nmrgvd</th>
+                <th class="text-left">Nrmrgvs</th>
+                <th class="text-left">Nrmrgvd</th>
+                <th class="text-left">Ccp</th>
+
             </tr>
             </thead>
             <tbody>
-            <tr v-for="res in cordoutput.length" :key="res">
-                <td>{{res-1}}</td>
-                <td class="code">{{cordoutput[res-1]}}</td>
-                <td>{{Nr[res-1]}}</td>
-                <td>{{Nmcms[res-1]}}</td>
-                <td>{{Nmcmd[res-1]}}</td>
-                <td>{{Nmcrms[res-1]}}</td>
-                <td>{{Nmcrmd[res-1]}}</td>
-                <td>{{Nrmcrms[res-1]}}</td>
-                <td>{{Nrmcrmd[res-1]}}</td>
-                <td>{{Nrmcms[res-1]}}</td>
+            <tr v-for="line in cordoutput[res-1].length" :key="line">
+                <td>{{line-1}}</td>
+                <td class="code">{{cordoutput[res-1][line-1]}}</td>
+                <td>{{Ccp[res-1][line-1][0]}}</td>
+                <td>{{Ccp[res-1][line-1][1]}}</td>
+                <td>{{Ccp[res-1][line-1][2]}}</td>
+                <td>{{Ccp[res-1][line-1][3]}}</td>
+                <td>{{Ccp[res-1][line-1][4]}}</td>
+                <td>{{Ccp[res-1][line-1][5]}}</td>
+                <td>{{Ccp[res-1][line-1][6]}}</td>
+                <td>{{Ccp[res-1][line-1][7]}}</td>
+                <td>{{Ccp[res-1][line-1][8]}}</td>
+                <td>{{Ccp[res-1][line-1][9]}}</td>
+                <td>{{Ccp[res-1][line-1][10]}}</td>
+                <td>{{Ccp[res-1][line-1][11]}}</td>
+                <td>{{Ccp[res-1][line-1][12]}}</td>
+                <td>{{Ccp[res-1][line-1][13]}}</td>
 
             </tr>
             </tbody>
         </table>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -42,36 +73,31 @@
         data: () => ({
             swap: false,
             link: 'mdi-link',
-            result: '',
-            cordoutput: '',
-            Nr: [],
-            Nmcms: [],
-            Nmcmd: [],
-            Nmcrms: [],
-            Nmcrmd: [],
-            Nrmcrms: [],
-            Nrmcrmd: [],
-            Nrmcms: [],
+            result: [],
+            cordoutput: [],
+            filename: [],
+            show: "",
+            Ccp:[]
+
 
 
         }),
         mounted: function () {
-            if (localStorage.filedata) {
-                this.result = localStorage.getItem("filedata").toString().split("\n");
-                this.cordoutput = localStorage.getItem("filedata").toString().split("\n");
-                this.getComplexity();
+            // get file data ,file name and Ccp values from localStorage
+            if (localStorage.fileindex) {
+                for (let i = 0; i < localStorage.getItem("fileindex"); i++) {
+                    this.result.push(localStorage.getItem(`filedata${i}`).toString().split("\n"))
+                    this.cordoutput.push(localStorage.getItem(`filedata${i}`).toString().split("\n"));
+                    this.filename.push(localStorage.getItem(`filedataNmae${i}`).toString());
+                }
+                this.show = localStorage.getItem(`filedataNmae${0}`).toString();
+                console.log(JSON.parse(localStorage.getItem(`Ccp`).toString()));
+                this.Ccp = JSON.parse(localStorage.getItem(`Ccp`).toString());
+
             }
         },
         methods: {
-            getComplexity(){
-                for (var i = 0; i < this.result.length; i++) {
 
-                    this.Nr[i]=0; this.Nmcms[i]=0; this.Nmcmd[i]=0;this.Nmcrms[i]=0; this.Nmcrmd[i]=0; this.Nrmcrms[i]=0;this.Nrmcrmd[i]=0; this.Nrmcms[i]=0;
-
-                    this.Nmcms[5] =1;this.Nmcms[7] =1;this.Nmcms[8] =1;this.Nmcms[17] =1;this.Nmcms[19] =1;this.Nmcms[20] =1;this.Nmcms[29] =1;this.Nmcms[30] =1;this.Nmcms[55] =1;
-                    this.Nr[26] =1
-                }
-            }
         }
     }
 </script>
@@ -105,5 +131,23 @@
 
     tr:nth-child(odd) {
         background-color: #eee;
+    }
+
+    #menubtn {
+        outline: none;
+        border-radius: 5px;
+        color: #fff;
+        background: #258ad3;
+        height: 40px;
+        margin-left: 10px;
+        padding: 5px 8px 5px 8px;
+    }
+
+    #miniMenu {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+
     }
 </style>

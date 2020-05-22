@@ -45,7 +45,6 @@
 </template>
 
 <script>
-    import {Inheritance} from "../controller/Inheritance"
 
     export default {
         name: "inheritanceComplex",
@@ -61,6 +60,7 @@
             Ci: []
         }),
         mounted: function () {
+            // get file data ,file name and Ci values from localStorage
             if (localStorage.fileindex) {
                 for (let i = 0; i < localStorage.getItem("fileindex"); i++) {
                     this.result.push(localStorage.getItem(`filedata${i}`).toString().split("\n"))
@@ -69,22 +69,10 @@
                 }
                 this.show = localStorage.getItem(`filedataNmae${0}`).toString();
                 this.Ci = JSON.parse(localStorage.getItem(`Ci`).toString());
-                //this.getComplexity();
+
             }
         },
         methods: {
-            getComplexity() {
-                for (var i = 0; i < this.result.length; i++) {
-                    this.Ndi[i] = Inheritance.Ndi(this.result[i]);
-                    this.Nidi[i] = Inheritance.Nidi(this.result[i]);
-
-                    /* this.Ndi[i]=0; this.Nidi[i]=0; this.Ti[i]=0;
-                     this.Ndi[13]=1;
-                     this.Ndi[25]=1; this.Nidi[25]=1;*/
-                    this.Ci[i] = this.Ndi[i] + this.Nidi[i];
-                    this.Ti[i] = this.Ci[i];
-                }
-            }
         }
     }
 

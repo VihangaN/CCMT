@@ -45,7 +45,6 @@
 </template>
 
 <script>
-    import {Controlstructures} from "../controller/Controlstructures"
 
     export default {
         name: "contolStructerComplex",
@@ -61,6 +60,7 @@
             Ccs: []
         }),
         mounted: function () {
+            // get file data ,file name and Ccs values from localStorage
             if (localStorage.fileindex) {
                 for (let i = 0; i < localStorage.getItem("fileindex"); i++) {
                     this.result.push(localStorage.getItem(`filedata${i}`).toString().split("\n"))
@@ -69,21 +69,10 @@
                 }
                 this.show = localStorage.getItem(`filedataNmae${0}`).toString();
                 this.Ccs = JSON.parse(localStorage.getItem(`Ccs`).toString());
-                //this.getComplexity();
+
             }
         },
         methods: {
-            getComplexity() {
-                for (var i = 0; i < this.result.length; i++) {
-                    this.Wtcs[i] = 0;
-                    this.NC[i] = 0;
-                    this.Ccspps[i] = 0;
-                    this.Ccs[i] = 0;
-                    this.Wtcs[i] = Controlstructures.wtcs(this.result[i]);
-                    this.NC[i] = Controlstructures.NC(this.result[i]);
-                    this.Ccs[i] = (this.Wtcs[i] * this.NC[i]) + this.Ccspps[i]
-                }
-            }
         }
     }
 </script>

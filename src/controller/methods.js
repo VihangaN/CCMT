@@ -1,11 +1,11 @@
 var weight = require("../assets/Weight.json");
 export const methods = {
-    Wmrt:(line)=>{
+    Wmrt:(line)=>{ // Identify method and method return type
         var metherdpatrn = new RegExp("((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\w\\s\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*");
         if (line.match(metherdpatrn)) {
             var codeline = line;
             codeline = codeline.split("(");
-            if (codeline[0].match(/(\bboolean\s\b)|(\bbool\s\b)|(\blong\s\b)|(\bbyte\s\b)|(\bshort\s\b)|(\bdouble\s\b)|(\bint\s\b)|(\bfloat\s\b)|(\bstring\s\b)|(\bString\s\b)|(\bchar\s\b)/g)) {
+            if (codeline[0].match(/(\bboolean\s\b)|(\bbool\s\b)|(\blong\s\b)|(\bbyte\s\b)|(\bshort\s\b)|(\bdouble\s\b)|(\bint\s\b)|(\bfloat\s\b)|(\bstring\s\b)|(\bString\s\b)|(\bchar\s\b)/g)) { // Identify method return type
                 return weight.Cm.primitive_return;
             } else if (codeline[0].match(/(\bvoid\s\b)/g)) {
                 return weight.Cm.void_return;
@@ -16,7 +16,7 @@ export const methods = {
             return 0;
         }
     },
-    Npdtp:(line)=>{
+    Npdtp:(line)=>{ // Identify number of primitive parameters
         var metherdpatrn = new RegExp("((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\w\\s\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*");
         if (line.match(metherdpatrn)) {
             var codeline = line;
@@ -39,7 +39,7 @@ export const methods = {
             return 0;
         }
     } ,
-    Ncdtp:(line)=>{
+    Ncdtp:(line)=>{ // Identify number of composite parameters
         var metherdpatrn = new RegExp("((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\w\\s\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*");
         if (line.match(metherdpatrn)) {
             var codeline = line;

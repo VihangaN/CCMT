@@ -2,23 +2,23 @@
 import { Bar } from "vue-chartjs";
 
 export default {
+  data() {
+    return {
+      chartData: JSON.parse(localStorage.getItem("summery"))
+    };
+  },
   extends: Bar,
   mounted() {
+
+    console.log(this.chartData);
     this.renderChart(
       {
-        labels: [
-          "cs",
-          "cv",
-          "cm",
-          "ci",
-          "ccp",
-          "ccs",
-        ],
+        labels: ["cs", "cv", "cm", "ci", "ccp", "ccs"],
         datasets: [
           {
-            label: "Data One",
-            backgroundColor: "#f87979",
-            data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
+            label: "Complexity Summery",
+            backgroundColor: "#198AD1",
+            data: [this.chartData.AllByColCs,this.chartData.AllByColCv,this.chartData.AllByColCm,this.chartData.AllByColCi,this.chartData.AllByColCcp,this.chartData.AllByColCcs]
           }
         ]
       },

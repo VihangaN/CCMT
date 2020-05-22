@@ -20,14 +20,14 @@
     "composite_data_type": 2
   },
   "Ci": {
-    "by_one_class":1,
-    "by_two_class":2,
-    "by_three_class":3,
-    "by_more_than_three_class":4
+    "by_one_class": 1,
+    "by_two_class": 2,
+    "by_three_class": 3,
+    "by_more_than_three_class": 4
   },
   "Ccp": {
     "Wr": 2,
-    "Wmcms": 2,
+    "Wmcms": 21,
     "Wmcmd": 3,
     "Wmcrms": 3,
     "Wmcrmd": 4,
