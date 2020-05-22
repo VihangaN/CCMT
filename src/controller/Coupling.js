@@ -25,15 +25,19 @@ export const Coupling = {
 
 
     Nr: (line) => {
-        for (let i = 0; i < recarsueMetherd.length; i++) {
+        if (recarsueMetherdFile.length != 0) {
+            for (let i = 0; i < recarsueMetherd.length; i++) {
 
-            if (line.match(new RegExp("(" + recarsueMetherd[i] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
-                console.log(line);
-                return weight.Ccp.Wr;
+                if (line.match(new RegExp("(" + recarsueMetherd[i] + ")\\s*\\(|::([^W:.,()\\s]+)", "g")) && !line.match(variableKeyWordRemover)) {
+                    console.log(line);
+                    return weight.Ccp.Wr;
 
-            } else {
-                return 0;
+                } else {
+                    return 0;
+                }
             }
+        } else {
+            return 0;
         }
     },
     Nmcms: (line, fileindex, lineindex) => {
@@ -353,21 +357,25 @@ export const Coupling = {
         }
     },
     Nrmrgvs: (line, fileindex, lineindex) => {
-        for (let i = 0; i < recarsueMetherdFile.length; i++) {
-            if (recarsueMetherdFile[i] == fileindex) {
-                if (recarsuemethedstart[i] <= lineindex && lineindex <= recarsuemethedend[i]) {
-                    if (line.match(/(\w+\s\w+;|\w+\s\w+\s?=\s?\w?.+;|(\w*(,(.*)))(?=;)|(\w+\[\]))/g)) {
-                        if (!line.match(/return/g) && !line.match(metherdpatrn1) && !line.match(new RegExp("for", "g"))) {
-                            for (var j = 0; j < GlobalVariabals.length; j++) {
-                                if (line.match(new RegExp(GlobalVariabals[j]))) {
-                                    if (fileindex == GlobalVariabalsFile[j]) {
-                                        weight.Ccp.Wrmrgvs;
+        if (recarsueMetherdFile.length != 0) {
+            for (let i = 0; i < recarsueMetherdFile.length; i++) {
+                if (recarsueMetherdFile[i] == fileindex) {
+                    if (recarsuemethedstart[i] <= lineindex && lineindex <= recarsuemethedend[i]) {
+                        if (line.match(/(\w+\s\w+;|\w+\s\w+\s?=\s?\w?.+;|(\w*(,(.*)))(?=;)|(\w+\[\]))/g)) {
+                            if (!line.match(/return/g) && !line.match(metherdpatrn1) && !line.match(new RegExp("for", "g"))) {
+                                for (var j = 0; j < GlobalVariabals.length; j++) {
+                                    if (line.match(new RegExp(GlobalVariabals[j]))) {
+                                        if (fileindex == GlobalVariabalsFile[j]) {
+                                            weight.Ccp.Wrmrgvs;
+                                        } else {
+                                            return 0;
+                                        }
                                     } else {
                                         return 0;
                                     }
-                                } else {
-                                    return 0;
                                 }
+                            } else {
+                                return 0;
                             }
                         } else {
                             return 0;
@@ -378,27 +386,31 @@ export const Coupling = {
                 } else {
                     return 0;
                 }
-            } else {
-                return 0;
             }
+        } else {
+            return 0;
         }
     },
     Nrmrgvd: (line, fileindex, lineindex) => {
-        for (let i = 0; i < recarsueMetherdFile.length; i++) {
-            if (recarsueMetherdFile[i] == fileindex) {
-                if (recarsuemethedstart[i] <= lineindex && lineindex <= recarsuemethedend[i]) {
-                    if (line.match(/(\w+\s\w+;|\w+\s\w+\s?=\s?\w?.+;|(\w*(,(.*)))(?=;)|(\w+\[\]))/g)) {
-                        if (!line.match(/return/g) && !line.match(metherdpatrn1) && !line.match(new RegExp("for", "g"))) {
-                            for (var j = 0; j < GlobalVariabals.length; j++) {
-                                if (line.match(new RegExp(GlobalVariabals[j]))) {
-                                    if (fileindex != GlobalVariabalsFile[j]) {
-                                        weight.Ccp.Wrmrgvd;
+        if (recarsueMetherdFile.length != 0) {
+            for (let i = 0; i < recarsueMetherdFile.length; i++) {
+                if (recarsueMetherdFile[i] == fileindex) {
+                    if (recarsuemethedstart[i] <= lineindex && lineindex <= recarsuemethedend[i]) {
+                        if (line.match(/(\w+\s\w+;|\w+\s\w+\s?=\s?\w?.+;|(\w*(,(.*)))(?=;)|(\w+\[\]))/g)) {
+                            if (!line.match(/return/g) && !line.match(metherdpatrn1) && !line.match(new RegExp("for", "g"))) {
+                                for (var j = 0; j < GlobalVariabals.length; j++) {
+                                    if (line.match(new RegExp(GlobalVariabals[j]))) {
+                                        if (fileindex != GlobalVariabalsFile[j]) {
+                                            weight.Ccp.Wrmrgvd;
+                                        } else {
+                                            return 0;
+                                        }
                                     } else {
                                         return 0;
                                     }
-                                } else {
-                                    return 0;
                                 }
+                            } else {
+                                return 0;
                             }
                         } else {
                             return 0;
@@ -409,9 +421,9 @@ export const Coupling = {
                 } else {
                     return 0;
                 }
-            } else {
-                return 0;
             }
+        } else {
+            return 0;
         }
     },
     methodTypeIdentyfer: (file, index) => {

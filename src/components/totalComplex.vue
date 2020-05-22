@@ -233,6 +233,12 @@
                 // console.log(this.AllCi);
             },
             Ccs(file) {
+                Controlstructures.classDetecter(file);
+                Controlstructures.MethodsDetecter(file);
+                Controlstructures.sectionscaner(file);
+                Controlstructures.sortAlgo();
+                Controlstructures.CcsppsAndCcsCal();
+                Controlstructures.d();
                 var fileCcs = [];
                 var Wtcs = [];
                 var NC = [];
@@ -244,9 +250,12 @@
                     NC[i] = 0;
                     Ccspps[i] = 0;
                     Ccs[i] = 0;
-                    Wtcs[i] = Controlstructures.wtcs(file[i],i);
-                    NC[i] = Controlstructures.NC(file[i]),i;
-                    Ccs[i] = (Wtcs[i] * NC[i]) + Ccspps[i]
+                    var obj = Controlstructures.resultFeder(i);
+
+                    Wtcs[i] = obj.wtcs// Controlstructures.wtcs(file[i]);
+                    NC[i] = obj.NC// Controlstructures.NC(file[i]);
+                    Ccs[i] = obj.Ccs //(Wtcs[i] * NC[i]) + Ccspps[i]
+                    Ccspps[i] = obj.Ccspps
                     lineCcs.push(Wtcs[i])
                     lineCcs.push(NC[i])
                     lineCcs.push(Ccspps[i])
@@ -256,7 +265,6 @@
                 this.AllCcs.push(fileCcs);
                 // console.log(this.AllCcs);
             },
-
             Ccp(file, fileindex) {
                 var fileCcp = [];
                 var Nr = [];
