@@ -10,6 +10,7 @@ import contolStructerComplex from './components/contolStructerComplex.vue'
 import totalComplex from './components/totalComplex.vue'
 import weight from './components/weight.vue'
 import bar from './components/barchart.vue'
+import chartbar from './components/chart.vue'
 
 Vue.use(Router)
 
@@ -25,7 +26,9 @@ let router =  new Router({
         {path:'/contolStructerComplex' , component:contolStructerComplex},
         {path:'/totalComplex' , component:totalComplex},
         {path:'/weight' , component:weight},
+        {path:'/chart' , component:chartbar},
         {path:'/bar' , component:bar},
+        
 
     ],
     mode:'history',

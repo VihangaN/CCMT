@@ -14,9 +14,12 @@
         <div v-for="res in cordoutput.length" :key="res">
 
             <div :id="filename[res-1]" v-if="show == filename[res-1]">
-                <h3>{{filename[res-1]}}</h3>
+                <h3>{{filename[res-1]}}
+                    <b-button type="is-info" @click="print('print'+filename[res-1])">Print</b-button>
+
+                </h3>
                 <br>
-                <table>
+                <table :id="'print'+filename[res-1]" class="printBg">
                     <thead>
                     <tr>
                         <th class="text-left">#</th>
@@ -46,6 +49,9 @@
 
 <script>
 
+    import htmlToImage from "html-to-image";
+    import download from "downloadjs";
+
     export default {
         name: "contolStructerComplex",
         components: {},
@@ -73,6 +79,12 @@
             }
         },
         methods: {
+            print(id) {
+                htmlToImage.toPng(document.getElementById(id))
+                    .then(function (dataUrl) {
+                        download(dataUrl, new Date().toLocaleString() + " " + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
+                    });
+            }
         }
     }
 </script>
@@ -106,6 +118,14 @@
 
     tr:nth-child(odd) {
         background-color: #eee;
+    }
+
+    tr:nth-child(even) {
+        background-color: #fff;
+    }
+
+    .printBg {
+        background-color: #fff;
     }
 
     #menubtn {

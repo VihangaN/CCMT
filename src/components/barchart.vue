@@ -3,6 +3,7 @@
 import { Bar } from "vue-chartjs";
 
 export default {
+ 
   data() {
     return {
       chartData: JSON.parse(localStorage.getItem("summery"))

@@ -114,7 +114,7 @@
           </v-list-item>
  </router-link>
           <br />
-           <router-link to="/bar">
+           <router-link to="/chart">
           <v-list-item link>
             <v-list-item-icon>
               <v-icon>mdi-chart-bar</v-icon>
