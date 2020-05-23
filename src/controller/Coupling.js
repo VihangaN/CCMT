@@ -45,6 +45,7 @@ export const Coupling = {
         } else {
             return 0;
         }
+        return 0
     },
     Nmcms: (line, fileindex, lineindex) => { // Identify  normal method call normal method same file
 
@@ -82,6 +83,7 @@ export const Coupling = {
         } else {
             return 0;
         }
+        return 0
     },
     Nmcmd: (line, fileindex, lineindex) => { // Identify  normal method call normal method different file
         if (line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch"))) {
@@ -118,6 +120,7 @@ export const Coupling = {
         } else {
             return 0;
         }
+        return 0
     },
     Nmcrms: (line, fileindex, lineindex) => { // Identify  normal method call recrsue method same file
         if (line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch"))) {
@@ -153,6 +156,7 @@ export const Coupling = {
         } else {
             return 0;
         }
+        return 0
     },
     Nmcrmd: (line, fileindex, lineindex) => { // Identify  normal method call recersue method different file
         if (line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch"))) {
@@ -188,6 +192,7 @@ export const Coupling = {
         } else {
             return 0;
         }
+        return 0
     },
     Nrmcrms: (line, fileindex, lineindex) => { // Identify  recercue method call recersue method same file
         if (line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch"))) {
@@ -223,6 +228,7 @@ export const Coupling = {
         } else {
             return 0;
         }
+        return 0
     },
     Nrmcrmd: (line, fileindex, lineindex) => { // Identify  recersue method call recersue method different file
         if (line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch"))) {
@@ -258,6 +264,7 @@ export const Coupling = {
         } else {
             return 0;
         }
+        return 0
     },
     Nrmcms: (line, fileindex, lineindex) => {  // Identify  recersue method call normal method same file
         if (line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch"))) {
@@ -294,6 +301,7 @@ export const Coupling = {
         } else {
             return 0;
         }
+        return 0
     },
     Nrmcmd: (line, fileindex, lineindex) => { // Identify  recersue method call normal method different file
         if (line.match(methodCall) && !line.match(variableKeyWordRemover) && !line.match(new RegExp("for|while|if|switch"))) {
@@ -330,6 +338,7 @@ export const Coupling = {
         } else {
             return 0;
         }
+        return 0
     },
     Nmrgvs: (line, fileindex, lineindex) => { // Identify  A regular method referencing a global variable in the same file
 
@@ -445,6 +454,7 @@ export const Coupling = {
         } else {
             return 0;
         }
+        return 0
     },
     Nrmrgvd: (line, fileindex, lineindex) => { //Identify A recursive method referencing a global variable in a different file
         if (recarsueMetherdFile.length != 0) {
@@ -486,6 +496,7 @@ export const Coupling = {
         } else {
             return 0;
         }
+        return 0
     },
     methodTypeIdentyfer: (file, index) => { // identify method types normal or recurse
         for (var i = 0; i < methedstart.length; i++) {
