@@ -14,7 +14,7 @@
     "core-js": "^3.6.4",
     "downloadjs": "^1.4.7",
     "html-to-image": "^0.1.1",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "vue": "^2.6.11",
     "vue-chartjs": "^3.5.0",
     "vue-router": "^3.1.5",
